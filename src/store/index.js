@@ -140,10 +140,8 @@ const methods = {
           });
       }
       if (!user) {
-        console.log("there is no user | auth state change");
-        state.userDetails = {};
+        console.log("there is no user | auth state change");        
         state.online = false;
-
         router.push("/auth");
       }
     });
