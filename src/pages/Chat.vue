@@ -267,20 +267,18 @@ export default {
 
           fileError.value = null;
           store.methods.useStorage2(file.value, "smackchat");
-
-          // if (store.state.progress) {
-          const dialog = $q.dialog({
-            title: "Uploading...",
-            progress: true,
-            persistent: true,
-            ok: false,
-            html: true,
-          });
-          // }
+         
+          // const dialog = $q.dialog({
+          //   title: "Uploading...",
+          //   progress: true,
+          //   persistent: true,
+          //   ok: false,
+          //   html: true,
+          // });
 
           setTimeout(() => {
             if (store.state.uploadCompleted) {
-              dialog.hide();
+              // dialog.hide();
               file.value = null;
             }
           }, 1000);
