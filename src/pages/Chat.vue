@@ -228,7 +228,7 @@ export default {
         setTimeout(() => {
           window.scrollTo(0, chats.value.scrollHeight);
           showMessages.value = true;
-        }, 1000);
+        }, 2000);
       }
     );
 
@@ -283,7 +283,7 @@ export default {
               dialog.hide();
               file.value = null;
             }
-          }, 1000);
+          }, 2000);
 
           if (store.state.url) {
             store.methods.sendMessage({
