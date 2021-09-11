@@ -85,7 +85,7 @@ const methods = {
           // update the progress as file uploads
           let percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
 
-          state.progress = percentage;
+          state.progress = Math.round(percentage)
           console.log("progress: ", state.progress);
 
           if (state.progress >= 100) {
@@ -198,6 +198,7 @@ const methods = {
         .update({ online: false })
         .then(() => {
           console.log("user is offline");
+          state.userDetails = {}
         });
     });
   },

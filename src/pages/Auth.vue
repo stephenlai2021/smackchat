@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex q-pa-md">
-    <q-header class="bg-white" reveal style="border-bottom: 1px solid #eeeeee">
+    <q-header class="" reveal style="border-bottom: 1px solid #eeeeee">
       <q-toolbar class="constraint">
         <q-avatar>
           <img
@@ -18,7 +18,7 @@
             round
             dense
             flat
-            color="primary"
+            color=""
             size="md"
             icon="eva-settings-2-outline"
             @click="store.methods.toggleLeftDrawer()"

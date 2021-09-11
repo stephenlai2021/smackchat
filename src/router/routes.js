@@ -97,7 +97,21 @@ const routes = [
           });
         },
       },
-      // { path: "/settings", component: () => import("src/pages/Settings.vue") },
+      {
+        path: "/camera",
+        component: () => import("src/pages/Camera.vue"),
+        beforeEnter: (to, from, next) => {
+          auth.onAuthStateChanged((user) => {
+            if (user) {
+              console.log("user is logged in | route guard");
+              next();
+            } else {
+              console.log("user logged out | route guard");
+              next("/auth");
+            }
+          });
+        },
+      },
     ],
   },
 

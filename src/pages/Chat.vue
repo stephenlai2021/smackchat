@@ -77,10 +77,29 @@
       />
     </div>
 
-    <q-footer
-      class="bg-transparent"
-      style="backdrop-filter: blur(20px);"
+    <!-- Camera Modal -->
+    <transition-group
+      appear
+      enter-active-class="animated slideInDown"
+      leave-active-class="animated slideOutUp"
     >
+      <div v-if="showCameraModal" class="camera-modal">
+        <div class="constraint" style="border: 1px solid green; height: 100vh">
+          <div class="row justify-around">
+            <h3 style="margin: 0; padding: 0">Camera Modal</h3>
+            <q-btn
+              round
+              color="red"
+              icon="eva-close"
+              @click="showCameraModal = false"
+            />
+          </div>
+          <camera-input></camera-input>
+        </div>
+      </div>
+    </transition-group>
+
+    <q-footer class="bg-transparent footer" style="backdrop-filter: blur(20px)">
       <q-form class="flex constraint" :class="{ 'q-mx-sm': inputFocus }">
         <q-btn-group
           v-if="!inputFocus"
@@ -93,10 +112,18 @@
             <input class="file-input" type="file" @change="handleChange" />
             <q-icon color="green-12" size="md" name="eva-image-outline" />
           </label>
-          <label class="q-ma-md" style="cursor: pointer">
+          <!-- <label class="q-ma-md" style="cursor: pointer">
             <input class="file-input" type="file" @change="handleChange" />
             <q-icon color="green-12" size="md" name="eva-camera-outline" />
-          </label>
+          </label> -->
+          <q-icon
+            size="md"
+            class="q-ma-md"
+            color="green-12"
+            style="cursor: pointer"
+            name="eva-camera-outline"
+            @click="showCameraModal = true"
+          />
           <q-btn
             round
             size="16px"
@@ -161,8 +188,12 @@ import { formatDistanceToNow } from "date-fns";
 import { timestamp } from "src/boot/firebase";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
+// import CameraInput from 'src/components/CameraInput.vue'
 
 export default {
+  components: {
+    // CameraInput,
+  },
   setup() {
     const $q = useQuasar();
 
@@ -185,9 +216,10 @@ export default {
     const to = ref({});
     const file = ref(null);
     const fileError = ref(null);
+    const showCameraModal = ref(false);
 
     // allowed file types
-    const types = ["image/png", "image/jpeg", "image/jpg"];  
+    const types = ["image/png", "image/jpeg", "image/jpg"];
 
     // watch
     watch(
@@ -196,7 +228,7 @@ export default {
         setTimeout(() => {
           window.scrollTo(0, chats.value.scrollHeight);
           showMessages.value = true;
-        }, 20);
+        }, 1000);
       }
     );
 
@@ -236,11 +268,22 @@ export default {
           fileError.value = null;
           store.methods.useStorage2(file.value, "smackchat");
 
+          // if (store.state.progress) {
+          const dialog = $q.dialog({
+            title: "Uploading...",
+            progress: true,
+            persistent: true,
+            ok: false,
+            html: true,
+          });
+          // }
+
           setTimeout(() => {
             if (store.state.uploadCompleted) {
+              dialog.hide();
               file.value = null;
             }
-          }, 2000);
+          }, 1000);
 
           if (store.state.url) {
             store.methods.sendMessage({
@@ -309,12 +352,6 @@ export default {
       }
     };
 
-    // picker.value = new EmojiButton({
-    //   position: {
-    //     top: '50px',
-    //   },
-    // });
-
     picker.value = new EmojiButton();
 
     picker.value.on("emoji", (selection) => {
@@ -363,15 +400,16 @@ export default {
       btnEmoji,
       indicator,
       inputFocus,
+      showCameraModal,
 
       // methods
       call,
       onBlur,
       onFocus,
-      handleChange,
       newMessage,
       sendMessage,
       showMessages,
+      handleChange,
       showEmojiPicker,
       sendTypingIndicator,
       formatDistanceToNow,
@@ -381,6 +419,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.footer {
+  z-index: 300;
+}
+.camera-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  // transform: translateX(-50%);
+  width: 100%;
+  height: 100vh;
+  z-index: 500;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+}
+.progress-bar {
+  display: block;
+  height: 6px;
+  background: #5ad8d2;
+  // padding: 20px;
+  border-radius: 6px;
+  // margin-top: 10px;
+  transition: width 0.3s ease;
+}
 .file-input {
   height: 0;
   width: 0;

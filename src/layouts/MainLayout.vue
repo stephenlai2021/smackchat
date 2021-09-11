@@ -168,14 +168,10 @@
             </q-btn-group>
           </q-item>
           <q-item
+            v-if="store.state.userDetails.online"
             clickable
             v-ripple
-            @click="
-              !store.state.online
-                ? router.push('/auth')
-                : store.methods.logoutUser()
-            "
-            v-if="store.state.online"
+            @click="logoutUser"
           >
             <q-item-section avatar>
               <q-icon
@@ -186,9 +182,7 @@
               />
             </q-item-section>
 
-            <q-item-section>{{
-              !store.state.online ? "" : t("logout")
-            }}</q-item-section>
+            <q-item-section>{{ t("logout") }}</q-item-section>
           </q-item>
         </q-list>
       </div>
@@ -251,7 +245,7 @@ export default {
       return route.params.to;
     });
 
-    /* watch/watchEffect */
+    /* watch, watchEffect */
     watch(
       () => store.state.darkMode,
       (newVal, oldVal) => {
@@ -284,7 +278,7 @@ export default {
           }, 2000);
         } else {
           file.value = null;
-          // fileError.value = "Please select an image file (png or jpeg/jpg)";
+          fileError.value = "Please select an image file (png or jpeg/jpg)";
         }
       }
     );
@@ -303,6 +297,11 @@ export default {
     });
 
     // methods
+    const logoutUser = () => {
+      store.methods.logoutUser();
+      router.push("/auth");
+    };
+
     const handleChange = (e) => {
       let selected = e.target.files[0];
       console.log("You have selected: ", selected);
@@ -386,6 +385,7 @@ export default {
       leftDrawerOpen,
 
       // methods
+      logoutUser,
       toggleDark,
       checkRoute,
       handleChange,

@@ -20,9 +20,10 @@ module.exports = configure(function (ctx) {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli/boot-files
     boot: [
+      'i18n',
       'firebase',
       'localbase',
-      'i18n'
+      // 'global-components',
     ],
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -105,9 +106,13 @@ module.exports = configure(function (ctx) {
       'fadeIn',
       'fadeOut',
       'slideInUp',
+      'slideInDown',
       'slideOutDown',
+      'slideOutUp',
       'slideInRight',
-      'slideOutLeft'
+      'slideOutLeft',
+      'zoomIn',
+      'zoomOut',
     ],
 
     // https://v2.quasar.dev/quasar-cli/developing-ssr/configuring-ssr
