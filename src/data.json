@@ -1,0 +1,28 @@
+{
+  "chats": {
+    "1R6Q0dwHuGYBBLvZyrf7ihpu9Cn1": { 
+      "xmku9DR10yZdLZgIDdIlsKJwBZO2": { 
+        "message1": {
+          "from": "dog",
+          "text": "hi, how are you ?"
+        },
+        "message2": {
+          "from": "cat",
+          "text": "you there ?"
+        }
+      }
+    },
+    "xmku9DR10yZdLZgIDdIlsKJwBZO2": { 
+      "1R6Q0dwHuGYBBLvZyrf7ihpu9Cn1": { 
+        "message1": {
+          "from": "cat",
+          "text": "hi, how are you ?"
+        },
+        "message2": {
+          "from": "dog",
+          "text": "you there ?"
+        }
+      }
+    }
+  }
+}
