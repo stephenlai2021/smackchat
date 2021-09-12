@@ -238,11 +238,11 @@ export default {
         store.methods.useStorage2(file.value, "smackchat");
 
         store.state.progress = null;
-        setTimeout(() => {
-          if (store.state.uploadCompleted) {
-            file.value = null;
-          }
-        }, 2000);
+        // setTimeout(() => {
+        //   if (store.state.uploadCompleted) {
+        //     file.value = null;
+        //   }
+        // }, 2000);
 
         // if (store.state.url) {
         //   store.methods.sendMessage({
@@ -273,6 +273,10 @@ export default {
           to: route.params.to,
           createdAt: timestamp(),
         });
+        if (store.state.uploadCompleted) {
+          // store.statel.progress = null
+            file.value = null;
+          }
       }
     );
 
