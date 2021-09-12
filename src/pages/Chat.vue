@@ -239,7 +239,7 @@ export default {
 
         store.state.progress = null;
       } 
-      if (!selected) {
+      if (!selected || !types.includes(selected.type)) {
         file.value = null;
         fileError.value = "Please select an image file (png or jpeg/jpg)";
         
