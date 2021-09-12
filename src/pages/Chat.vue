@@ -91,24 +91,49 @@
     <!-- Camera Modal -->
     <transition-group
       appear
-      enter-active-class="animated slideInDown"
-      leave-active-class="animated slideOutUp"
+      enter-active-class="animated zoomIn"
+      leave-active-class="animated zoomOut"
     >
       <div v-if="showCameraModal" class="camera-modal">
         <div class="constraint" style="border: 1px solid green; height: 100vh">
-          <div class="row justify-around">
-            <h3 style="margin: 0; padding: 0">Camera Modal</h3>
-            <q-btn
-              round
-              color="red"
-              icon="eva-close"
-              @click="showCameraModal = false"
-            />
+          <div class="full-width camera-panel">
+            <div class="" style="width: 100%">
+              <video
+                v-show="!imageCaptured"
+                ref="video"
+                autoplay
+                style="width: 100%"
+              />
+              <canvas
+                v-show="imageCaptured"
+                ref="canvas"
+                class="full-width"
+                height="240"
+              />
+              <div class="text-center q-pa-md">
+                <q-btn
+                  v-if="showCaptureBtn"
+                  :disable="hideCameraBtn"
+                  color="blue"
+                  icon="eva-camera-outline"
+                  size="lg"
+                  round
+                  @click="captureImage"
+                />
+              </div>
+              <div v-if="imageCaptured" class="constraint text-center q-pa-md">
+                <div>Uploading... {{ store.state.progress }}%</div>
+                <div
+                  class="progress-bar"
+                  :style="{ width: store.state.progress + '%' }"
+                ></div>
+              </div>
+            </div>
           </div>
-          <camera-input></camera-input>
         </div>
       </div>
     </transition-group>
+    <!-- End of Camera Modal -->
 
     <q-footer class="bg-transparent footer" style="backdrop-filter: blur(20px)">
       <q-form class="flex constraint" :class="{ 'q-mx-sm': inputFocus }">
@@ -129,7 +154,7 @@
             color="green-12"
             style="cursor: pointer"
             name="eva-camera-outline"
-            @click="showCameraModal = true"
+            @click="openCameraModal"
           />
           <q-btn
             round
@@ -188,13 +213,15 @@
 </template>
 
 <script>
-import { ref, onMounted, inject, watch, computed } from "vue";
+import { ref, onMounted, onBeforeUnmount, inject, watch, computed } from "vue";
 import { EmojiButton } from "@joeattardi/emoji-button";
 import { useRoute, useRouter } from "vue-router";
 import { formatDistanceToNow } from "date-fns";
 import { timestamp } from "src/boot/firebase";
-import { useQuasar } from "quasar";
+import { useQuasar, uid } from "quasar";
 import { useI18n } from "vue-i18n";
+
+// const shortUrl = require("node-url-shortener");
 
 export default {
   setup() {
@@ -218,6 +245,99 @@ export default {
     const to = ref({});
     const showCameraModal = ref(false);
 
+    /****************/
+    /* Camera Input */
+    /****************/
+    const video = ref(null);
+    const canvas = ref(null);
+    const imageCaptured = ref(false);
+    const hideCameraBtn = ref(false);
+    const hasCameraSupport = ref(true);
+    const cameraDisabled = ref(false);
+    const showCaptureBtn = ref(false)
+    const post = ref({
+      id: uid(),
+      caption: "",
+      location: "",
+      photo: null,
+      createdAt: Date.now(),
+    });
+
+    const openCameraModal = () => {
+      showCameraModal.value = true;
+      initCamera();
+    };
+
+    const closeCameraModal = () => {
+      showCameraModal.value = false;
+      disableCamera();
+    };
+
+    const initCamera = () => {
+      navigator.mediaDevices
+        .getUserMedia({
+          video: true,
+        })
+        .then((stream) => {
+          video.value.srcObject = stream;
+          showCaptureBtn.value = true
+        })
+        .catch((err) => {
+          hasCameraSupport.value = false;
+        });
+    };
+
+    const captureImage = () => {
+      canvas.value.width = video.value.getBoundingClientRect().width;
+      canvas.value.height = video.value.getBoundingClientRect().height;
+
+      let context = canvas.value.getContext("2d");
+      context.drawImage(
+        video.value,
+        0,
+        0,
+        canvas.value.width,
+        canvas.value.height
+      );
+
+      imageCaptured.value = true;
+      hideCameraBtn.value = true;
+
+      post.value.photo = dataURItoBlob(canvas.value.toDataURL());
+      console.log("photo info: ", post.value.photo);
+
+      store.methods.useStorage2(post.value.photo, "smackchat");
+      store.state.progress = null;
+    };
+
+    const dataURItoBlob = (dataURI) => {
+      const byteString = atob(dataURI.split(",")[1]);
+
+      const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+
+      const ab = new ArrayBuffer(byteString.length);
+
+      const ia = new Uint8Array(ab);
+
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+
+      const blob = new Blob([ab], { type: mimeString });
+      return blob;
+    };
+
+    const disableCamera = () => {
+      video.value.srcObject.getVideoTracks().forEach((track) => {
+        track.stop();
+      });
+    };
+
+    onBeforeUnmount(() => {
+      disableCamera();
+    });
+    /* End of Camera Input */
+
     /***************/
     /* Image Input */
     /***************/
@@ -240,7 +360,7 @@ export default {
       } else {
         file.value = null;
         fileError.value = "Please select an image file (png or jpeg/jpg)";
-        
+
         $q.notify({
           message: fileError.value,
           color: "purple",
@@ -260,8 +380,12 @@ export default {
           createdAt: timestamp(),
         });
         if (store.state.uploadCompleted) {
-            file.value = null;
-          }
+          file.value = null;
+
+          hideCameraBtn.value = false;
+          imageCaptured.value = false;
+          showCameraModal.value = false;
+        }
       }
     );
     /* End of Image Input */
@@ -395,6 +519,17 @@ export default {
       inputFocus,
       showCameraModal,
 
+      /* camera */
+      post,
+      video,
+      canvas,
+      imageCaptured,
+      hideCameraBtn,
+      cameraDisabled,
+      showCaptureBtn,
+      hasCameraSupport,
+      /* end of ref */
+
       // methods
       call,
       onBlur,
@@ -406,12 +541,30 @@ export default {
       showEmojiPicker,
       sendTypingIndicator,
       formatDistanceToNow,
+
+      /* camera */
+      initCamera,
+      captureImage,
+      disableCamera,
+      openCameraModal,
+      closeCameraModal,
+      /* end of camera */
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.camera-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.camera-frame {
+  border: 2px solid grey;
+  border-radius: 10px;
+}
 .progress-bar {
   display: block;
   height: 6px;
