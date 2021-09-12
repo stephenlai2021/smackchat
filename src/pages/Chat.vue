@@ -238,8 +238,7 @@ export default {
         store.methods.useStorage2(file.value, "smackchat");
 
         store.state.progress = null;
-      } 
-      if (!selected || !types.includes(selected.type)) {
+      } else {
         file.value = null;
         fileError.value = "Please select an image file (png or jpeg/jpg)";
         
