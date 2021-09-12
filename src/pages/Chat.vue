@@ -97,7 +97,7 @@
       <div v-if="showCameraModal" class="camera-modal">
         <div class="constraint" style="height: 100vh">
           <div class="full-width camera-panel">
-            <div style="width: 100%; position: relative;">
+            <div style="width: 100%; position: relative">
               <video
                 v-show="!imageCaptured"
                 ref="video"
@@ -106,12 +106,41 @@
               />
               <q-btn
                 v-if="showCaptureBtn"
-                :disable="hideCameraBtn"
+                color="red"
+                icon="eva-close-outline"
+                size="md"
+                round
+                style="position: absolute; top: 20px; right: 20px; opacity: 0.7"
+                @click="cancelCapture"
+              />
+              <q-btn
+                v-if="showCaptureBtn"
                 color="blue"
                 icon="eva-camera-outline"
                 size="lg"
                 round
-                style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); opacity: 0.7;"
+                style="
+                  position: absolute;
+                  bottom: 20px;
+                  left: 50%;
+                  transform: translateX(-50%);
+                  opacity: 0.7;
+                "
+                @click="captureImage"
+              />
+              <q-btn
+                v-if="showCaptureBtn"
+                :disable="hideCameraBtn"
+                color="amber-8"
+                icon="eva-swap-outline"
+                size="md"
+                round
+                style="
+                  position: absolute;
+                  bottom: 20px;
+                  right: 20px;
+                  opacity: 0.7;
+                "
                 @click="captureImage"
               />
               <canvas
@@ -262,17 +291,24 @@ export default {
       createdAt: Date.now(),
     });
 
+    const cancelCapture = () => {
+      showCameraModal.value = false;
+      disableCamera()
+    }
+
     const openCameraModal = () => {
       showCameraModal.value = true;
       initCamera();
     };
 
     const closeCameraModal = () => {
+      showCaptureBtn.value = false
       showCameraModal.value = false;
       disableCamera();
     };
 
     const initCamera = () => {
+      showCaptureBtn.value = false
       navigator.mediaDevices
         .getUserMedia({
           video: true,
@@ -299,7 +335,7 @@ export default {
         canvas.value.height
       );
 
-      showCaptureBtn.value = false
+      showCaptureBtn.value = false;
       imageCaptured.value = true;
       hideCameraBtn.value = true;
 
@@ -386,7 +422,7 @@ export default {
           imageCaptured.value = false;
           showCameraModal.value = false;
 
-          disableCamera()
+          disableCamera();
         }
       }
     );
@@ -526,6 +562,8 @@ export default {
       video,
       canvas,
       imageCaptured,
+
+      cancelCapture,
       hideCameraBtn,
       cameraDisabled,
       showCaptureBtn,
