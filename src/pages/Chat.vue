@@ -78,11 +78,7 @@
       enter-active-class="animated fadeIn"
       leave-active-class="animated fadeOut"
     >
-      <div
-        v-if="file"
-        class="image-modal constraint text-center q-pa-md"
-      >
-        <!-- <div v-if="fileError" class="error text-green-12">{{ fileError }}</div> -->
+      <div v-if="file" class="image-modal constraint text-center q-pa-md">
         <div v-if="file">{{ file.name }}</div>
         <div v-if="file">Uploading... {{ store.state.progress }}%</div>
         <div
@@ -228,7 +224,6 @@ export default {
     /***************/
     const file = ref(null);
     const fileError = ref(null);
-    const wrongFile = ref(false);
 
     const types = ["image/png", "image/jpeg", "image/jpg"];
 
@@ -248,6 +243,7 @@ export default {
           position: "bottom",
           timeout: 2000,
         });
+        // fileError.value = null
       }
     };
 
@@ -262,18 +258,9 @@ export default {
           fileError.value = null;
           store.methods.useStorage2(file.value, "smackchat");
 
-          // const dialog = $q.dialog({
-          //   title: "Uploading...",
-          //   progress: true,
-          //   persistent: true,
-          //   ok: false,
-          //   html: true,
-          // });
-
           store.state.progress = null;
           setTimeout(() => {
             if (store.state.uploadCompleted) {
-              // dialog.hide();
               file.value = null;
             }
           }, 2000);
@@ -286,10 +273,9 @@ export default {
               createdAt: timestamp(),
             });
           }
-        } 
+        }
       }
     );
-
     /* End of Image Input */
 
     /***************/

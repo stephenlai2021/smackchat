@@ -71,7 +71,7 @@ const methods = {
           });
         }
       );
-    })
+    });
   },
   useStorage2(file, data) {
     watchEffect(() => {
@@ -85,13 +85,13 @@ const methods = {
           // update the progress as file uploads
           let percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
 
-          state.progress = Math.round(percentage)
+          state.progress = Math.round(percentage);
           console.log("progress: ", state.progress);
 
           if (state.progress >= 100) {
             state.uploadCompleted = true;
             console.log("image upload completed: ", state.uploadCompleted);
-          }
+          }          
         },
         (err) => {
           state.error = err.message;
@@ -140,7 +140,7 @@ const methods = {
           });
       }
       if (!user) {
-        console.log("there is no user | auth state change");        
+        console.log("there is no user | auth state change");
         state.online = false;
         router.push("/auth");
       }
@@ -196,7 +196,7 @@ const methods = {
         .update({ online: false })
         .then(() => {
           console.log("user is offline");
-          state.userDetails = {}
+          state.userDetails = {};
         });
     });
   },
