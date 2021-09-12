@@ -72,6 +72,14 @@
       />
     </div>
 
+    <!-- Map Modal -->
+
+    <!-- End of Map Modal -->
+    
+    <!-- Video Modal -->
+
+    <!-- End of Video Modal -->
+
     <!-- Image Modal -->
     <transition-group
       appear
@@ -87,6 +95,7 @@
         ></div>
       </div>
     </transition-group>
+    <!-- End of Image Modal -->
 
     <!-- Camera Modal -->
     <transition-group
@@ -241,15 +250,13 @@
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount, inject, watch, computed } from "vue";
+import { ref, onMounted, inject, watch } from "vue";
 import { EmojiButton } from "@joeattardi/emoji-button";
 import { useRoute, useRouter } from "vue-router";
 import { formatDistanceToNow } from "date-fns";
 import { timestamp } from "src/boot/firebase";
 import { useQuasar, uid } from "quasar";
 import { useI18n } from "vue-i18n";
-
-// const shortUrl = require("node-url-shortener");
 
 export default {
   setup() {
@@ -271,10 +278,21 @@ export default {
     const inputFocus = ref(false);
     const showMessages = ref(false);
     const to = ref({});
-    const showCameraModal = ref(false);
 
     /****************/
-    /* Camera Input */
+    /* Map Button */
+    /****************/
+
+    /* Enod of Map Button */
+    
+    /****************/
+    /* Video Button */
+    /****************/
+
+    /* Enod of Video Button */
+
+    /****************/
+    /* Camera Button */
     /****************/
     const video = ref(null);
     const canvas = ref(null);
@@ -283,6 +301,8 @@ export default {
     const hasCameraSupport = ref(true);
     const cameraDisabled = ref(false);
     const showCaptureBtn = ref(false);
+    const showCameraModal = ref(false);
+
     const post = ref({
       id: uid(),
       caption: "",
@@ -368,14 +388,10 @@ export default {
         track.stop();
       });
     };
-
-    onBeforeUnmount(() => {
-      disableCamera();
-    });
-    /* End of Camera Input */
+    /* End of Camera Button */
 
     /***************/
-    /* Image Input */
+    /* Image Button */
     /***************/
     const file = ref(null);
     const fileError = ref(null);
@@ -426,10 +442,10 @@ export default {
         }
       }
     );
-    /* End of Image Input */
+    /* End of Image Button */
 
     /***************/
-    /* Emoji Input */
+    /* Emoji Button */
     /***************/
     const btnEmoji = ref(null);
     const picker = ref(null);
@@ -443,7 +459,7 @@ export default {
     const showEmojiPicker = () => {
       picker.value.togglePicker(btnEmoji.value);
     };
-    /* End of Emoji Input */
+    /* End of Emoji Button */
 
     watch(
       () => store.state.messages,
