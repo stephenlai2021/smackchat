@@ -32,7 +32,7 @@ const state = reactive({
   // storeage
   url: null,
   error: null,
-  progress: null,
+  progress: 0,
   uploadCompleted: false,
 
   isChatPage: false,
