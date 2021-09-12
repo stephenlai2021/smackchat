@@ -225,8 +225,6 @@ export default {
     // allowed file types
     const types = ["image/png", "image/jpeg", "image/jpg"];
 
-    // const { url, error, progress } = useStorage(file.value, "smackchat");
-
     // computed
     const title = computed(() => {
       let currentPath = route.fullPath;

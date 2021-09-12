@@ -27,11 +27,6 @@
           {{ store.state.otherUser.name }}
         </span>
         <div class="flex row justify-end full-width">
-          <!-- <q-spinner-dots
-            size="2rem"
-            color="grey-5"
-            v-if="store.state.typing.typing"
-          /> -->
           <q-btn
             round
             dense
@@ -77,6 +72,27 @@
       />
     </div>
 
+    <!-- Image Modal -->
+    <transition-group
+      appear
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+    >
+      <div
+        v-if="file"
+        class="image-modal constraint text-center q-pa-md"
+      >
+        <!-- <div v-if="fileError" class="error text-green-12">{{ fileError }}</div> -->
+        <div v-if="file">{{ file.name }}</div>
+        <div v-if="file">Uploading... {{ store.state.progress }}%</div>
+        <div
+          v-if="file"
+          class="progress-bar"
+          :style="{ width: store.state.progress + '%' }"
+        ></div>
+      </div>
+    </transition-group>
+
     <!-- Camera Modal -->
     <transition-group
       appear
@@ -112,10 +128,6 @@
             <input class="file-input" type="file" @change="handleChange" />
             <q-icon color="green-12" size="md" name="eva-image-outline" />
           </label>
-          <!-- <label class="q-ma-md" style="cursor: pointer">
-            <input class="file-input" type="file" @change="handleChange" />
-            <q-icon color="green-12" size="md" name="eva-camera-outline" />
-          </label> -->
           <q-icon
             size="md"
             class="q-ma-md"
@@ -188,12 +200,8 @@ import { formatDistanceToNow } from "date-fns";
 import { timestamp } from "src/boot/firebase";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
-// import CameraInput from 'src/components/CameraInput.vue'
 
 export default {
-  components: {
-    // CameraInput,
-  },
   setup() {
     const $q = useQuasar();
 
@@ -204,24 +212,103 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-    const btnEmoji = ref(null);
     const chats = ref(null);
     const input = ref(null);
-    const picker = ref(null);
+
     const desktop = ref(false);
     const newMessage = ref("");
     const indicator = ref(false);
     const inputFocus = ref(false);
     const showMessages = ref(false);
     const to = ref({});
-    const file = ref(null);
-    const fileError = ref(null);
     const showCameraModal = ref(false);
 
-    // allowed file types
+    /***************/
+    /* Image Input */
+    /***************/
+    const file = ref(null);
+    const fileError = ref(null);
+    const wrongFile = ref(false);
+
     const types = ["image/png", "image/jpeg", "image/jpg"];
 
-    // watch
+    const handleChange = (e) => {
+      let selected = e.target.files[0];
+      console.log("You have selected: ", selected);
+
+      if (selected && types.includes(selected.type)) {
+        file.value = selected;
+        fileError.value = null;
+      } else {
+        file.value = null;
+        fileError.value = "Please select an image file (png or jpeg/jpg)";
+        $q.notify({
+          message: fileError.value,
+          color: "purple",
+          position: "bottom",
+          timeout: 2000,
+        });
+      }
+    };
+
+    watch(
+      () => file.value,
+      (newVal, oldVal) => {
+        console.log("You have selected: ", newVal);
+
+        if (file.value && types.includes(file.value.type)) {
+          console.log("file name: ", file.value.name);
+
+          fileError.value = null;
+          store.methods.useStorage2(file.value, "smackchat");
+
+          // const dialog = $q.dialog({
+          //   title: "Uploading...",
+          //   progress: true,
+          //   persistent: true,
+          //   ok: false,
+          //   html: true,
+          // });
+
+          store.state.progress = null;
+          setTimeout(() => {
+            if (store.state.uploadCompleted) {
+              // dialog.hide();
+              file.value = null;
+            }
+          }, 2000);
+
+          if (store.state.url) {
+            store.methods.sendMessage({
+              text: store.state.url,
+              from: "me",
+              to: route.params.to,
+              createdAt: timestamp(),
+            });
+          }
+        } 
+      }
+    );
+
+    /* End of Image Input */
+
+    /***************/
+    /* Emoji Input */
+    /***************/
+    const btnEmoji = ref(null);
+    const picker = ref(null);
+
+    picker.value = new EmojiButton();
+
+    picker.value.on("emoji", (selection) => {
+      newMessage.value += selection.emoji;
+    });
+
+    const showEmojiPicker = () => {
+      picker.value.togglePicker(btnEmoji.value);
+    };
+    /* End of Emoji Input */
+
     watch(
       () => store.state.messages,
       () => {
@@ -234,10 +321,8 @@ export default {
 
     watch(
       () => indicator.value,
-      // () => store.state.typing.typing,
       (newVal, oldVal) => {
         store.methods.getTypingIndicator(route.params.from, route.params.to);
-        // newVal = false
       }
     );
 
@@ -257,62 +342,7 @@ export default {
       }
     );
 
-    watch(
-      () => file.value,
-      (newVal, oldVal) => {
-        console.log("You have selected: ", newVal);
-
-        if (file.value && types.includes(file.value.type)) {
-          console.log("file name: ", file.value.name);
-
-          fileError.value = null;
-          store.methods.useStorage2(file.value, "smackchat");
-         
-          // const dialog = $q.dialog({
-          //   title: "Uploading...",
-          //   progress: true,
-          //   persistent: true,
-          //   ok: false,
-          //   html: true,
-          // });
-
-          setTimeout(() => {
-            if (store.state.uploadCompleted) {
-              // dialog.hide();
-              file.value = null;
-            }
-          }, 1000);
-
-          if (store.state.url) {
-            store.methods.sendMessage({
-              text: store.state.url,
-              from: "me",
-              to: route.params.to,
-              createdAt: timestamp(),
-            });
-          }
-        } else {
-          file.value = null;
-          // fileError.value = "Please select an image file (png or jpeg/jpg)";
-        }
-      }
-    );
-
-    // methods
     const call = () => {};
-
-    const handleChange = (e) => {
-      let selected = e.target.files[0];
-      console.log("You have selected: ", selected);
-
-      if (selected && types.includes(selected.type)) {
-        file.value = selected;
-        fileError.value = null;
-      } else {
-        file.value = null;
-        fileError.value = "Please select an image file (png or jpeg/jpg)";
-      }
-    };
 
     const sendTypingIndicator = () => {
       indicator.value = true;
@@ -350,17 +380,6 @@ export default {
       }
     };
 
-    picker.value = new EmojiButton();
-
-    picker.value.on("emoji", (selection) => {
-      newMessage.value += selection.emoji;
-    });
-
-    const showEmojiPicker = () => {
-      picker.value.togglePicker(btnEmoji.value);
-    };
-
-    // lifecycle
     onMounted(() => {
       store.methods.getMessages(route.params.from, route.params.to);
       store.methods.getOnlineStatus(route.params.to);
@@ -392,11 +411,13 @@ export default {
 
       /* ref */
       to,
+      file,
       chats,
       input,
       desktop,
       btnEmoji,
       indicator,
+      fileError,
       inputFocus,
       showCameraModal,
 
@@ -417,6 +438,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.progress-bar {
+  display: block;
+  height: 6px;
+  background: #5ad8d2;
+  // padding: 20px;
+  border-radius: 6px;
+  margin-top: 20px;
+  transition: width 0.3s ease;
+}
+.image-modal {
+  position: fixed;
+  bottom: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid green;
+}
 .footer {
   z-index: 300;
 }
