@@ -80,8 +80,8 @@
     >
       <div v-if="file" class="image-modal constraint text-center q-pa-md">
         <div>{{ file.name }}</div>
-        <!-- <div v-if="file">Uploading... {{ store.state.progress }}%</div> -->
-        <div>Uploading...</div>
+        <div v-if="file">Uploading... {{ store.state.progress }}%</div>
+        <!-- <div>Uploading...</div> -->
         <div
           class="progress-bar"
           :style="{ width: store.state.progress + '%' }"
@@ -238,20 +238,6 @@ export default {
         store.methods.useStorage2(file.value, "smackchat");
 
         store.state.progress = null;
-        // setTimeout(() => {
-        //   if (store.state.uploadCompleted) {
-        //     file.value = null;
-        //   }
-        // }, 2000);
-
-        // if (store.state.url) {
-        //   store.methods.sendMessage({
-        //     text: store.state.url,
-        //     from: "me",
-        //     to: route.params.to,
-        //     createdAt: timestamp(),
-        //   });
-        // }
       } else {
         file.value = null;
         fileError.value = "Please select an image file (png or jpeg/jpg)";
@@ -274,41 +260,10 @@ export default {
           createdAt: timestamp(),
         });
         if (store.state.uploadCompleted) {
-          // store.statel.progress = null
             file.value = null;
           }
       }
     );
-
-    // watch(
-    //   () => file.value,
-    //   (newVal, oldVal) => {
-    //     console.log("You have selected: ", newVal);
-
-    //     if (file.value && types.includes(file.value.type)) {
-    //       console.log("file name: ", file.value.name);
-
-    //       fileError.value = null;
-    //       store.methods.useStorage2(file.value, "smackchat");
-
-    //       store.state.progress = null
-    //       setTimeout(() => {
-    //         if (store.state.uploadCompleted) {
-    //           file.value = null;
-    //         }
-    //       }, 2000);
-
-    //       if (store.state.url) {
-    //         store.methods.sendMessage({
-    //           text: store.state.url,
-    //           from: "me",
-    //           to: route.params.to,
-    //           createdAt: timestamp(),
-    //         });
-    //       }
-    //     }
-    //   }
-    // );
     /* End of Image Input */
 
     /***************/

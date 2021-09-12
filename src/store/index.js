@@ -85,8 +85,8 @@ const methods = {
           // update the progress as file uploads
           let percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
 
-          // state.progress = Math.round(percentage);
-          state.progress = percentage;
+          // state.progress = percentage;
+          state.progress = Math.round(percentage);
           console.log("progress: ", state.progress);
 
           if (state.progress >= 100) {
