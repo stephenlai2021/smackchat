@@ -267,13 +267,13 @@ export default {
           // }, 2000);
 
           if (store.state.url) {
-            file.value = null
             store.methods.sendMessage({
               text: store.state.url,
               from: "me",
               to: route.params.to,
               createdAt: timestamp(),
             });
+            file.value = null
           }
         }
       }
