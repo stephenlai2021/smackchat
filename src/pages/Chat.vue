@@ -95,14 +95,24 @@
       leave-active-class="animated zoomOut"
     >
       <div v-if="showCameraModal" class="camera-modal">
-        <div class="constraint" style="border: 1px solid green; height: 100vh">
+        <div class="constraint" style="height: 100vh">
           <div class="full-width camera-panel">
-            <div class="" style="width: 100%">
+            <div style="width: 100%; position: relative;">
               <video
                 v-show="!imageCaptured"
                 ref="video"
                 autoplay
                 style="width: 100%"
+              />
+              <q-btn
+                v-if="showCaptureBtn"
+                :disable="hideCameraBtn"
+                color="blue"
+                icon="eva-camera-outline"
+                size="lg"
+                round
+                style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); opacity: 0.7;"
+                @click="captureImage"
               />
               <canvas
                 v-show="imageCaptured"
@@ -110,17 +120,6 @@
                 class="full-width"
                 height="240"
               />
-              <div class="text-center q-pa-md">
-                <q-btn
-                  v-if="showCaptureBtn"
-                  :disable="hideCameraBtn"
-                  color="blue"
-                  icon="eva-camera-outline"
-                  size="lg"
-                  round
-                  @click="captureImage"
-                />
-              </div>
               <div v-if="imageCaptured" class="constraint text-center q-pa-md">
                 <div>Uploading... {{ store.state.progress }}%</div>
                 <div
@@ -254,7 +253,7 @@ export default {
     const hideCameraBtn = ref(false);
     const hasCameraSupport = ref(true);
     const cameraDisabled = ref(false);
-    const showCaptureBtn = ref(false)
+    const showCaptureBtn = ref(false);
     const post = ref({
       id: uid(),
       caption: "",
@@ -280,7 +279,7 @@ export default {
         })
         .then((stream) => {
           video.value.srcObject = stream;
-          showCaptureBtn.value = true
+          showCaptureBtn.value = true;
         })
         .catch((err) => {
           hasCameraSupport.value = false;
@@ -300,6 +299,7 @@ export default {
         canvas.value.height
       );
 
+      showCaptureBtn.value = false
       imageCaptured.value = true;
       hideCameraBtn.value = true;
 
