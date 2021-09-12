@@ -230,8 +230,10 @@ export default {
     const handleChange = (e) => {
       let selected = e.target.files[0];
       console.log("You have selected: ", selected);
+      file.value = selected
 
-      if (selected && types.includes(selected.type)) {
+      // if (selected && types.includes(selected.type)) {
+      if (file.value && types.includes(selected.type)) {
         file.value = selected;
         fileError.value = null;
 
@@ -241,6 +243,7 @@ export default {
       } else {
         file.value = null;
         fileError.value = "Please select an image file (png or jpeg/jpg)";
+        
         $q.notify({
           message: fileError.value,
           color: "purple",
