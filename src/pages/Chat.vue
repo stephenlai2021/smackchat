@@ -230,10 +230,8 @@ export default {
     const handleChange = (e) => {
       let selected = e.target.files[0];
       console.log("You have selected: ", selected);
-      file.value = selected
 
-      // if (selected && types.includes(selected.type)) {
-      if (file.value && types.includes(selected.type)) {
+      if (selected && types.includes(selected.type)) {
         file.value = selected;
         fileError.value = null;
 
@@ -292,7 +290,7 @@ export default {
         setTimeout(() => {
           window.scrollTo(0, chats.value.scrollHeight);
           showMessages.value = true;
-        }, 1000);
+        }, 500);
       }
     );
 
