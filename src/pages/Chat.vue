@@ -385,6 +385,8 @@ export default {
           hideCameraBtn.value = false;
           imageCaptured.value = false;
           showCameraModal.value = false;
+
+          disableCamera()
         }
       }
     );
