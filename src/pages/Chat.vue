@@ -11,7 +11,7 @@
         <q-btn
           round
           flat
-          color="green-12"
+          color="white"
           size="18px"
           class=""
           style="position: relative; z-index: 500"
@@ -19,7 +19,7 @@
           @click="router.push('/users')"
         />
         <span
-          class="text-green-12 text-bold"
+          class="text-white text-bold"
           style="font-size: 18px; width: 100%"
           color=""
           v-if="store.state.otherUser"
