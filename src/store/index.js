@@ -32,7 +32,7 @@ const state = reactive({
   // storeage
   url: null,
   error: null,
-  progress: 0,
+  progress: null,
   uploadCompleted: false,
 
   isChatPage: false,
@@ -104,16 +104,6 @@ const methods = {
       );
     });
   },
-  // saveOtherPeerId(to, id) {
-  //   db.collection("chat-users").doc(to).update({
-  //     peerId: id,
-  //   });
-  // },
-  // savePeerId() {
-  //   db.collection("chat-users").doc(state.userDetails.userId).update({
-  //     peerId: state.peerId,
-  //   });
-  // },
   handleAuthStateChanged() {
     console.log("handle auth state change | store");
     auth.onAuthStateChanged((user) => {

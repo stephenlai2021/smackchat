@@ -259,14 +259,15 @@ export default {
           fileError.value = null;
           store.methods.useStorage2(file.value, "smackchat");
 
-          store.state.progress = null;
-          setTimeout(() => {
-            if (store.state.uploadCompleted) {
-              file.value = null;
-            }
-          }, 2000);
+          // store.state.progress = null;
+          // setTimeout(() => {
+          //   if (store.state.uploadCompleted) {
+          //     file.value = null;
+          //   }
+          // }, 2000);
 
           if (store.state.url) {
+            file.value = null
             store.methods.sendMessage({
               text: store.state.url,
               from: "me",
