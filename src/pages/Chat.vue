@@ -80,7 +80,8 @@
     >
       <div v-if="file" class="image-modal constraint text-center q-pa-md">
         <div v-if="file">{{ file.name }}</div>
-        <div v-if="file">Uploading... {{ store.state.progress }}%</div>
+        <!-- <div v-if="file">Uploading... {{ store.state.progress }}%</div> -->
+        <div v-if="file">Uploading...</div>
         <div
           v-if="file"
           class="progress-bar"
