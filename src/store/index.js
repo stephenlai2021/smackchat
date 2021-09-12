@@ -86,13 +86,13 @@ const methods = {
           let percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
 
           // state.progress = Math.round(percentage);
-          state.progress = percentage
+          state.progress = percentage;
           console.log("progress: ", state.progress);
 
           if (state.progress >= 100) {
             state.uploadCompleted = true;
             console.log("image upload completed: ", state.uploadCompleted);
-          }          
+          }
         },
         (err) => {
           state.error = err.message;

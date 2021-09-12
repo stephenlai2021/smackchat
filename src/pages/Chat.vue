@@ -79,11 +79,10 @@
       leave-active-class="animated fadeOut"
     >
       <div v-if="file" class="image-modal constraint text-center q-pa-md">
-        <div v-if="file">{{ file.name }}</div>
+        <div>{{ file.name }}</div>
         <!-- <div v-if="file">Uploading... {{ store.state.progress }}%</div> -->
-        <div v-if="file">Uploading...</div>
+        <div>Uploading...</div>
         <div
-          v-if="file"
           class="progress-bar"
           :style="{ width: store.state.progress + '%' }"
         ></div>
@@ -259,11 +258,10 @@ export default {
           fileError.value = null;
           store.methods.useStorage2(file.value, "smackchat");
 
-          // store.state.progress = null;
           // setTimeout(() => {
-          //   if (store.state.uploadCompleted) {
-          //     file.value = null;
-          //   }
+            if (store.state.uploadCompleted) {
+              file.value = null;
+            }
           // }, 2000);
 
           if (store.state.url) {
@@ -273,7 +271,6 @@ export default {
               to: route.params.to,
               createdAt: timestamp(),
             });
-            file.value = null
           }
         }
       }
