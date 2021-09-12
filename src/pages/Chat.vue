@@ -234,6 +234,24 @@ export default {
       if (selected && types.includes(selected.type)) {
         file.value = selected;
         fileError.value = null;
+
+        store.methods.useStorage2(file.value, "smackchat");
+
+        store.state.progress = null;
+        setTimeout(() => {
+          if (store.state.uploadCompleted) {
+            file.value = null;
+          }
+        }, 2000);
+
+        // if (store.state.url) {
+        //   store.methods.sendMessage({
+        //     text: store.state.url,
+        //     from: "me",
+        //     to: route.params.to,
+        //     createdAt: timestamp(),
+        //   });
+        // }
       } else {
         file.value = null;
         fileError.value = "Please select an image file (png or jpeg/jpg)";
@@ -243,38 +261,50 @@ export default {
           position: "bottom",
           timeout: 2000,
         });
-        // fileError.value = null
       }
     };
 
     watch(
-      () => file.value,
+      () => store.state.url,
       (newVal, oldVal) => {
-        console.log("You have selected: ", newVal);
-
-        if (file.value && types.includes(file.value.type)) {
-          console.log("file name: ", file.value.name);
-
-          fileError.value = null;
-          store.methods.useStorage2(file.value, "smackchat");
-
-          // setTimeout(() => {
-            if (store.state.uploadCompleted) {
-              file.value = null;
-            }
-          // }, 2000);
-
-          if (store.state.url) {
-            store.methods.sendMessage({
-              text: store.state.url,
-              from: "me",
-              to: route.params.to,
-              createdAt: timestamp(),
-            });
-          }
-        }
+        store.methods.sendMessage({
+          text: store.state.url,
+          from: "me",
+          to: route.params.to,
+          createdAt: timestamp(),
+        });
       }
     );
+
+    // watch(
+    //   () => file.value,
+    //   (newVal, oldVal) => {
+    //     console.log("You have selected: ", newVal);
+
+    //     if (file.value && types.includes(file.value.type)) {
+    //       console.log("file name: ", file.value.name);
+
+    //       fileError.value = null;
+    //       store.methods.useStorage2(file.value, "smackchat");
+
+    //       store.state.progress = null
+    //       setTimeout(() => {
+    //         if (store.state.uploadCompleted) {
+    //           file.value = null;
+    //         }
+    //       }, 2000);
+
+    //       if (store.state.url) {
+    //         store.methods.sendMessage({
+    //           text: store.state.url,
+    //           from: "me",
+    //           to: route.params.to,
+    //           createdAt: timestamp(),
+    //         });
+    //       }
+    //     }
+    //   }
+    // );
     /* End of Image Input */
 
     /***************/
