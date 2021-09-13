@@ -151,9 +151,9 @@
                   right: 20px;
                   opacity: 0.7;
                 "
-                @click="frontCamera = !frontCamera"
+                @click="swapCamera"
               />
-                <!-- @click="swapCamera" -->
+                <!-- @click="frontCamera = !frontCamera" -->
               <canvas
                 v-show="imageCaptured"
                 ref="canvas"
@@ -322,21 +322,7 @@ export default {
       location: "",
       photo: null,
       createdAt: Date.now(),
-    });
-
-    watch(
-      () => frontCamera.value,
-      () => {
-        if (frontCamera.value) {
-          console.log("front camera");
-          initFrontCamera()
-        }
-        if (!frontCamera.value) {
-          console.log("back camera");
-          initBackCamera()
-        }
-      }
-    );    
+    });    
 
     const cancelCapture = () => {
       showCameraModal.value = false;
@@ -353,6 +339,20 @@ export default {
       showCameraModal.value = false;
       disableCamera();
     };
+
+    watch(
+      () => frontCamera.value,
+      () => {
+        if (frontCamera.value) {
+          console.log("front camera");
+          initFrontCamera()
+        }
+        if (!frontCamera.value) {
+          console.log("back camera");
+          initBackCamera()
+        }
+      }
+    );    
 
     const swapCamera = () => {
       frontCamera.value = !frontCamera.value;
@@ -387,7 +387,7 @@ export default {
     };
 
     const initBackCamera = () => {
-      showCaptureBtn.value = false;
+      // showCaptureBtn.value = false;
 
       const supports = navigator.mediaDevices.getSupportedConstraints();
       if (!supports["facingMode"]) {
@@ -398,7 +398,7 @@ export default {
         .getUserMedia(backCameraOptions.value)
         .then((stream) => {
           video.value.srcObject = stream;
-          showCaptureBtn.value = true;
+          // showCaptureBtn.value = true;
         })
         .catch((err) => {
           hasCameraSupport.value = false;
