@@ -255,7 +255,7 @@ import { useQuasar, uid } from "quasar";
 import { timestamp } from "src/boot/firebase";
 import { formatDistanceToNow } from "date-fns";
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted, inject, watch } from "vue";
+import { ref, onMounted, onBeforeUnmount inject, watch } from "vue";
 import { EmojiButton } from "@joeattardi/emoji-button";
 
 export default {
@@ -441,6 +441,10 @@ export default {
         });
       }
     };
+
+    onBeforeUnmount(() => {
+      disableCamera()
+    })
     /************************/
     /* End of Camera Button */
     /************************/
