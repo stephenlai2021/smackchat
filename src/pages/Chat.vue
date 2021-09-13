@@ -369,7 +369,7 @@ export default {
       }
     };
 
-    const initCamera = () => {
+    const initCamera = async () => {
       showCaptureBtn.value = false;
 
       const supports = navigator.mediaDevices.getSupportedConstraints();
