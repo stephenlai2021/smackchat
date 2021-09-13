@@ -97,9 +97,6 @@ const methods = {
           state.error = err.message;
         },
         async () => {
-          // state.url = await storageRef.getDownloadURL();
-          // console.log("image url | store: ", state.url);
-
           let tempUrl = await storageRef.getDownloadURL();
           console.log("image url | store: ", tempUrl);
 
@@ -125,19 +122,6 @@ const methods = {
               console.log("firebase dynamic links: ", data);
               state.url = data.shortLink;
             });
-
-          // let tempUrl = await storageRef.getDownloadURL();
-
-          // const firebaseDynamicLinks = new FirebaseDynamicLinks(
-          //   "AIzaSyBm9VXXj0pjKwkWrr4lJqsGrpBHkLUdRho"
-          // );
-
-          // const { shortLink, previewLink } =
-          //   await firebaseDynamicLinks.createLink({
-          //     longDynamicLink: `https://slai.page.link/?link=${tempUrl}`,
-          //   });
-
-          // state.url = shortLink
         }
       );
     });

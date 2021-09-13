@@ -323,7 +323,7 @@ export default {
       initFrontCamera();
 
       if (store.state.desktop) {
-        btnSwap.value = false
+        btnSwap.value = false;
       }
     };
 
@@ -336,7 +336,7 @@ export default {
     watch(
       () => frontCamera.value,
       () => {
-        closeCameraModal()
+        closeCameraModal();
         showCameraModal.value = true;
 
         if (frontCamera.value) {
@@ -350,7 +350,7 @@ export default {
       }
     );
 
-    const initFrontCamera = async () => {
+    const initFrontCamera = () => {
       showCaptureBtn.value = false;
 
       const supports = navigator.mediaDevices.getSupportedConstraints();
@@ -373,7 +373,7 @@ export default {
         });
     };
 
-    const initBackCamera = async () => {
+    const initBackCamera = () => {
       showCaptureBtn.value = false;
 
       const supports = navigator.mediaDevices.getSupportedConstraints();
@@ -381,18 +381,32 @@ export default {
         alert("This browser does not support facingMode!");
       }
 
-      try {
-        stream.value = await navigator.mediaDevices.getUserMedia({
+      navigator.mediaDevices
+        .getUserMedia({
           video: {
-            facingMode: { exact: "environment" },
+            facingMode: "user",
           },
+        })
+        .then((stream) => {
+          video.value.srcObject = stream;
+          showCaptureBtn.value = true;
+        })
+        .catch((err) => {
+          hasCameraSupport.value = false;
         });
 
-        video.value.srcObject = stream.value;
-        showCaptureBtn.value = true;
-      } catch (err) {
-        hasCameraSupport.value = false;
-      }
+      // try {
+      //   stream.value = await navigator.mediaDevices.getUserMedia({
+      //     video: {
+      //       facingMode: { exact: "environment" },
+      //     },
+      //   });
+
+      //   video.value.srcObject = stream.value;
+      //   showCaptureBtn.value = true;
+      // } catch (err) {
+      //   hasCameraSupport.value = false;
+      // }
     };
 
     const captureImage = () => {
