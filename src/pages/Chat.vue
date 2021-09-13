@@ -153,7 +153,7 @@
                 "
                 @click="swapCamera"
               />
-                <!-- @click="frontCamera = !frontCamera" -->
+              <!-- @click="frontCamera = !frontCamera" -->
               <canvas
                 v-show="imageCaptured"
                 ref="canvas"
@@ -313,7 +313,7 @@ export default {
     });
     const backCameraOptions = ref({
       video: {
-        facingMode: { exact: "environment"},
+        facingMode: { exact: "environment" },
       },
     });
     const post = ref({
@@ -322,7 +322,7 @@ export default {
       location: "",
       photo: null,
       createdAt: Date.now(),
-    });    
+    });
 
     const cancelCapture = () => {
       showCameraModal.value = false;
@@ -345,25 +345,25 @@ export default {
       () => {
         if (frontCamera.value) {
           console.log("front camera");
-          initFrontCamera()
+          initFrontCamera();
         }
         if (!frontCamera.value) {
           console.log("back camera");
-          initBackCamera()
+          initBackCamera();
         }
       }
-    );    
+    );
 
     const swapCamera = () => {
       frontCamera.value = !frontCamera.value;
 
       if (frontCamera.value) {
         console.log("front camera");
-        initFrontCamera()
+        initFrontCamera();
       }
       if (!frontCamera.value) {
         console.log("back camera");
-        initBackCamera()
+        initBackCamera();
       }
     };
 
@@ -376,7 +376,12 @@ export default {
       }
 
       navigator.mediaDevices
-        .getUserMedia(frontCameraOptions.value)
+        // .getUserMedia(frontCameraOptions.value)
+        .getUserMedia({
+          video: {
+            facingMode: "user",
+          },
+        })
         .then((stream) => {
           video.value.srcObject = stream;
           showCaptureBtn.value = true;
@@ -395,7 +400,12 @@ export default {
       }
 
       navigator.mediaDevices
-        .getUserMedia(backCameraOptions.value)
+        // .getUserMedia(backCameraOptions.value)
+        .getUserMedia({
+          video: {
+            facingMode: { exact: "environment" },
+          },
+        })
         .then((stream) => {
           video.value.srcObject = stream;
           // showCaptureBtn.value = true;
