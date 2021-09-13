@@ -115,11 +115,10 @@
               />
               <q-btn
                 v-if="showCaptureBtn"
-                class="textred"
+                class="text-red"
                 icon="eva-close-outline"
                 size="md"
                 round
-                flat
                 style="position: absolute; top: 20px; right: 20px; opacity: 0.7"
                 @click="cancelCapture"
               />
@@ -128,7 +127,6 @@
                 class="text-blue"
                 icon="eva-camera-outline"
                 size="lg"
-                flat
                 round
                 style="
                   position: absolute;
@@ -146,7 +144,6 @@
                 icon="eva-swap-outline"
                 size="md"
                 round
-                flat
                 style="
                   position: absolute;
                   bottom: 30px;
