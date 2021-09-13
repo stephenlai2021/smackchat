@@ -299,6 +299,7 @@ export default {
     const video = ref(null);
     const canvas = ref(null);
     const btnSwap = ref(true);
+    const stream = ref(null);
     const imageCaptured = ref(false);
     const hideCameraBtn = ref(false);
     const hasCameraSupport = ref(true);
@@ -376,19 +377,48 @@ export default {
         alert("This browser does not support facingMode!");
       }
 
-      navigator.mediaDevices
-        .getUserMedia({
-          video: {
-            facingMode: frontCamera.value ? { exact: "environment"} : "user",
-          },
-        })
-        .then((stream) => {
-          video.value.srcObject = stream;
+      if (frontCamera.value) {
+        try {
+          stream.value = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: "user",
+            },
+          });
+          video.value.srcObject = stream.value;
           showCaptureBtn.value = true;
-        })
-        .catch((err) => {
+        } catch (err) {
           hasCameraSupport.value = false;
-        });
+        }
+      }
+
+      if (!frontCamera.value) {
+        try {
+          stream.value = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: { exact: "environment" },
+            },
+          });
+
+          video.value.srcObject = stream.value;
+          showCaptureBtn.value = true;
+        } catch (err) {
+          hasCameraSupport.value = false;
+        }
+      }
+
+      // navigator.mediaDevices
+      //   .getUserMedia({
+      //     video: {
+      //       facingMode: frontCamera.value ? { exact: "environment" } : "user",
+      //     },
+      //   })
+      //   .then((stream) => {
+      //     video.value.srcObject = stream;
+      //     showCaptureBtn.value = true;
+      //   })
+      //   .catch((err) => {
+      //     hasCameraSupport.value = false;
+      //   });
     };
 
     const captureImage = () => {
