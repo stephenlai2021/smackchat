@@ -151,9 +151,9 @@
                   right: 20px;
                   opacity: 0.7;
                 "
-                @click="swapCamera"
+                @click="frontCamera = !frontCamera"
               />
-              <!-- @click="frontCamera = !frontCamera" -->
+              <!-- @click="swapCamera" -->
               <canvas
                 v-show="imageCaptured"
                 ref="canvas"
@@ -306,16 +306,6 @@ export default {
     const showCaptureBtn = ref(false);
     const showCameraModal = ref(false);
     const frontCamera = ref(true);
-    const frontCameraOptions = ref({
-      video: {
-        facingMode: "user",
-      },
-    });
-    const backCameraOptions = ref({
-      video: {
-        facingMode: { exact: "environment" },
-      },
-    });
     const post = ref({
       id: uid(),
       caption: "",
@@ -324,6 +314,17 @@ export default {
       createdAt: Date.now(),
     });
 
+    // const frontCameraOptions = ref({
+    //   video: {
+    //     facingMode: "user",
+    //   },
+    // });
+    // const backCameraOptions = ref({
+    //   video: {
+    //     facingMode: { exact: "environment" },
+    //   },
+    // });
+
     const cancelCapture = () => {
       showCameraModal.value = false;
       disableCamera();
@@ -331,8 +332,7 @@ export default {
 
     const openCameraModal = () => {
       showCameraModal.value = true;
-      // initFrontCamera();
-      initBackCamera();
+      initCamera();
     };
 
     const closeCameraModal = () => {
@@ -341,34 +341,34 @@ export default {
       disableCamera();
     };
 
-    watch(
-      () => frontCamera.value,
-      () => {
-        if (frontCamera.value) {
-          console.log("front camera");
-          initFrontCamera();
-        }
-        if (!frontCamera.value) {
-          console.log("back camera");
-          initBackCamera();
-        }
-      }
-    );
+    // watch(
+    //   () => frontCamera.value,
+    //   () => {
+    //     if (frontCamera.value) {
+    //       console.log("front camera");
+    //       initFrontCamera();
+    //     }
+    //     if (!frontCamera.value) {
+    //       console.log("back camera");
+    //       initBackCamera();
+    //     }
+    //   }
+    // );
 
-    const swapCamera = () => {
-      frontCamera.value = !frontCamera.value;
+    // const swapCamera = () => {
+    //   frontCamera.value = !frontCamera.value;
 
-      if (frontCamera.value) {
-        console.log("front camera");
-        initFrontCamera();
-      }
-      if (!frontCamera.value) {
-        console.log("back camera");
-        initBackCamera();
-      }
-    };
+    //   if (frontCamera.value) {
+    //     console.log("front camera");
+    //     initFrontCamera();
+    //   }
+    //   if (!frontCamera.value) {
+    //     console.log("back camera");
+    //     initBackCamera();
+    //   }
+    // };
 
-    const initFrontCamera = () => {
+    const initCamera = () => {
       showCaptureBtn.value = false;
 
       const supports = navigator.mediaDevices.getSupportedConstraints();
@@ -377,39 +377,14 @@ export default {
       }
 
       navigator.mediaDevices
-        // .getUserMedia(frontCameraOptions.value)
         .getUserMedia({
           video: {
-            facingMode: "user",
+            facingMode: frontCamera.value ? "user" : "environment",
           },
         })
         .then((stream) => {
           video.value.srcObject = stream;
           showCaptureBtn.value = true;
-        })
-        .catch((err) => {
-          hasCameraSupport.value = false;
-        });
-    };
-
-    const initBackCamera = () => {
-      showCaptureBtn.value = false;
-
-      const supports = navigator.mediaDevices.getSupportedConstraints();
-      if (!supports["facingMode"]) {
-        alert("This browser does not support facingMode!");
-      }
-
-      navigator.mediaDevices
-        .getUserMedia(backCameraOptions.value)
-        .getUserMedia({
-          video: {
-            facingMode: { exact: "environment" },
-          },
-        })
-        .then((stream) => {
-          video.value.srcObject = stream;
-          // showCaptureBtn.value = true;
         })
         .catch((err) => {
           hasCameraSupport.value = false;
