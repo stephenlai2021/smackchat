@@ -133,7 +133,7 @@
                   bottom: 20px;
                   left: 50%;
                   transform: translateX(-50%);
-                  opacity: 0.7;
+                  opacity: 0.5;
                 "
                 @click="captureImage"
               />
@@ -148,7 +148,7 @@
                   position: absolute;
                   bottom: 30px;
                   right: 20px;
-                  opacity: 0.7;
+                  opacity: 0.5;
                 "
                 @click="frontCamera = !frontCamera"
               />
