@@ -362,7 +362,7 @@ export default {
       if (frontCamera.value) {
         console.log("front camera");
         // initFrontCamera();
-         try {
+        try {
           stream.value = await navigator.mediaDevices.getUserMedia({
             video: {
               facingMode: "user",
@@ -377,20 +377,21 @@ export default {
       if (!frontCamera.value) {
         console.log("back camera");
         // initBackCamera();
-        if (!frontCamera.value) {
-        try {
-          stream.value = await navigator.mediaDevices.getUserMedia({
-            video: {
-              facingMode: { exact: "environment" },
-            },
-          });
 
-          video.value.srcObject = stream.value;
-          showCaptureBtn.value = true;
-        } catch (err) {
-          hasCameraSupport.value = false;
+        if (!frontCamera.value) {
+          try {
+            stream.value = await navigator.mediaDevices.getUserMedia({
+              video: {
+                facingMode: { exact: "environment" },
+              },
+            });
+
+            video.value.srcObject = stream.value;
+            showCaptureBtn.value = true;
+          } catch (err) {
+            hasCameraSupport.value = false;
+          }
         }
-      }
       }
     };
 
@@ -402,7 +403,7 @@ export default {
         alert("This browser does not support facingMode!");
       }
 
-      if (frontCamera.value) {
+      // if (frontCamera.value) {
         try {
           stream.value = await navigator.mediaDevices.getUserMedia({
             video: {
@@ -414,22 +415,22 @@ export default {
         } catch (err) {
           hasCameraSupport.value = false;
         }
-      }
+      // }
 
-      if (!frontCamera.value) {
-        try {
-          stream.value = await navigator.mediaDevices.getUserMedia({
-            video: {
-              facingMode: { exact: "environment" },
-            },
-          });
+      // if (!frontCamera.value) {
+      //   try {
+      //     stream.value = await navigator.mediaDevices.getUserMedia({
+      //       video: {
+      //         facingMode: { exact: "environment" },
+      //       },
+      //     });
 
-          video.value.srcObject = stream.value;
-          showCaptureBtn.value = true;
-        } catch (err) {
-          hasCameraSupport.value = false;
-        }
-      }
+      //     video.value.srcObject = stream.value;
+      //     showCaptureBtn.value = true;
+      //   } catch (err) {
+      //     hasCameraSupport.value = false;
+      //   }
+      // }
 
       // navigator.mediaDevices
       //   .getUserMedia({
