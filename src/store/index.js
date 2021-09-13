@@ -97,34 +97,35 @@ const methods = {
           state.error = err.message;
         },
         async () => {
-          state.url = await storageRef.getDownloadURL();
-          console.log("image url | store: ", state.url);
+          // state.url = await storageRef.getDownloadURL();
+          // console.log("image url | store: ", state.url);
 
-          // let tempUrl = await storageRef.getDownloadURL();
-          // console.log("image url | store: ", tempUrl);
+          let tempUrl = await storageRef.getDownloadURL();
+          console.log("image url | store: ", tempUrl);
 
-          // const url =
-          //   "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyBm9VXXj0pjKwkWrr4lJqsGrpBHkLUdRho";
+          const url =
+            "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyBm9VXXj0pjKwkWrr4lJqsGrpBHkLUdRho";
 
-          // fetch(url, {
-          //   method: "POST",
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //   },
-          //   body: JSON.stringify({
-          //     longDynamicLink: `https://slai.page.link/?link=${tempUrl}`,
-          //     suffix: {
-          //       option: "SHORT", // "UNGUESSABLE"
-          //     },
-          //   }),
-          // })
-          //   .then((res) => {
-          //     return res.json();
-          //   })
-          //   .then((data) => {
-          //     console.log("firebase dynamic links: ", data);
-          //     state.url = data.shortLink;
-          //   });
+          fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              longDynamicLink: `https://slai.page.link/?link=${tempUrl}`,
+              suffix: {
+                option: "SHORT", // "UNGUESSABLE"
+              },
+            }),
+          })
+            .then((res) => {
+              return res.json();
+            })
+            .then((data) => {
+              console.log("firebase dynamic links: ", data);
+              state.url = data.shortLink;
+              tempUrl = null
+            });
         }
       );
     });
