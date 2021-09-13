@@ -346,17 +346,14 @@ export default {
       () => frontCamera.value,
       () => {
         closeCameraModal()
+        showCameraModal.value = true;
 
         if (frontCamera.value) {
           console.log("front camera");
-
-          showCameraModal.value = true;
           initFrontCamera();
         }
         if (!frontCamera.value) {
           console.log("back camera");
-
-          showCameraModal.value = true;
           initBackCamera();
         }
       }
@@ -384,7 +381,7 @@ export default {
       navigator.mediaDevices
         .getUserMedia({
           video: {
-            facingMode: frontCamera.value ? { exact: "environment" } : "user",
+            facingMode: "user",
           },
         })
         .then((stream) => {
