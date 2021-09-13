@@ -384,7 +384,7 @@ export default {
       navigator.mediaDevices
         .getUserMedia({
           video: {
-            facingMode: "user",
+             facingMode: { exact: "environment" },
           },
         })
         .then((stream) => {
