@@ -336,6 +336,7 @@ export default {
     watch(
       () => frontCamera.value,
       () => {
+        disableCamera()
         closeCameraModal();
         showCameraModal.value = true;
 
@@ -371,7 +372,7 @@ export default {
         });
     };
 
-    const initBackCamera = () => {
+    const initBackCamera = async () => {
       showCaptureBtn.value = false;
 
       const supports = navigator.mediaDevices.getSupportedConstraints();
@@ -379,32 +380,18 @@ export default {
         alert("This browser does not support facingMode!");
       }
 
-      navigator.mediaDevices
-        .getUserMedia({
+      try {
+        stream.value = await navigator.mediaDevices.getUserMedia({
           video: {
-             facingMode: { exact: "environment" },
+            facingMode: { exact: "environment" },
           },
-        })
-        .then((stream) => {
-          video.value.srcObject = stream;
-          showCaptureBtn.value = true;
-        })
-        .catch((err) => {
-          hasCameraSupport.value = false;
         });
 
-      // try {
-      //   stream.value = await navigator.mediaDevices.getUserMedia({
-      //     video: {
-      //       facingMode: { exact: "environment" },
-      //     },
-      //   });
-
-      //   video.value.srcObject = stream.value;
-      //   showCaptureBtn.value = true;
-      // } catch (err) {
-      //   hasCameraSupport.value = false;
-      // }
+        video.value.srcObject = stream.value;
+        showCaptureBtn.value = true;
+      } catch (err) {
+        hasCameraSupport.value = false;
+      }
     };
 
     const captureImage = () => {
