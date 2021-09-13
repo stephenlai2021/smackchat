@@ -333,7 +333,7 @@ export default {
 
     const openCameraModal = () => {
       showCameraModal.value = true;
-      initCamera();
+      initFrontCamera();
     };
 
     const closeCameraModal = () => {
@@ -347,11 +347,38 @@ export default {
       () => {
         if (frontCamera.value) {
           console.log("front camera");
-          initFrontCamera();
+          // initFrontCamera();
+          
+          try {
+            stream.value = await navigator.mediaDevices.getUserMedia({
+              video: {
+                facingMode: "user",
+              },
+            });
+            video.value.srcObject = stream.value;
+            showCaptureBtn.value = true;
+          } catch (err) {
+            hasCameraSupport.value = false;
+          }
         }
         if (!frontCamera.value) {
           console.log("back camera");
-          initBackCamera();
+          // initBackCamera();
+
+          if (!frontCamera.value) {
+            try {
+              stream.value = await navigator.mediaDevices.getUserMedia({
+                video: {
+                  facingMode: { exact: "environment" },
+                },
+              });
+
+              video.value.srcObject = stream.value;
+              showCaptureBtn.value = true;
+            } catch (err) {
+              hasCameraSupport.value = false;
+            }
+          }
         }
       }
     );
@@ -404,17 +431,17 @@ export default {
       }
 
       // if (frontCamera.value) {
-        try {
-          stream.value = await navigator.mediaDevices.getUserMedia({
-            video: {
-              facingMode: "user",
-            },
-          });
-          video.value.srcObject = stream.value;
-          showCaptureBtn.value = true;
-        } catch (err) {
-          hasCameraSupport.value = false;
-        }
+      try {
+        stream.value = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: "user",
+          },
+        });
+        video.value.srcObject = stream.value;
+        showCaptureBtn.value = true;
+      } catch (err) {
+        hasCameraSupport.value = false;
+      }
       // }
 
       // if (!frontCamera.value) {
