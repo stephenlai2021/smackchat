@@ -330,7 +330,7 @@ export default {
     const closeCameraModal = () => {
       showCaptureBtn.value = false;
       showCameraModal.value = false;
-      disableCamera();
+      // disableCamera();
     };
 
     watch(
@@ -340,11 +340,9 @@ export default {
         showCameraModal.value = true;
 
         if (frontCamera.value) {
-          console.log("front camera");
           initFrontCamera();
         }
         if (!frontCamera.value) {
-          console.log("back camera");
           initBackCamera();
         }
       }
