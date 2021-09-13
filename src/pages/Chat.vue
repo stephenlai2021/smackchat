@@ -137,6 +137,7 @@
                 "
                 @click="captureImage"
               />
+              <!-- v-if="showCaptureBtn && !btnSwap" -->
               <q-btn
                 v-if="showCaptureBtn"
                 :disable="hideCameraBtn"
@@ -150,8 +151,9 @@
                   right: 20px;
                   opacity: 0.7;
                 "
-                @click="captureImage"
+                @click="frontCamera = !frontCamera"
               />
+                <!-- @click="swapCamera" -->
               <canvas
                 v-show="imageCaptured"
                 ref="canvas"
@@ -296,17 +298,24 @@ export default {
     /****************/
     const video = ref(null);
     const canvas = ref(null);
+    const btnSwap = ref(true);
     const imageCaptured = ref(false);
     const hideCameraBtn = ref(false);
     const hasCameraSupport = ref(true);
     const cameraDisabled = ref(false);
     const showCaptureBtn = ref(false);
     const showCameraModal = ref(false);
-    const options = ref({
-      video: true,
-      facingMode: "environment", // user (front camera), environment (back camera)
+    const frontCamera = ref(true);
+    const frontCameraOptions = ref({
+      video: {
+        facingMode: "user",
+      },
     });
-
+    const backCameraOptions = ref({
+      video: {
+        facingMode: { exact: "environment"},
+      },
+    });
     const post = ref({
       id: uid(),
       caption: "",
@@ -315,6 +324,20 @@ export default {
       createdAt: Date.now(),
     });
 
+    watch(
+      () => frontCamera.value,
+      () => {
+        if (frontCamera.value) {
+          console.log("front camera");
+          initFrontCamera()
+        }
+        if (!frontCamera.value) {
+          console.log("back camera");
+          initBackCamera()
+        }
+      }
+    );    
+
     const cancelCapture = () => {
       showCameraModal.value = false;
       disableCamera();
@@ -322,7 +345,7 @@ export default {
 
     const openCameraModal = () => {
       showCameraModal.value = true;
-      initCamera();
+      initFrontCamera();
     };
 
     const closeCameraModal = () => {
@@ -331,15 +354,48 @@ export default {
       disableCamera();
     };
 
-    const initCamera = () => {
+    const swapCamera = () => {
+      frontCamera.value = !frontCamera.value;
+
+      if (frontCamera.value) {
+        console.log("front camera");
+        initFrontCamera()
+      }
+      if (!frontCamera.value) {
+        console.log("back camera");
+        initBackCamera()
+      }
+    };
+
+    const initFrontCamera = () => {
       showCaptureBtn.value = false;
 
       const supports = navigator.mediaDevices.getSupportedConstraints();
       if (!supports["facingMode"]) {
         alert("This browser does not support facingMode!");
       }
+
       navigator.mediaDevices
-        .getUserMedia(options.value)
+        .getUserMedia(frontCameraOptions.value)
+        .then((stream) => {
+          video.value.srcObject = stream;
+          showCaptureBtn.value = true;
+        })
+        .catch((err) => {
+          hasCameraSupport.value = false;
+        });
+    };
+
+    const initBackCamera = () => {
+      showCaptureBtn.value = false;
+
+      const supports = navigator.mediaDevices.getSupportedConstraints();
+      if (!supports["facingMode"]) {
+        alert("This browser does not support facingMode!");
+      }
+
+      navigator.mediaDevices
+        .getUserMedia(backCameraOptions.value)
         .then((stream) => {
           video.value.srcObject = stream;
           showCaptureBtn.value = true;
@@ -449,7 +505,7 @@ export default {
           imageCaptured.value = false;
           showCameraModal.value = false;
 
-          disableCamera()
+          disableCamera();
         }
       }
     );
@@ -592,6 +648,8 @@ export default {
       post,
       video,
       canvas,
+      btnSwap,
+      frontCamera,
       imageCaptured,
 
       cancelCapture,
@@ -614,8 +672,8 @@ export default {
       formatDistanceToNow,
 
       /* camera */
-      initCamera,
       captureImage,
+      swapCamera,
       disableCamera,
       openCameraModal,
       closeCameraModal,
