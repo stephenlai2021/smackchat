@@ -115,7 +115,7 @@
               />
               <q-btn
                 v-if="showCaptureBtn"
-                color="textred"
+                class="textred"
                 icon="eva-close-outline"
                 size="md"
                 round
@@ -124,7 +124,7 @@
               />
               <q-btn
                 v-if="showCaptureBtn"
-                color="text-blue"
+                class="text-blue"
                 icon="eva-camera-outline"
                 size="lg"
                 round
@@ -140,7 +140,7 @@
               <q-btn
                 v-if="showCaptureBtn && btnSwap"
                 :disable="hideCameraBtn"
-                color="text-amber-8"
+                class="text-amber-8"
                 icon="eva-swap-outline"
                 size="md"
                 round
