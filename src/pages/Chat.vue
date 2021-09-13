@@ -330,7 +330,7 @@ export default {
     const closeCameraModal = () => {
       showCaptureBtn.value = false;
       showCameraModal.value = false;
-      // disableCamera();
+      disableCamera();
     };
 
     watch(
