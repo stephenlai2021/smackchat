@@ -331,7 +331,8 @@ export default {
 
     const openCameraModal = () => {
       showCameraModal.value = true;
-      initFrontCamera();
+      // initFrontCamera();
+      initBackCamera();
     };
 
     const closeCameraModal = () => {
@@ -392,7 +393,7 @@ export default {
     };
 
     const initBackCamera = () => {
-      // showCaptureBtn.value = false;
+      showCaptureBtn.value = false;
 
       const supports = navigator.mediaDevices.getSupportedConstraints();
       if (!supports["facingMode"]) {
@@ -400,7 +401,7 @@ export default {
       }
 
       navigator.mediaDevices
-        // .getUserMedia(backCameraOptions.value)
+        .getUserMedia(backCameraOptions.value)
         .getUserMedia({
           video: {
             facingMode: { exact: "environment" },
