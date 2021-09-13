@@ -147,7 +147,7 @@
                 round
                 style="
                   position: absolute;
-                  bottom: 20px;
+                  bottom: 40px;
                   right: 20px;
                   opacity: 0.7;
                 "
@@ -355,18 +355,18 @@ export default {
     //   }
     // );
 
-    // const swapCamera = () => {
-    //   frontCamera.value = !frontCamera.value;
+    const swapCamera = () => {
+      frontCamera.value = !frontCamera.value;
 
-    //   if (frontCamera.value) {
-    //     console.log("front camera");
-    //     initFrontCamera();
-    //   }
-    //   if (!frontCamera.value) {
-    //     console.log("back camera");
-    //     initBackCamera();
-    //   }
-    // };
+      if (frontCamera.value) {
+        console.log("front camera");
+        initFrontCamera();
+      }
+      if (!frontCamera.value) {
+        console.log("back camera");
+        initBackCamera();
+      }
+    };
 
     const initCamera = () => {
       showCaptureBtn.value = false;
