@@ -147,7 +147,7 @@
                 round
                 style="
                   position: absolute;
-                  bottom: 40px;
+                  bottom: 30px;
                   right: 20px;
                   opacity: 0.7;
                 "
@@ -379,7 +379,7 @@ export default {
       navigator.mediaDevices
         .getUserMedia({
           video: {
-            facingMode: frontCamera.value ? "user" : "environment",
+            facingMode: frontCamera.value ? "user" : { exact: "environment"},
           },
         })
         .then((stream) => {
