@@ -336,7 +336,6 @@ export default {
     watch(
       () => frontCamera.value,
       () => {
-        disableCamera()
         closeCameraModal();
         showCameraModal.value = true;
 

@@ -97,31 +97,34 @@ const methods = {
           state.error = err.message;
         },
         async () => {
-          let tempUrl = await storageRef.getDownloadURL();
-          console.log("image url | store: ", tempUrl);
+          state.url = await storageRef.getDownloadURL();
+          console.log("image url | store: ", state.url);
 
-          const url =
-            "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyBm9VXXj0pjKwkWrr4lJqsGrpBHkLUdRho";
+          // let tempUrl = await storageRef.getDownloadURL();
+          // console.log("image url | store: ", tempUrl);
 
-          fetch(url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              longDynamicLink: `https://slai.page.link/?link=${tempUrl}`,
-              suffix: {
-                option: "SHORT", // "UNGUESSABLE"
-              },
-            }),
-          })
-            .then((res) => {
-              return res.json();
-            })
-            .then((data) => {
-              console.log("firebase dynamic links: ", data);
-              state.url = data.shortLink;
-            });
+          // const url =
+          //   "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyBm9VXXj0pjKwkWrr4lJqsGrpBHkLUdRho";
+
+          // fetch(url, {
+          //   method: "POST",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   },
+          //   body: JSON.stringify({
+          //     longDynamicLink: `https://slai.page.link/?link=${tempUrl}`,
+          //     suffix: {
+          //       option: "SHORT", // "UNGUESSABLE"
+          //     },
+          //   }),
+          // })
+          //   .then((res) => {
+          //     return res.json();
+          //   })
+          //   .then((data) => {
+          //     console.log("firebase dynamic links: ", data);
+          //     state.url = data.shortLink;
+          //   });
         }
       );
     });
