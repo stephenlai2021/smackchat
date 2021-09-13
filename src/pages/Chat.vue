@@ -345,9 +345,10 @@ export default {
     watch(
       () => frontCamera.value,
       () => {
+        closeCameraModal()
+
         if (frontCamera.value) {
           console.log("front camera");
-          closeCameraModal()
 
           showCameraModal.value = true;
           initFrontCamera();
@@ -366,11 +367,9 @@ export default {
 
       if (frontCamera.value) {
         console.log("front camera");
-        // initFrontCamera();
       }
       if (!frontCamera.value) {
         console.log("back camera");
-        // initBackCamera();
       }
     };
 
@@ -381,21 +380,6 @@ export default {
       if (!supports["facingMode"]) {
         alert("This browser does not support facingMode!");
       }
-
-      // if (!frontCamera.value) {
-      //   try {
-      //     stream.value = await navigator.mediaDevices.getUserMedia({
-      //       video: {
-      //         facingMode: { exact: "environment" },
-      //       },
-      //     });
-
-      //     video.value.srcObject = stream.value;
-      //     showCaptureBtn.value = true;
-      //   } catch (err) {
-      //     hasCameraSupport.value = false;
-      //   }
-      // }
 
       navigator.mediaDevices
         .getUserMedia({
