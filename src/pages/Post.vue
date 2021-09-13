@@ -3,7 +3,6 @@
     <q-header reveal>
       <q-toolbar class="constraint">
         <q-avatar>
-                <!-- ? 'https://www.clipartmax.com/png/full/98-984206_profile-photo-facebook-profile-picture-icon.png' -->
           <img
             style="width: 30px; height: 30px"
             :src="

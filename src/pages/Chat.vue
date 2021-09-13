@@ -75,7 +75,7 @@
     <!-- Map Modal -->
 
     <!-- End of Map Modal -->
-    
+
     <!-- Video Modal -->
 
     <!-- End of Video Modal -->
@@ -250,13 +250,13 @@
 </template>
 
 <script>
+import { useI18n } from "vue-i18n";
+import { useQuasar, uid } from "quasar";
+import { timestamp } from "src/boot/firebase";
+import { formatDistanceToNow } from "date-fns";
+import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted, inject, watch } from "vue";
 import { EmojiButton } from "@joeattardi/emoji-button";
-import { useRoute, useRouter } from "vue-router";
-import { formatDistanceToNow } from "date-fns";
-import { timestamp } from "src/boot/firebase";
-import { useQuasar, uid } from "quasar";
-import { useI18n } from "vue-i18n";
 
 export default {
   setup() {
@@ -284,7 +284,7 @@ export default {
     /****************/
 
     /* Enod of Map Button */
-    
+
     /****************/
     /* Video Button */
     /****************/
@@ -302,6 +302,10 @@ export default {
     const cameraDisabled = ref(false);
     const showCaptureBtn = ref(false);
     const showCameraModal = ref(false);
+    const options = ref({
+      video: true,
+      facingMode: "environment", // user (front camera), environment (back camera)
+    });
 
     const post = ref({
       id: uid(),
@@ -313,8 +317,8 @@ export default {
 
     const cancelCapture = () => {
       showCameraModal.value = false;
-      disableCamera()
-    }
+      disableCamera();
+    };
 
     const openCameraModal = () => {
       showCameraModal.value = true;
@@ -322,17 +326,20 @@ export default {
     };
 
     const closeCameraModal = () => {
-      showCaptureBtn.value = false
+      showCaptureBtn.value = false;
       showCameraModal.value = false;
       disableCamera();
     };
 
     const initCamera = () => {
-      showCaptureBtn.value = false
+      showCaptureBtn.value = false;
+
+      const supports = navigator.mediaDevices.getSupportedConstraints();
+      if (!supports["facingMode"]) {
+        alert("This browser does not support facingMode!");
+      }
       navigator.mediaDevices
-        .getUserMedia({
-          video: true,
-        })
+        .getUserMedia(options.value)
         .then((stream) => {
           video.value.srcObject = stream;
           showCaptureBtn.value = true;
@@ -384,11 +391,15 @@ export default {
     };
 
     const disableCamera = () => {
-      video.value.srcObject.getVideoTracks().forEach((track) => {
-        track.stop();
-      });
+      if (video.value) {
+        video.value.srcObject.getVideoTracks().forEach((track) => {
+          track.stop();
+        });
+      }
     };
+    /************************/
     /* End of Camera Button */
+    /************************/
 
     /***************/
     /* Image Button */
@@ -438,11 +449,13 @@ export default {
           imageCaptured.value = false;
           showCameraModal.value = false;
 
-          disableCamera();
+          disableCamera()
         }
       }
     );
+    /***********************/
     /* End of Image Button */
+    /***********************/
 
     /***************/
     /* Emoji Button */
@@ -459,7 +472,9 @@ export default {
     const showEmojiPicker = () => {
       picker.value.togglePicker(btnEmoji.value);
     };
+    /***********************/
     /* End of Emoji Button */
+    /***********************/
 
     watch(
       () => store.state.messages,

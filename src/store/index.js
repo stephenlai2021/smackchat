@@ -1,8 +1,7 @@
-import { reactive, watchEffect } from "vue";
-import { auth, db, disk, timestamp } from "src/boot/firebase";
-import { formatDistanceToNow } from "date-fns";
 import router from "../router";
-import { route } from "quasar/wrappers";
+import { reactive, watchEffect } from "vue";
+import { formatDistanceToNow } from "date-fns";
+import { auth, db, disk, timestamp } from "src/boot/firebase";
 
 const state = reactive({
   users: [],
@@ -98,8 +97,47 @@ const methods = {
           state.error = err.message;
         },
         async () => {
-          state.url = await storageRef.getDownloadURL();
-          console.log("image url | store: ", state.url);
+          // state.url = await storageRef.getDownloadURL();
+          // console.log("image url | store: ", state.url);
+
+          let tempUrl = await storageRef.getDownloadURL();
+          console.log("image url | store: ", tempUrl);
+
+          const url =
+            "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyBm9VXXj0pjKwkWrr4lJqsGrpBHkLUdRho";
+
+          fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              longDynamicLink: `https://slai.page.link/?link=${tempUrl}`,
+              suffix: {
+                option: "SHORT", // "UNGUESSABLE"
+              },
+            }),
+          })
+            .then((res) => {
+              return res.json();
+            })
+            .then((data) => {
+              console.log("firebase dynamic links: ", data);
+              state.url = data.shortLink;
+            });
+
+          // let tempUrl = await storageRef.getDownloadURL();
+
+          // const firebaseDynamicLinks = new FirebaseDynamicLinks(
+          //   "AIzaSyBm9VXXj0pjKwkWrr4lJqsGrpBHkLUdRho"
+          // );
+
+          // const { shortLink, previewLink } =
+          //   await firebaseDynamicLinks.createLink({
+          //     longDynamicLink: `https://slai.page.link/?link=${tempUrl}`,
+          //   });
+
+          // state.url = shortLink
         }
       );
     });
