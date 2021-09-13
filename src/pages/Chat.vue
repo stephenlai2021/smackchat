@@ -137,9 +137,8 @@
                 "
                 @click="captureImage"
               />
-              <!-- v-if="showCaptureBtn && !btnSwap" -->
               <q-btn
-                v-if="showCaptureBtn"
+                v-if="showCaptureBtn && btnSwap"
                 :disable="hideCameraBtn"
                 color="amber-8"
                 icon="eva-swap-outline"
@@ -153,7 +152,6 @@
                 "
                 @click="frontCamera = !frontCamera"
               />
-              <!-- @click="swapCamera" -->
               <canvas
                 v-show="imageCaptured"
                 ref="canvas"
@@ -315,17 +313,6 @@ export default {
       createdAt: Date.now(),
     });
 
-    // const frontCameraOptions = ref({
-    //   video: {
-    //     facingMode: "user",
-    //   },
-    // });
-    // const backCameraOptions = ref({
-    //   video: {
-    //     facingMode: { exact: "environment" },
-    //   },
-    // });
-
     const cancelCapture = () => {
       showCameraModal.value = false;
       disableCamera();
@@ -334,6 +321,10 @@ export default {
     const openCameraModal = () => {
       showCameraModal.value = true;
       initFrontCamera();
+
+      if (store.state.desktop) {
+        btnSwap.value = false
+      }
     };
 
     const closeCameraModal = () => {
@@ -358,17 +349,6 @@ export default {
         }
       }
     );
-
-    const swapCamera = () => {
-      frontCamera.value = !frontCamera.value;
-
-      if (frontCamera.value) {
-        console.log("front camera");
-      }
-      if (!frontCamera.value) {
-        console.log("back camera");
-      }
-    };
 
     const initFrontCamera = async () => {
       showCaptureBtn.value = false;
@@ -683,7 +663,6 @@ export default {
 
       /* camera */
       captureImage,
-      swapCamera,
       disableCamera,
       openCameraModal,
       closeCameraModal,
