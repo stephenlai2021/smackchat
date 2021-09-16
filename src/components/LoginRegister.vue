@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { ref, inject, watch, watchEffect } from "vue";
+import { ref, inject, watch, watchEffect, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 
@@ -74,14 +74,13 @@ export default {
     const file = ref(null);
     const fileError = ref(null);
 
+    const lat = ref(null);
+    const lng = ref(null);
+
     // allowed file types
     const types = ["image/png", "image/jpeg", "image/jpg"];
 
-    const formData = ref({
-      name: "me",
-      email: "me@test.com",
-      password: "123456",
-    });
+    const formData = ref({});
 
     // watch
     watch(
@@ -112,6 +111,7 @@ export default {
       if (props.tab === "login") {
         store.state.login = true;
         store.methods.loginUser(formData.value);
+        console.log('login: ', formData.value)
 
         if (store.state.successMessage === "user login successfully") {
           store.state.login = false;
@@ -119,7 +119,7 @@ export default {
         }
       }
       if (props.tab === "register") {
-        formData.value = { ...formData.value, avatar: store.state.url }
+        formData.value = { ...formData.value, avatar: store.state.url };
         // formData.value = {
         //   name: "me",
         //   email: "me@test.com",
@@ -138,6 +138,29 @@ export default {
       formData.value = "";
       store.state.errorMessage = "";
     };
+
+    onMounted(() => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((pos) => {
+          lat.value = pos.coords.latitude;
+          lng.value = pos.coords.longitude;
+
+          formData.value = {
+            name: "me",
+            email: "me@test.com",
+            password: "123456",
+            geolocation: {
+              lat: lat.value,
+              lng: lng.value,
+            }
+          };
+          console.log(`geolocation: 
+            lat: ${lat.value}
+            lng: ${lng.value}
+          `)
+        });
+      }
+    });
 
     return {
       // i18n

@@ -151,10 +151,10 @@ const methods = {
                   state.login = false;
                 });
             });
-          })
-          .catch((err) => {
-            console.log("error message: ", err.message);
           });
+        // .catch((err) => {
+        //   console.log("error message: ", err.message);
+        // });
       }
       if (!user) {
         console.log("there is no user | auth state change");
@@ -175,7 +175,7 @@ const methods = {
           email: data.email,
           avatar: data.avatar,
           userId: user.uid,
-          geolocation: null,
+          geolocation: data.geolocation,
         });
 
         state.tab = "home";

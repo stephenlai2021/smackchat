@@ -115,16 +115,16 @@
               />
               <q-btn
                 v-if="showCaptureBtn"
-                class="text-red"
+                color="red"
                 icon="eva-close-outline"
                 size="md"
                 round
-                style="position: absolute; top: 20px; right: 20px; opacity: 0.7"
+                style="position: absolute; top: 20px; right: 20px; opacity: 0.5"
                 @click="cancelCapture"
               />
               <q-btn
                 v-if="showCaptureBtn"
-                class="text-blue"
+                color="blue"
                 icon="eva-camera-outline"
                 size="lg"
                 round
@@ -140,7 +140,7 @@
               <q-btn
                 v-if="showCaptureBtn && btnSwap"
                 :disable="hideCameraBtn"
-                class="text-amber-8"
+                color="amber-8"
                 icon="eva-swap-outline"
                 size="md"
                 round
@@ -255,10 +255,13 @@ import { useQuasar, uid } from "quasar";
 import { timestamp } from "src/boot/firebase";
 import { formatDistanceToNow } from "date-fns";
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted, onBeforeUnmount inject, watch } from "vue";
+import { ref, onMounted, onBeforeUnmount, inject, watch } from "vue";
 import { EmojiButton } from "@joeattardi/emoji-button";
 
 export default {
+  components: {
+    "image-modal": require("components/ChatPage/ImageModal.vue").default,
+  },
   setup() {
     const $q = useQuasar();
 
@@ -443,7 +446,7 @@ export default {
     };
 
     onBeforeUnmount(() => {
-      disableCamera()
+      // disableCamera()
     })
     /************************/
     /* End of Camera Button */
