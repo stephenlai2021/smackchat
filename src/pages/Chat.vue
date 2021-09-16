@@ -446,7 +446,7 @@ export default {
     };
 
     onBeforeUnmount(() => {
-      // disableCamera()
+      disableCamera()
     })
     /************************/
     /* End of Camera Button */
