@@ -323,7 +323,6 @@ export default {
 
     const openCameraModal = () => {
       showCameraModal.value = true;
-      disableCamera()
       initFrontCamera();
 
       if (store.state.desktop) {
@@ -447,7 +446,8 @@ export default {
     };
 
     onBeforeUnmount(() => {
-      disableCamera()
+      closeCameraModal()
+      // disableCamera()
     })
     /************************/
     /* End of Camera Button */
