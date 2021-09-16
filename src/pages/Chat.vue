@@ -323,6 +323,7 @@ export default {
 
     const openCameraModal = () => {
       showCameraModal.value = true;
+      disableCamera()
       initFrontCamera();
 
       if (store.state.desktop) {
