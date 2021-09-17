@@ -75,10 +75,27 @@
     <!-- Video Modal -->
 
     <!-- End of Video Modal -->
+        
+    <!-- Image Modal -->
+    <transition-group
+      appear
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+    >
+      <div v-if="file" class="image-modal constraint text-center q-pa-md">
+        <div>{{ file.name }}</div>
+        <div v-if="file">Uploading... {{ store.state.progress }}%</div>
+        <div
+          class="progress-bar"
+          :style="{ width: store.state.progress + '%' }"
+        ></div>
+      </div>
+    </transition-group>
+    <!-- End of Image Modal -->
 
     <map-modal v-if="showMapModal" @close-mapmodal="showMapModal = false" />
     
-    <image-modal :file="file" />
+    <!-- <image-modal :file="file" /> -->
 
     <!-- Camera Modal -->
     <transition-group
