@@ -64,7 +64,7 @@ import { useI18n } from "vue-i18n";
 
 export default {
   components: {
-    "login-register": require("components/LoginRegister.vue").default,
+    "login-register": require("src/components/AuthPage/LoginRegister.vue").default,
   },
   setup() {
     const store = inject("store");

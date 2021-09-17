@@ -72,16 +72,12 @@
       />
     </div>
 
-    <!-- Map Modal -->
-      <map-modal v-if="showMapModal" @close-mapmodal="showMapModal = false" />    
-    <!-- End of Map Modal -->
-
     <!-- Video Modal -->
 
     <!-- End of Video Modal -->
-
+        
     <!-- Image Modal -->
-    <transition-group
+    <!-- <transition-group
       appear
       enter-active-class="animated fadeIn"
       leave-active-class="animated fadeOut"
@@ -94,8 +90,12 @@
           :style="{ width: store.state.progress + '%' }"
         ></div>
       </div>
-    </transition-group>
+    </transition-group> -->
     <!-- End of Image Modal -->
+
+    <map-modal v-if="showMapModal" @close-mapmodal="showMapModal = false" />
+    
+    <image-modal :file="file" />
 
     <!-- Camera Modal -->
     <transition-group
@@ -261,6 +261,7 @@ import { EmojiButton } from "@joeattardi/emoji-button";
 export default {
   components: {
     "map-modal": require("components/ChatPage/MapModal.vue").default,
+    "image-modal": require("components/ChatPage/ImageModal.vue").default,
   },
   setup() {
     const $q = useQuasar();
@@ -280,7 +281,7 @@ export default {
     const indicator = ref(false);
     const inputFocus = ref(false);
     const showMessages = ref(false);
-    const to = ref({});  
+    const to = ref({});
 
     /****************/
     /* Video Button */
@@ -300,7 +301,7 @@ export default {
     const hasCameraSupport = ref(true);
     const cameraDisabled = ref(false);
     const showCaptureBtn = ref(false);
-    const showMapModal = ref(false)
+    const showMapModal = ref(false);
     const showCameraModal = ref(false);
     const frontCamera = ref(true);
     const post = ref({
@@ -355,7 +356,7 @@ export default {
       }
 
       if (store.state.desktop) {
-        btnSwap.value = false
+        btnSwap.value = false;
       }
 
       navigator.mediaDevices
@@ -509,7 +510,7 @@ export default {
     /***********************/
 
     /***************/
-    /* Emoji Button */
+    /* Emoji Modal */
     /***************/
     const btnEmoji = ref(null);
     const picker = ref(null);
@@ -524,7 +525,7 @@ export default {
       picker.value.togglePicker(btnEmoji.value);
     };
     /***********************/
-    /* End of Emoji Button */
+    /* End of Emoji Modal */
     /***********************/
 
     watch(
@@ -701,26 +702,23 @@ export default {
   border: 2px solid grey;
   border-radius: 10px;
 }
-.progress-bar {
-  display: block;
-  height: 6px;
-  // background: #5ad8d2;
-  background: #69f0ae;
-  // padding: 20px;
-  border-radius: 6px;
-  margin-top: 20px;
-  transition: width 0.3s ease;
-}
-.image-modal {
-  position: fixed;
-  bottom: 64px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(8px);
-  // border: 1px solid green;
-}
+// .progress-bar {
+//   display: block;
+//   height: 6px;
+//   background: #69f0ae;
+//   border-radius: 6px;
+//   margin-top: 20px;
+//   transition: width 0.3s ease;
+// }
+// .image-modal {
+//   position: fixed;
+//   bottom: 64px;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   width: 100%;
+//   background: rgba(0, 0, 0, 0.8);
+//   backdrop-filter: blur(8px);
+// }
 .footer {
   z-index: 300;
 }

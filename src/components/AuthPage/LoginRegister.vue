@@ -80,7 +80,15 @@ export default {
     // allowed file types
     const types = ["image/png", "image/jpeg", "image/jpg"];
 
-    const formData = ref({});
+    const formData = ref({
+      name: null,
+      email: null,
+      password: null,
+      geolocation: {
+        lat: null,
+        lng: null,
+      },
+    });
 
     // watch
     watch(
@@ -111,7 +119,7 @@ export default {
       if (props.tab === "login") {
         store.state.login = true;
         store.methods.loginUser(formData.value);
-        console.log('login: ', formData.value)
+        console.log("login: ", formData.value);
 
         if (store.state.successMessage === "user login successfully") {
           store.state.login = false;
@@ -152,12 +160,12 @@ export default {
             geolocation: {
               lat: lat.value,
               lng: lng.value,
-            }
+            },
           };
           console.log(`geolocation: 
             lat: ${lat.value}
             lng: ${lng.value}
-          `)
+          `);
         });
       }
     });
