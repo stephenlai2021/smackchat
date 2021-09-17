@@ -30,7 +30,7 @@
           <q-btn
             round
             dense
-            color="blue"
+            color="red"
             size="md"
             icon="eva-pin-outline"
             class="q-mr-md"
@@ -39,7 +39,7 @@
           <q-btn
             round
             dense
-            color="red"
+            color="green"
             size="md"
             icon="eva-phone-outline"
             class="q-mr-md"
