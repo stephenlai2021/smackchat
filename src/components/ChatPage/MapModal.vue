@@ -1,27 +1,29 @@
 <template>
   <q-page>
-    <div>
-      <q-btn
-        round
-        dense
-        size="md"
-        class="bg-amber-2"
-        icon="eva-arrow-ios-back-outline"
-        style="
-          position: fixed;
-          left: 50%;
-          transform: translate(-50%);
-          top: 10px;
-          z-index: 500;
-        "
-        @click="
-          router.push(
-            `/chat/${store.state.userDetails.name}/${store.state.user.name}`
-          )
-        "
-      />
-    </div>
-    <div id="map"></div>
+    <transition-group
+      appear
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+    >
+      <div>
+        <q-btn
+          round
+          dense
+          size="md"
+          class="bg-red-3"
+          icon="eva-close-outline"
+          style="
+            position: fixed;
+            left: 50%;
+            transform: translate(-50%);
+            bottom: 20px;
+            z-index: 700;
+          "
+          @click="closeMapModal"
+        />
+      </div>
+      <div id="map"></div>
+    </transition-group>
   </q-page>
 </template>
 
@@ -30,7 +32,7 @@ import { ref, onMounted, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 export default {
-  setup() {
+  setup(props, context) {
     const route = useRoute();
     const router = useRouter();
 
@@ -54,6 +56,10 @@ export default {
     const icon = ref(null);
 
     // methods
+    const closeMapModal = () => {
+      context.emit("close-mapmodal");
+    };
+
     const getUserGeoLocation = () => {
       map.value = L.map("map", {
         center: [store.state.geoLocation.lat, store.state.geoLocation.lng],
@@ -64,7 +70,10 @@ export default {
 
       setControl();
 
-      user.value = L.marker([store.state.user.geoLocation.lat, store.state.user.geoLocation.lng])
+      user.value = L.marker([
+        store.state.user.geoLocation.lat,
+        store.state.user.geoLocation.lng,
+      ])
         .addTo(map.value)
         .bindPopup(`${store.state.user.name} is here`)
         .openPopup();
@@ -158,6 +167,8 @@ export default {
       store,
       route,
       router,
+
+      closeMapModal,
     };
   },
 };
@@ -166,9 +177,10 @@ export default {
 <style lang="scss" scoped>
 #map {
   position: fixed;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 900;
+  z-index: 600;
 }
 </style>

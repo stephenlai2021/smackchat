@@ -34,7 +34,7 @@
             size="md"
             icon="eva-pin-outline"
             class="q-mr-md"
-            @click="router.push('/map')"
+            @click="showMapModal = true"
           />
           <q-btn
             round
@@ -73,7 +73,7 @@
     </div>
 
     <!-- Map Modal -->
-
+      <map-modal v-if="showMapModal" @close-mapmodal="showMapModal = false" />    
     <!-- End of Map Modal -->
 
     <!-- Video Modal -->
@@ -260,7 +260,7 @@ import { EmojiButton } from "@joeattardi/emoji-button";
 
 export default {
   components: {
-    "image-modal": require("components/ChatPage/ImageModal.vue").default,
+    "map-modal": require("components/ChatPage/MapModal.vue").default,
   },
   setup() {
     const $q = useQuasar();
@@ -280,13 +280,7 @@ export default {
     const indicator = ref(false);
     const inputFocus = ref(false);
     const showMessages = ref(false);
-    const to = ref({});
-
-    /****************/
-    /* Map Button */
-    /****************/
-
-    /* Enod of Map Button */
+    const to = ref({});  
 
     /****************/
     /* Video Button */
@@ -306,6 +300,7 @@ export default {
     const hasCameraSupport = ref(true);
     const cameraDisabled = ref(false);
     const showCaptureBtn = ref(false);
+    const showMapModal = ref(false)
     const showCameraModal = ref(false);
     const frontCamera = ref(true);
     const post = ref({
@@ -357,6 +352,10 @@ export default {
       const supports = navigator.mediaDevices.getSupportedConstraints();
       if (!supports["facingMode"]) {
         alert("This browser does not support facingMode!");
+      }
+
+      if (store.state.desktop) {
+        btnSwap.value = false
       }
 
       navigator.mediaDevices
@@ -446,9 +445,9 @@ export default {
     };
 
     onBeforeUnmount(() => {
-      closeCameraModal()
+      closeCameraModal();
       // disableCamera()
-    })
+    });
     /************************/
     /* End of Camera Button */
     /************************/
@@ -620,7 +619,6 @@ export default {
     });
 
     return {
-      // i18n
       t,
       locale,
 
@@ -628,7 +626,6 @@ export default {
       route,
       router,
 
-      /* ref */
       to,
       file,
       chats,
@@ -640,6 +637,9 @@ export default {
       inputFocus,
       showCameraModal,
 
+      /* map */
+      showMapModal,
+
       /* camera */
       post,
       video,
@@ -647,13 +647,11 @@ export default {
       btnSwap,
       frontCamera,
       imageCaptured,
-
       cancelCapture,
       hideCameraBtn,
       cameraDisabled,
       showCaptureBtn,
       hasCameraSupport,
-      /* end of ref */
 
       // methods
       call,
@@ -679,6 +677,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn-mapBack {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+  top: 10px;
+  z-index: 500;
+}
+#map {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 500;
+}
 .camera-panel {
   display: flex;
   justify-content: center;
