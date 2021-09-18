@@ -53,12 +53,11 @@
 
     <image-modal :file="file" />
 
-    <!-- <video-modal /> -->
-
     <map-modal v-if="showMapModal" @close-mapmodal="showMapModal = false" />
 
     <!-- Camera Modal -->
-    <camera-modal v-if="showCameraModal" @close-cameraModal="showCameraModal = false" />
+    <camera-modal v-if="showCameraModal" @close-cameraModal="showCameraModal = false" @open-cameraModal="showCameraModal = true" />
+    <!-- <camera-modal /> -->
 
     <!-- <transition-group
       appear

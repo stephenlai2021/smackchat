@@ -127,6 +127,7 @@ export default {
     const closeCameraModal = () => {
       showCaptureBtn.value = false;
       // showCameraModal.value = false;
+      context.emit('close-cameraModal')
       disableCamera();
     };
 
@@ -134,7 +135,8 @@ export default {
       () => frontCamera.value,
       () => {
         closeCameraModal();
-        showCameraModal.value = true;
+        // showCameraModal.value = true;
+        context.emit('open-cameraModal')
 
         if (frontCamera.value) {
           initFrontCamera();
