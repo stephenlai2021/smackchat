@@ -1,8 +1,8 @@
 <template>
   <transition-group
     appear
-    enter-active-class="animated zoomIn"
-    leave-active-class="animated zoomOut"
+    enter-active-class="animated slideInRight"
+    leave-active-class="animated slideOutLeft"
   >
     <!-- <div v-if="showCameraModal" class="camera-modal"> -->
     <div class="camera-modal">
