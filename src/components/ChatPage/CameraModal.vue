@@ -10,7 +10,7 @@
         <div class="full-width camera-panel">
           <div style="width: 100%; position: relative">
             <video
-              v-show="!imageCaptured || videoLoaded"
+              v-show="!imageCaptured"
               ref="video"
               autoplay
               style="width: 100%"
@@ -197,7 +197,10 @@ export default {
         })
         .then((stream) => {
           video.value.srcObject = stream;
-          videoLoaded.value = true;
+
+          setTimeout(() => {
+            videoLoaded.value = true;
+          }, 250)
         })
         .catch((err) => {
           hasCameraSupport.value = false;
