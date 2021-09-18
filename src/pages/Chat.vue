@@ -43,7 +43,7 @@
             size="md"
             icon="eva-phone-outline"
             class="q-mr-md"
-            @click="call"
+            @click="showVideoModal = true"
           />
         </div>
       </q-toolbar>
@@ -54,6 +54,8 @@
     <image-modal :file="file" v-if="file" @close-imageModal="file = null" />
 
     <map-modal v-if="showMapModal" @close-mapmodal="showMapModal = false" />
+
+    <video-modal v-if="showVideoModal" @close-videoModal="showVideoModal = false" />
 
     <!-- Camera Modal -->
     <camera-modal v-if="showCameraModal" @close-cameraModal="showCameraModal = false" @open-cameraModal="showCameraModal = true" />
@@ -246,6 +248,7 @@ export default {
     const showMessages = ref(false);
     const to = ref({});
     const showMapModal = ref(false)
+    const showVideoModal = ref(false)
 
     /****************/
     /* Video Button */
@@ -606,6 +609,7 @@ export default {
       // cameraDisabled,
       // showCaptureBtn,
       // showImageModal,
+      showVideoModal,
       showCameraModal,
       // hasCameraSupport,
 

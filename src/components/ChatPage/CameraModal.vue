@@ -336,7 +336,8 @@ export default {
   width: 100%;
   height: 100vh;
   z-index: 600;
-  background: rgba(0, 0, 0, 0.8);
+  // background: black;
+  background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(8px);
 }
 </style>

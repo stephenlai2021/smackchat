@@ -1,15 +1,56 @@
 <template>
-  <div>
-    <h5>Video Chat</h5>
-  </div>
+  <q-page>
+    <transition-group
+      appear
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+    >
+      <div class="video-modal">
+        <h5>Video Chat</h5>
+        <q-btn
+          round
+          dense
+          size="md"
+          class="bg-red-3"
+          icon="eva-close-outline"
+          style="
+            position: fixed;
+            left: 50%;
+            transform: translate(-50%);
+            bottom: 20px;
+            z-index: 700;
+          "
+          @click="closeVideoModal"
+        />
+      </div>
+    </transition-group>
+  </q-page>
 </template>
 
 <script>
 export default {
-  setup() {
-    return {};
+  setup(props, context) {
+    const closeVideoModal = () => {
+      context.emit("close-videoModal");
+    };
+
+    return {
+      closeVideoModal,
+    };
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.video-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 600;
+  // background: black;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(8px);
+}
+</style>

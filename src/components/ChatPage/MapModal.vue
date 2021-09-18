@@ -10,7 +10,7 @@
           round
           dense
           size="md"
-          class="bg-red-3"
+          class="bg-red-8"
           icon="eva-close-outline"
           style="
             position: fixed;
@@ -18,6 +18,7 @@
             transform: translate(-50%);
             bottom: 20px;
             z-index: 700;
+             opacity: 0.5;
           "
           @click="closeMapModal"
         />
@@ -69,11 +70,12 @@ export default {
       });
 
       setControl();
+      setIcon()
 
       user.value = L.marker([
         store.state.user.geoLocation.lat,
         store.state.user.geoLocation.lng,
-      ])
+      ], { icon: red.value })
         .addTo(map.value)
         .bindPopup(`${store.state.user.name} is here`)
         .openPopup();
@@ -101,7 +103,7 @@ export default {
           });
 
           setControl();
-          // setIcon();
+          setIcon();
 
           // me.value = L.marker([lat.value, lng.value], { icon: red.value })
           me.value = L.marker([lat.value, lng.value])
