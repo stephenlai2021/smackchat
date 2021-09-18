@@ -76,16 +76,23 @@
 
 <script>
 import { uid } from "quasar";
-import { useRoute } from 'vue-router'
+import { useRoute } from "vue-router";
 import { timestamp } from "src/boot/firebase";
-import { inject, ref, watch, onMounted, onBeforeUnmount, onBeforeMount } from "vue";
+import {
+  inject,
+  ref,
+  watch,
+  onMounted,
+  onBeforeUnmount,
+  onBeforeMount,
+} from "vue";
 
 export default {
-  props: ['file'],
+  props: ["file"],
   setup(props, context) {
     const store = inject("store");
 
-    const route = useRoute()
+    const route = useRoute();
 
     const video = ref(null);
     const canvas = ref(null);
@@ -107,7 +114,7 @@ export default {
 
     const cancelCapture = () => {
       // showCameraModal.value = false;
-      closeCameraModal()
+      closeCameraModal();
       // context.emit('close-cameraModal')
       // disableCamera();
     };
@@ -134,7 +141,7 @@ export default {
       videoLoaded.value = false;
       // showCameraModal.value = false;
       disableCamera();
-      context.emit('close-cameraModal')
+      context.emit("close-cameraModal");
     };
 
     watch(
@@ -142,7 +149,7 @@ export default {
       () => {
         closeCameraModal();
         // showCameraModal.value = true;
-        context.emit('open-cameraModal')
+        context.emit("open-cameraModal");
 
         if (frontCamera.value) {
           initFrontCamera();
@@ -153,7 +160,7 @@ export default {
       }
     );
 
-     watch(
+    watch(
       () => store.state.url,
       (newVal, oldVal) => {
         store.methods.sendMessage({
@@ -169,7 +176,7 @@ export default {
           imageCaptured.value = false;
           // showCameraModal.value = false;
 
-          closeCameraModal()
+          closeCameraModal();
           // context.emit('close-cameraModal')
 
           // disableCamera();
@@ -200,7 +207,7 @@ export default {
 
           setTimeout(() => {
             videoLoaded.value = true;
-          }, 250)
+          }, 250);
         })
         .catch((err) => {
           hasCameraSupport.value = false;
@@ -223,7 +230,10 @@ export default {
         });
 
         video.value.srcObject = stream.value;
-        videoLoaded.value = true;
+        // videoLoaded.value = true;
+        setTimeout(() => {
+          videoLoaded.value = true;
+        }, 250);
       } catch (err) {
         hasCameraSupport.value = false;
       }
