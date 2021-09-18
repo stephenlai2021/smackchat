@@ -1,10 +1,10 @@
 <template>
   <q-page>
-    <!-- <transition-group
+    <transition-group
       appear
       enter-active-class="animated fadeIn"
       leave-active-class="animated fadeOut"
-    > -->
+    >
       <div>
         <q-btn
           round
@@ -24,7 +24,7 @@
         />
       </div>
       <div id="map"></div>
-    <!-- </transition-group> -->
+    </transition-group>
   </q-page>
 </template>
 
