@@ -1,8 +1,8 @@
 <template>
-  <div 
-    ref="chats" 
+  <div
+    ref="chats"
     :class="{ invisible: !showMessages }"
-    class="q-mx-md q-my-md column col justify-end messages"  
+    class="q-mx-md q-my-md column col justify-end messages"
   >
     <q-chat-message
       v-for="(message, index) in store.getters.formattedMessages()"
@@ -28,8 +28,8 @@ export default {
   setup() {
     const store = inject("store");
 
-    const chats = ref(null)
-    const showMessages = ref(false)
+    const chats = ref(null);
+    const showMessages = ref(false);
 
     watch(
       () => store.state.messages,

@@ -48,41 +48,19 @@
         </div>
       </q-toolbar>
     </q-header>
-
-    <div class="video-chat"></div>
-
-    <!-- <div
-      ref="chats"
-      :class="{ invisible: !showMessages }"
-      class="q-mx-md q-my-md column col justify-end messages"
-    >
-      <q-chat-message
-        v-for="(message, index) in store.getters.formattedMessages()"
-        :key="index"
-        :avatar="
-          message.from === 'me'
-            ? store.state.userDetails.avatar
-            : store.state.otherUser.avatar
-        "
-        :text="[message.text]"
-        :sent="message.from === 'me'"
-        :stamp="message.createdAt"
-        :bg-color="message.from === 'me' ? 'amber-2' : 'light-green-2'"
-        class="q-my-md"
-      />
-    </div> -->
+  
     <chat-messages />
 
-    <!-- Video Modal -->
-
-    <!-- End of Video Modal -->
-
     <image-modal :file="file" />
+
+    <!-- <video-modal /> -->
 
     <map-modal v-if="showMapModal" @close-mapmodal="showMapModal = false" />
 
     <!-- Camera Modal -->
-    <transition-group
+    <camera-modal v-if="showCameraModal" @close-cameraModal="showCameraModal = false" />
+
+    <!-- <transition-group
       appear
       enter-active-class="animated zoomIn"
       leave-active-class="animated zoomOut"
@@ -153,7 +131,7 @@
           </div>
         </div>
       </div>
-    </transition-group>
+    </transition-group> -->
     <!-- End of Camera Modal -->
 
     <q-footer class="bg-transparent footer" style="backdrop-filter: blur(20px)">
@@ -175,8 +153,9 @@
             color="green-12"
             style="cursor: pointer"
             name="eva-camera-outline"
-            @click="openCameraModal"
+            @click="showCameraModal = true"
           />
+            <!-- @click="openCameraModal" -->
           <q-btn
             round
             size="16px"
@@ -245,7 +224,9 @@ import { EmojiButton } from "@joeattardi/emoji-button";
 export default {
   components: {
     "map-modal": require("components/ChatPage/MapModal.vue").default,
+    "video-modal": require("components/ChatPage/VideoModal.vue").default,
     "image-modal": require("components/ChatPage/ImageModal.vue").default,
+    "camera-modal": require("components/ChatPage/CameraModal.vue").default,
     "chat-messages": require("components/ChatPage/ChatMessages.vue").default,
   },
   setup() {
@@ -513,16 +494,6 @@ export default {
     /* End of Emoji Modal */
     /***********************/
 
-    // watch(
-    //   () => store.state.messages,
-    //   () => {
-    //     setTimeout(() => {
-    //       window.scrollTo(0, chats.value.scrollHeight);
-    //       showMessages.value = true;
-    //     }, 800);
-    //   }
-    // );
-
     watch(
       () => indicator.value,
       (newVal, oldVal) => {
@@ -711,7 +682,6 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  // transform: translateX(-50%);
   width: 100%;
   height: 100vh;
   z-index: 500;
