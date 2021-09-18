@@ -51,7 +51,8 @@
   
     <chat-messages />
 
-    <image-modal :file="file" />
+    <!-- <image-modal v-if="file" :file="file" @close-imageModal="file = null" /> -->
+    <image-modal v-if="file" @close-imageModal="file = null" />
 
     <map-modal v-if="showMapModal" @close-mapmodal="showMapModal = false" />
 

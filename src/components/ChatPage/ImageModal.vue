@@ -4,7 +4,8 @@
       enter-active-class="animated fadeIn"
       leave-active-class="animated fadeOut"
     >
-      <div v-if="file" class="image-modal constraint text-center q-pa-md">
+      <!-- <div v-if="file" class="image-modal constraint text-center q-pa-md"> -->
+      <div class="image-modal constraint text-center q-pa-md">
         <div>{{ file.name }}</div>
         <div v-if="file">Uploading... {{ store.state.progress }}%</div>
         <div
@@ -16,12 +17,34 @@
 </template>
 
 <script>
-import { inject } from "vue";
+import { inject, watch } from "vue";
 
 export default {
   props: ["file"],
-  setup() {
+  setup(props, context) {
     const store = inject("store");
+
+    watch(
+      () => store.state.url,
+      (newVal, oldVal) => {
+        store.methods.sendMessage({
+          text: store.state.url,
+          from: "me",
+          to: route.params.to,
+          createdAt: timestamp(),
+        });
+        if (store.state.uploadCompleted) {
+          // file.value = null;
+          context.emit('close-imageModal')
+
+          // hideCameraBtn.value = false;
+          // imageCaptured.value = false;
+          // showCameraModal.value = false;
+
+          // disableCamera();
+        }
+      }
+    );
 
     return {
       store,
