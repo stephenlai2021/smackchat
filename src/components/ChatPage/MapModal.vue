@@ -59,35 +59,7 @@ export default {
     // methods
     const closeMapModal = () => {
       context.emit("close-mapmodal");
-    };
-
-    const getUserGeoLocation = () => {
-      map.value = L.map("map", {
-        center: [store.state.geoLocation.lat, store.state.geoLocation.lng],
-        zoom: zoom.value,
-        maxZoom: 18,
-        zoomControl: false,
-      });
-
-      setControl();
-      setIcon()
-
-      user.value = L.marker([
-        store.state.user.geoLocation.lat,
-        store.state.user.geoLocation.lng,
-      ], { icon: red.value })
-        .addTo(map.value)
-        .bindPopup(`${store.state.user.name} is here`)
-        .openPopup();
-
-      // addStores();
-
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution:
-          '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>         contributors',
-        maxZoom: 18,
-      }).addTo(map.value);
-    };
+    };  
 
     const initMap = () => {
       if (navigator.geolocation) {
@@ -110,8 +82,6 @@ export default {
             .addTo(map.value)
             .bindPopup("您的位置")
             .openPopup();
-
-          // addStores();
 
           L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution:
@@ -161,8 +131,6 @@ export default {
 
     onMounted(() => {
       initMap();
-
-      // getUserGeoLocation()
     });
 
     return {
