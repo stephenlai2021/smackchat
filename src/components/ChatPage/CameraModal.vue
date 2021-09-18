@@ -252,6 +252,7 @@ export default {
 
       video,
       canvas,
+      frontCamera,
 
       btnSwap,
       captureImage,
