@@ -1,8 +1,8 @@
 <template>
     <transition-group
       appear
-      enter-active-class="animated fadeIn"
-      leave-active-class="animated fadeOut"
+      enter-active-class="animated slideInUp"
+      leave-active-class="animated slideOutDown"
     >
       <!-- <div v-if="file" class="image-modal constraint text-center q-pa-md"> -->
       <div class="image-modal constraint text-center q-pa-md">
@@ -19,11 +19,17 @@
 
 <script>
 import { inject, watch } from "vue";
+import { useRoute } from 'vue-router'
+import { timestamp } from "src/boot/firebase";
 
 export default {
   props: ["file"],
   setup(props, context) {
     const store = inject("store");
+
+    const route = useRoute()
+
+    // const showImageModal = ref(false)
 
     watch(
       () => store.state.url,
@@ -36,7 +42,9 @@ export default {
         });
         if (store.state.uploadCompleted) {
           // file.value = null;
+          // file = null;
           context.emit('close-imageModal')
+          // showImageModal.value = false
 
           // hideCameraBtn.value = false;
           // imageCaptured.value = false;
@@ -49,6 +57,8 @@ export default {
 
     return {
       store,
+
+      // showImageModal,
     };
   },
 };

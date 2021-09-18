@@ -51,8 +51,7 @@
   
     <chat-messages />
 
-    <image-modal :file="file" v-if="showImageModal" @close-imageModal="showImageModal = null" />
-    <!-- <image-modal v-if="file" @close-imageModal="file = null" /> -->
+    <image-modal :file="file" v-if="file" @close-imageModal="file = null" />
 
     <map-modal v-if="showMapModal" @close-mapmodal="showMapModal = false" />
 
@@ -154,7 +153,6 @@
             name="eva-camera-outline"
             @click="showCameraModal = true"
           />
-            <!-- @click="openCameraModal" -->
           <q-btn
             round
             size="16px"
@@ -213,11 +211,11 @@
 
 <script>
 import { useI18n } from "vue-i18n";
-import { useQuasar, uid } from "quasar";
+import { useQuasar } from "quasar";
 import { timestamp } from "src/boot/firebase";
 import { formatDistanceToNow } from "date-fns";
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted, onBeforeUnmount, inject, watch } from "vue";
+import { ref, onMounted, inject, watch } from "vue";
 import { EmojiButton } from "@joeattardi/emoji-button";
 
 export default {
@@ -423,7 +421,6 @@ export default {
     /***************/
     const file = ref(null);
     const fileError = ref(null);
-    const showImageModal = ref(false)
 
     const types = ["image/png", "image/jpeg", "image/jpg"];
 
@@ -434,7 +431,6 @@ export default {
       if (selected && types.includes(selected.type)) {
         file.value = selected;
         fileError.value = null;
-        showImageModal.value = false
 
         store.methods.useStorage2(file.value, "smackchat");
 
