@@ -7,7 +7,8 @@
       <!-- <div v-if="file" class="image-modal constraint text-center q-pa-md"> -->
       <div class="image-modal constraint text-center q-pa-md">
         <div>{{ file.name }}</div>
-        <div v-if="file">Uploading... {{ store.state.progress }}%</div>
+        <!-- <div v-if="file">Uploading... {{ store.state.progress }}%</div> -->
+        <div>Uploading... {{ store.state.progress }}%</div>
         <div
           class="progress-bar"
           :style="{ width: store.state.progress + '%' }"
