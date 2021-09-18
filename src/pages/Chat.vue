@@ -51,7 +51,7 @@
 
     <div class="video-chat"></div>
 
-    <div
+    <!-- <div
       ref="chats"
       :class="{ invisible: !showMessages }"
       class="q-mx-md q-my-md column col justify-end messages"
@@ -70,33 +70,16 @@
         :bg-color="message.from === 'me' ? 'amber-2' : 'light-green-2'"
         class="q-my-md"
       />
-    </div>
+    </div> -->
+    <chat-messages />
 
     <!-- Video Modal -->
 
     <!-- End of Video Modal -->
-        
-    <!-- Image Modal -->
-    <!-- <transition-group
-      appear
-      enter-active-class="animated fadeIn"
-      leave-active-class="animated fadeOut"
-    >
-      <div v-if="file" class="image-modal constraint text-center q-pa-md">
-        <div>{{ file.name }}</div>
-        <div v-if="file">Uploading... {{ store.state.progress }}%</div>
-        <div
-          class="progress-bar"
-          :style="{ width: store.state.progress + '%' }"
-        ></div>
-      </div>
-    </transition-group> -->
-    <!-- End of Image Modal -->
-    
+
     <image-modal :file="file" />
 
     <map-modal v-if="showMapModal" @close-mapmodal="showMapModal = false" />
-    
 
     <!-- Camera Modal -->
     <transition-group
@@ -263,6 +246,7 @@ export default {
   components: {
     "map-modal": require("components/ChatPage/MapModal.vue").default,
     "image-modal": require("components/ChatPage/ImageModal.vue").default,
+    "chat-messages": require("components/ChatPage/ChatMessages.vue").default,
   },
   setup() {
     const $q = useQuasar();
@@ -529,15 +513,15 @@ export default {
     /* End of Emoji Modal */
     /***********************/
 
-    watch(
-      () => store.state.messages,
-      () => {
-        setTimeout(() => {
-          window.scrollTo(0, chats.value.scrollHeight);
-          showMessages.value = true;
-        }, 500);
-      }
-    );
+    // watch(
+    //   () => store.state.messages,
+    //   () => {
+    //     setTimeout(() => {
+    //       window.scrollTo(0, chats.value.scrollHeight);
+    //       showMessages.value = true;
+    //     }, 800);
+    //   }
+    // );
 
     watch(
       () => indicator.value,
