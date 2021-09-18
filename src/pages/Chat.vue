@@ -51,7 +51,7 @@
   
     <chat-messages />
 
-    <image-modal :file="file" @close-imageModal="file = null" />
+    <image-modal :file="file" v-if="showImageModal" @close-imageModal="showImageModal = null" />
     <!-- <image-modal v-if="file" @close-imageModal="file = null" /> -->
 
     <map-modal v-if="showMapModal" @close-mapmodal="showMapModal = false" />
@@ -423,6 +423,7 @@ export default {
     /***************/
     const file = ref(null);
     const fileError = ref(null);
+    const showImageModal = ref(false)
 
     const types = ["image/png", "image/jpeg", "image/jpg"];
 
@@ -433,6 +434,7 @@ export default {
       if (selected && types.includes(selected.type)) {
         file.value = selected;
         fileError.value = null;
+        showImageModal.value = false
 
         store.methods.useStorage2(file.value, "smackchat");
 
@@ -607,6 +609,7 @@ export default {
       // hideCameraBtn,
       // cameraDisabled,
       // showCaptureBtn,
+      showImageModal,
       showCameraModal,
       // hasCameraSupport,
 

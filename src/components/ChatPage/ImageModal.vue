@@ -4,8 +4,8 @@
       enter-active-class="animated fadeIn"
       leave-active-class="animated fadeOut"
     >
-      <div v-if="file" class="image-modal constraint text-center q-pa-md">
-      <!-- <div class="image-modal constraint text-center q-pa-md"> -->
+      <!-- <div v-if="file" class="image-modal constraint text-center q-pa-md"> -->
+      <div class="image-modal constraint text-center q-pa-md">
         <div>{{ file.name }}</div>
         <!-- <div v-if="file">Uploading... {{ store.state.progress }}%</div> -->
         <div>Uploading... {{ store.state.progress }}%</div>
