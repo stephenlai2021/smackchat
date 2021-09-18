@@ -605,7 +605,7 @@ export default {
       // hideCameraBtn,
       // cameraDisabled,
       // showCaptureBtn,
-      showImageModal,
+      // showImageModal,
       showCameraModal,
       // hasCameraSupport,
 
