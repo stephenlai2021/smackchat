@@ -10,13 +10,13 @@
         <div class="full-width camera-panel">
           <div style="width: 100%; position: relative">
             <video
-              v-show="!imageCaptured"
+              v-show="!imageCaptured || videoLoaded"
               ref="video"
               autoplay
               style="width: 100%"
             />
             <q-btn
-              v-if="showCaptureBtn"
+              v-if="videoLoaded"
               color="red"
               icon="eva-close-outline"
               size="md"
@@ -25,7 +25,7 @@
               @click="cancelCapture"
             />
             <q-btn
-              v-if="showCaptureBtn"
+              v-if="videoLoaded"
               color="blue"
               icon="eva-camera-outline"
               size="lg"
@@ -40,7 +40,7 @@
               @click="captureImage"
             />
             <q-btn
-              v-if="showCaptureBtn && btnSwap"
+              v-if="videoLoaded && btnSwap"
               :disable="hideCameraBtn"
               color="amber-8"
               icon="eva-swap-outline"
@@ -94,7 +94,7 @@ export default {
     const imageCaptured = ref(false);
     const hideCameraBtn = ref(false);
     const hasCameraSupport = ref(true);
-    const showCaptureBtn = ref(false);
+    const videoLoaded = ref(false);
     // const showCameraModal = ref(false);
     const frontCamera = ref(true);
     const post = ref({
@@ -131,7 +131,7 @@ export default {
     // };
 
     const closeCameraModal = () => {
-      showCaptureBtn.value = false;
+      videoLoaded.value = false;
       // showCameraModal.value = false;
       disableCamera();
       context.emit('close-cameraModal')
@@ -178,7 +178,7 @@ export default {
     );
 
     const initFrontCamera = () => {
-      showCaptureBtn.value = false;
+      videoLoaded.value = false;
 
       const supports = navigator.mediaDevices.getSupportedConstraints();
       if (!supports["facingMode"]) {
@@ -197,7 +197,7 @@ export default {
         })
         .then((stream) => {
           video.value.srcObject = stream;
-          showCaptureBtn.value = true;
+          videoLoaded.value = true;
         })
         .catch((err) => {
           hasCameraSupport.value = false;
@@ -205,7 +205,7 @@ export default {
     };
 
     const initBackCamera = async () => {
-      showCaptureBtn.value = false;
+      videoLoaded.value = false;
 
       const supports = navigator.mediaDevices.getSupportedConstraints();
       if (!supports["facingMode"]) {
@@ -220,7 +220,7 @@ export default {
         });
 
         video.value.srcObject = stream.value;
-        showCaptureBtn.value = true;
+        videoLoaded.value = true;
       } catch (err) {
         hasCameraSupport.value = false;
       }
@@ -239,7 +239,7 @@ export default {
         canvas.value.height
       );
 
-      showCaptureBtn.value = false;
+      videoLoaded.value = false;
       imageCaptured.value = true;
       hideCameraBtn.value = true;
 
@@ -291,7 +291,7 @@ export default {
       hideCameraBtn,
       imageCaptured,
       cancelCapture,
-      showCaptureBtn,
+      videoLoaded,
     };
   },
 };
