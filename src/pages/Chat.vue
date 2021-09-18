@@ -57,7 +57,6 @@
 
     <!-- Camera Modal -->
     <camera-modal v-if="showCameraModal" @close-cameraModal="showCameraModal = false" @open-cameraModal="showCameraModal = true" />
-    <!-- <camera-modal /> -->
 
     <!-- <transition-group
       appear
@@ -247,6 +246,7 @@ export default {
     const inputFocus = ref(false);
     const showMessages = ref(false);
     const to = ref({});
+    const showMapModal = ref(false)
 
     /****************/
     /* Video Button */
@@ -257,163 +257,162 @@ export default {
     /****************/
     /* Camera Button */
     /****************/
-    const video = ref(null);
-    const canvas = ref(null);
-    const btnSwap = ref(true);
-    const stream = ref(null);
-    const imageCaptured = ref(false);
-    const hideCameraBtn = ref(false);
-    const hasCameraSupport = ref(true);
-    const cameraDisabled = ref(false);
-    const showCaptureBtn = ref(false);
-    const showMapModal = ref(false);
+    // const video = ref(null);
+    // const canvas = ref(null);
+    // const btnSwap = ref(true);
+    // const stream = ref(null);
+    // const imageCaptured = ref(false);
+    // const hideCameraBtn = ref(false);
+    // const hasCameraSupport = ref(true);
+    // const cameraDisabled = ref(false);
+    // const showCaptureBtn = ref(false);
+    // const showMapModal = ref(false);
     const showCameraModal = ref(false);
-    const frontCamera = ref(true);
-    const post = ref({
-      id: uid(),
-      caption: "",
-      location: "",
-      photo: null,
-      createdAt: Date.now(),
-    });
+    // const frontCamera = ref(true);
+    // const post = ref({
+    //   id: uid(),
+    //   caption: "",
+    //   location: "",
+    //   photo: null,
+    //   createdAt: Date.now(),
+    // });
 
-    const cancelCapture = () => {
-      showCameraModal.value = false;
-      disableCamera();
-    };
+    // const cancelCapture = () => {
+    //   showCameraModal.value = false;
+    //   disableCamera();
+    // };
 
-    const openCameraModal = () => {
-      showCameraModal.value = true;
-      initFrontCamera();
+    // const openCameraModal = () => {
+    //   showCameraModal.value = true;
+    //   initFrontCamera();
 
-      if (store.state.desktop) {
-        btnSwap.value = false;
-      }
-    };
+    //   if (store.state.desktop) {
+    //     btnSwap.value = false;
+    //   }
+    // };
 
-    const closeCameraModal = () => {
-      showCaptureBtn.value = false;
-      showCameraModal.value = false;
-      disableCamera();
-    };
+    // const closeCameraModal = () => {
+    //   showCaptureBtn.value = false;
+    //   showCameraModal.value = false;
+    //   disableCamera();
+    // };
 
-    watch(
-      () => frontCamera.value,
-      () => {
-        closeCameraModal();
-        showCameraModal.value = true;
+    // watch(
+    //   () => frontCamera.value,
+    //   () => {
+    //     closeCameraModal();
+    //     showCameraModal.value = true;
 
-        if (frontCamera.value) {
-          initFrontCamera();
-        }
-        if (!frontCamera.value) {
-          initBackCamera();
-        }
-      }
-    );
+    //     if (frontCamera.value) {
+    //       initFrontCamera();
+    //     }
+    //     if (!frontCamera.value) {
+    //       initBackCamera();
+    //     }
+    //   }
+    // );
 
-    const initFrontCamera = () => {
-      showCaptureBtn.value = false;
+    // const initFrontCamera = () => {
+    //   showCaptureBtn.value = false;
 
-      const supports = navigator.mediaDevices.getSupportedConstraints();
-      if (!supports["facingMode"]) {
-        alert("This browser does not support facingMode!");
-      }
+    //   const supports = navigator.mediaDevices.getSupportedConstraints();
+    //   if (!supports["facingMode"]) {
+    //     alert("This browser does not support facingMode!");
+    //   }
 
-      if (store.state.desktop) {
-        btnSwap.value = false;
-      }
+    //   if (store.state.desktop) {
+    //     btnSwap.value = false;
+    //   }
 
-      navigator.mediaDevices
-        .getUserMedia({
-          video: {
-            facingMode: "user",
-          },
-        })
-        .then((stream) => {
-          video.value.srcObject = stream;
-          showCaptureBtn.value = true;
-        })
-        .catch((err) => {
-          hasCameraSupport.value = false;
-        });
-    };
+    //   navigator.mediaDevices
+    //     .getUserMedia({
+    //       video: {
+    //         facingMode: "user",
+    //       },
+    //     })
+    //     .then((stream) => {
+    //       video.value.srcObject = stream;
+    //       showCaptureBtn.value = true;
+    //     })
+    //     .catch((err) => {
+    //       hasCameraSupport.value = false;
+    //     });
+    // };
 
-    const initBackCamera = async () => {
-      showCaptureBtn.value = false;
+    // const initBackCamera = async () => {
+    //   showCaptureBtn.value = false;
 
-      const supports = navigator.mediaDevices.getSupportedConstraints();
-      if (!supports["facingMode"]) {
-        alert("This browser does not support facingMode!");
-      }
+    //   const supports = navigator.mediaDevices.getSupportedConstraints();
+    //   if (!supports["facingMode"]) {
+    //     alert("This browser does not support facingMode!");
+    //   }
 
-      try {
-        stream.value = await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: { exact: "environment" },
-          },
-        });
+    //   try {
+    //     stream.value = await navigator.mediaDevices.getUserMedia({
+    //       video: {
+    //         facingMode: { exact: "environment" },
+    //       },
+    //     });
 
-        video.value.srcObject = stream.value;
-        showCaptureBtn.value = true;
-      } catch (err) {
-        hasCameraSupport.value = false;
-      }
-    };
+    //     video.value.srcObject = stream.value;
+    //     showCaptureBtn.value = true;
+    //   } catch (err) {
+    //     hasCameraSupport.value = false;
+    //   }
+    // };
 
-    const captureImage = () => {
-      canvas.value.width = video.value.getBoundingClientRect().width;
-      canvas.value.height = video.value.getBoundingClientRect().height;
+    // const captureImage = () => {
+    //   canvas.value.width = video.value.getBoundingClientRect().width;
+    //   canvas.value.height = video.value.getBoundingClientRect().height;
 
-      let context = canvas.value.getContext("2d");
-      context.drawImage(
-        video.value,
-        0,
-        0,
-        canvas.value.width,
-        canvas.value.height
-      );
+    //   let context = canvas.value.getContext("2d");
+    //   context.drawImage(
+    //     video.value,
+    //     0,
+    //     0,
+    //     canvas.value.width,
+    //     canvas.value.height
+    //   );
 
-      showCaptureBtn.value = false;
-      imageCaptured.value = true;
-      hideCameraBtn.value = true;
+    //   showCaptureBtn.value = false;
+    //   imageCaptured.value = true;
+    //   hideCameraBtn.value = true;
 
-      post.value.photo = dataURItoBlob(canvas.value.toDataURL());
-      console.log("photo info: ", post.value.photo);
+    //   post.value.photo = dataURItoBlob(canvas.value.toDataURL());
+    //   console.log("photo info: ", post.value.photo);
 
-      store.methods.useStorage2(post.value.photo, "smackchat");
-      store.state.progress = null;
-    };
+    //   store.methods.useStorage2(post.value.photo, "smackchat");
+    //   store.state.progress = null;
+    // };
 
-    const dataURItoBlob = (dataURI) => {
-      const byteString = atob(dataURI.split(",")[1]);
+    // const dataURItoBlob = (dataURI) => {
+    //   const byteString = atob(dataURI.split(",")[1]);
 
-      const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+    //   const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
 
-      const ab = new ArrayBuffer(byteString.length);
+    //   const ab = new ArrayBuffer(byteString.length);
 
-      const ia = new Uint8Array(ab);
+    //   const ia = new Uint8Array(ab);
 
-      for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-      }
+    //   for (var i = 0; i < byteString.length; i++) {
+    //     ia[i] = byteString.charCodeAt(i);
+    //   }
 
-      const blob = new Blob([ab], { type: mimeString });
-      return blob;
-    };
+    //   const blob = new Blob([ab], { type: mimeString });
+    //   return blob;
+    // };
 
-    const disableCamera = () => {
-      if (video.value) {
-        video.value.srcObject.getVideoTracks().forEach((track) => {
-          track.stop();
-        });
-      }
-    };
+    // const disableCamera = () => {
+    //   if (video.value) {
+    //     video.value.srcObject.getVideoTracks().forEach((track) => {
+    //       track.stop();
+    //     });
+    //   }
+    // };
 
-    onBeforeUnmount(() => {
-      closeCameraModal();
-      // disableCamera()
-    });
+    // onBeforeUnmount(() => {
+    //   closeCameraModal();
+    // });
     /************************/
     /* End of Camera Button */
     /************************/
@@ -450,26 +449,26 @@ export default {
       }
     };
 
-    watch(
-      () => store.state.url,
-      (newVal, oldVal) => {
-        store.methods.sendMessage({
-          text: store.state.url,
-          from: "me",
-          to: route.params.to,
-          createdAt: timestamp(),
-        });
-        if (store.state.uploadCompleted) {
-          file.value = null;
+    // watch(
+    //   () => store.state.url,
+    //   (newVal, oldVal) => {
+    //     store.methods.sendMessage({
+    //       text: store.state.url,
+    //       from: "me",
+    //       to: route.params.to,
+    //       createdAt: timestamp(),
+    //     });
+    //     if (store.state.uploadCompleted) {
+    //       file.value = null;
 
-          hideCameraBtn.value = false;
-          imageCaptured.value = false;
-          showCameraModal.value = false;
+    //       // hideCameraBtn.value = false;
+    //       // imageCaptured.value = false;
+    //       // showCameraModal.value = false;
 
-          disableCamera();
-        }
-      }
-    );
+    //       // disableCamera();
+    //     }
+    //   }
+    // );
     /***********************/
     /* End of Image Button */
     /***********************/
@@ -597,17 +596,18 @@ export default {
       showMapModal,
 
       /* camera */
-      post,
-      video,
-      canvas,
-      btnSwap,
-      frontCamera,
-      imageCaptured,
-      cancelCapture,
-      hideCameraBtn,
-      cameraDisabled,
-      showCaptureBtn,
-      hasCameraSupport,
+      // post,
+      // video,
+      // canvas,
+      // btnSwap,
+      // frontCamera,
+      // imageCaptured,
+      // cancelCapture,
+      // hideCameraBtn,
+      // cameraDisabled,
+      // showCaptureBtn,
+      showCameraModal,
+      // hasCameraSupport,
 
       // methods
       call,
@@ -622,10 +622,10 @@ export default {
       formatDistanceToNow,
 
       /* camera */
-      captureImage,
-      disableCamera,
-      openCameraModal,
-      closeCameraModal,
+      // captureImage,
+      // disableCamera,
+      // openCameraModal,
+      // closeCameraModal,
       /* end of camera */
     };
   },

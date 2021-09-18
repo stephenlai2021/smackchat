@@ -1,8 +1,8 @@
 <template>
   <transition-group
     appear
-    enter-active-class="animated slideInUp"
-    leave-active-class="animated slideOutDown"
+    enter-active-class="animated zoomIn"
+    leave-active-class="animated zoomOut"
   >
     <!-- <div v-if="showCameraModal" class="camera-modal"> -->
     <div class="camera-modal">
@@ -76,11 +76,16 @@
 
 <script>
 import { uid } from "quasar";
-import { inject, ref, watch, onMounted, onBeforeUnmount } from "vue";
+import { useRoute } from 'vue-router'
+import { timestamp } from "src/boot/firebase";
+import { inject, ref, watch, onMounted, onBeforeUnmount, onBeforeMount } from "vue";
 
 export default {
+  props: ['file'],
   setup(props, context) {
     const store = inject("store");
+
+    const route = useRoute()
 
     const video = ref(null);
     const canvas = ref(null);
@@ -103,16 +108,17 @@ export default {
     const cancelCapture = () => {
       // showCameraModal.value = false;
       closeCameraModal()
-      context.emit('close-cameraModal')
+      // context.emit('close-cameraModal')
       // disableCamera();
     };
 
-    onMounted(() => {
+    // onMounted(() => {
+    onBeforeMount(() => {
       initFrontCamera();
 
-      if (store.state.desktop) {
-        btnSwap.value = false;
-      }
+      // if (store.state.desktop) {
+      //   btnSwap.value = false;
+      // }
     });
 
     // const openCameraModal = () => {
@@ -127,8 +133,8 @@ export default {
     const closeCameraModal = () => {
       showCaptureBtn.value = false;
       // showCameraModal.value = false;
-      context.emit('close-cameraModal')
       disableCamera();
+      context.emit('close-cameraModal')
     };
 
     watch(
@@ -143,6 +149,30 @@ export default {
         }
         if (!frontCamera.value) {
           initBackCamera();
+        }
+      }
+    );
+
+     watch(
+      () => store.state.url,
+      (newVal, oldVal) => {
+        store.methods.sendMessage({
+          text: store.state.url,
+          from: "me",
+          to: route.params.to,
+          createdAt: timestamp(),
+        });
+        if (store.state.uploadCompleted) {
+          // file.value = null;
+
+          hideCameraBtn.value = false;
+          imageCaptured.value = false;
+          // showCameraModal.value = false;
+
+          closeCameraModal()
+          // context.emit('close-cameraModal')
+
+          // disableCamera();
         }
       }
     );
