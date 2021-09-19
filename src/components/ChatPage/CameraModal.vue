@@ -205,21 +205,14 @@ export default {
           .then((stream) => {
             video.value.srcObject = stream;
 
-            const track = stream.getVideoTracks()[0];
+            track.value = stream.getVideoTracks()[0];
 
-            const imageCapture = new ImageCapture(track);
+            const imageCapture = new ImageCapture(track.value);
 
             imageCapture.getPhotoCapabilities().then(() => {
-              if (flashLight.value) {
-                track.applyConstraints({
-                  advanced: [{ torch: true }],
-                });
-              }
-              if (!flashLight.value) {
-                track.applyConstraints({
-                  advanced: [{ torch: false }],
-                });
-              }
+              track.value.applyConstraints({
+                advanced: [{ torch: flashLight.value ? true : false }],
+              });
             });
 
             setTimeout(() => {
