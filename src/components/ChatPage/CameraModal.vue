@@ -210,9 +210,9 @@ export default {
 
             track.value = stream.getVideoTracks()[1];
 
-            // track.applyConstraints({
-            //   advanced: [{ torch: flashLight.value ? true : false }],
-            // });
+            track.applyConstraints({
+              advanced: [{ torch: flashLight.value ? true : false }],
+            });
 
             // if (flashLight.value) {
             //   track.applyConstraints({
