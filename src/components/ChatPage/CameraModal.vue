@@ -210,19 +210,19 @@ export default {
 
             track.value = stream.getVideoTracks()[1];
 
-            track.applyConstraints({
-              advanced: [{ torch: flashLight.value ? true : false }],
-            });
+            // track.applyConstraints({
+            //   advanced: [{ torch: flashLight.value ? true : false }],
+            // });
 
-            // if (flashLight.value) {
-            //   track.applyConstraints({
-            //     advanced: [{ torch: true }],
-            //   })
-            // } else {
-            //   track.applyConstraints({
-            //     advanced: [{ torch: false }],
-            //   })
-            // }
+            if (flashLight.value) {
+              track.applyConstraints({
+                advanced: [{ torch: true }],
+              })
+            } else {
+              track.applyConstraints({
+                advanced: [{ torch: false }],
+              })
+            }
 
             setTimeout(() => {
               videoLoaded.value = true;
