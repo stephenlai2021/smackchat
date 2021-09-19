@@ -209,10 +209,10 @@ export default {
           .then((stream) => {
             video.value.srcObject = stream;
 
-            const track = stream.getVideoTracks()[2];
+            const track = stream.getVideoTracks()[0];
 
             track.applyConstraints({
-              advanced: [{ torch: torch.value }],
+              advanced: [{ torch: true }],
             });
 
             // if (flashLight.value) {
