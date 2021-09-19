@@ -195,40 +195,45 @@ export default {
         btnSwap.value = false;
       }
 
-      navigator.mediaDevices
-        .getUserMedia({
-          video: {
-            facingMode: "user",
-          },
-        })
-        .then((stream) => {
-          video.value.srcObject = stream;
-
-          const track = stream.getVideoTracks()[0];
-          new ImageCapture(track).getPhotoCapabilities().then(() => {
-            track.applyConstraints({
-              advanced: [{ torch: flashLight.value ? true : false }],
+      if ('mediaDevices' in navigator) {
+        navigator.mediaDevices
+          .getUserMedia({
+            video: {
+              facingMode: "user",
+            },
+          })
+          .then((stream) => {
+            video.value.srcObject = stream;
+  
+            const track = stream.getVideoTracks()[0];
+  
+            const imageCapture = new ImageCapture(track)
+  
+            imageCapture.getPhotoCapabilities().then(() => {
+              track.applyConstraints({
+                advanced: [{ torch: flashLight.value ? true : false }],
+              });
             });
+  
+            // if (flashLight.value) {
+            //   track.applyConstraints({
+            //     advanced: [{ torch: true }],
+            //   });
+            // }
+            // if (!flashLight.value) {
+            //   track.applyConstraints({
+            //     advanced: [{ torch: false }],
+            //   });
+            // }
+  
+            setTimeout(() => {
+              videoLoaded.value = true;
+            }, 250);
+          })
+          .catch((err) => {
+            hasCameraSupport.value = false;
           });
-
-          // if (flashLight.value) {
-          //   track.applyConstraints({
-          //     advanced: [{ torch: true }],
-          //   });
-          // }
-          // if (!flashLight.value) {
-          //   track.applyConstraints({
-          //     advanced: [{ torch: false }],
-          //   });
-          // }
-
-          setTimeout(() => {
-            videoLoaded.value = true;
-          }, 250);
-        })
-        .catch((err) => {
-          hasCameraSupport.value = false;
-        });
+      }
     };
 
     const initBackCamera = async () => {
@@ -250,16 +255,16 @@ export default {
 
         track.value = stream.value.getVideoTracks()[0];
         new ImageCapture(track.value).getPhotoCapabilities().then(() => {
-            track.applyConstraints({
+            track.value.applyConstraints({
               advanced: [{ torch: flashLight.value ? true : false }],
             });
           });
 
         // flashLight.value ?
 
-        track.value.applyConstraints({
-          advanced: [{ torch: flashLight.value ? true : false }],
-        });
+        // track.value.applyConstraints({
+        //   advanced: [{ torch: flashLight.value ? true : false }],
+        // });
 
         // if (flashLight.value) {
         //   track.applyConstraints({
