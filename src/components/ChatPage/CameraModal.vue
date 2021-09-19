@@ -47,7 +47,7 @@
               size="md"
               flat
               round
-              style="position: absolute; bottom: 25px; left: 20px"
+              style="position: absolute; bottom: 30px; left: 20px"
               @click="flashLight = !flashLight"
             />
             <q-btn
@@ -58,7 +58,7 @@
               size="md"
               flat
               round
-              style="position: absolute; bottom: 25px; right: 20px"
+              style="position: absolute; bottom: 30px; right: 20px"
               @click="frontCamera = !frontCamera"
             />
             <canvas
@@ -111,6 +111,7 @@ export default {
     const hasCameraSupport = ref(true);
     const videoLoaded = ref(false);
     const frontCamera = ref(true);
+    const torch = ref(false)
     const post = ref({
       id: uid(),
       caption: "",
@@ -132,6 +133,10 @@ export default {
       disableCamera();
       context.emit("close-cameraModal");
     };
+
+    watch(() => flashLight.value, () => {
+      flashLight.value ? torch.value = true : torch.value = false
+    })
 
     watch(
       () => frontCamera.value,
@@ -191,7 +196,7 @@ export default {
           const imageCapture = new ImageCapture(track);
           imageCapture.getPhotoCapabilities().then(() => {
             track.applyConstraints({
-              advanced: [{ torch: flashLight ? true : false }],
+              advanced: [{ torch: torch.value }],
             });
           });
 
