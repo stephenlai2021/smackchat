@@ -135,22 +135,11 @@ export default {
       context.emit("close-cameraModal");
     };
 
-    watch(
-      () => flashLight.value,
-      () => {
-        flashLight.value ? (torch.value = true) : (torch.value = false);
-        // if (flashLight.value) {
-        //   track.value.applyConstraints({
-        //     advanced: [{ torch: true }],
-        //   });
-        // }
-        // if (!flashLight.value) {
-        //   track.value.applyConstraints({
-        //     advanced: [{ torch: false }],
-        //   });
-        // }
-      }
-    );
+    // watch(
+    //   () => flashLight.value,
+    //   () => {
+    //     flashLight.value ? (torch.value = true) : (torch.value = false);
+    // );
 
     watch(
       () => frontCamera.value,
@@ -211,10 +200,15 @@ export default {
 
               const track = stream.getVideoTracks()[0];
 
-              track.applyConstraints({
-                // advanced: [{ torch: true }],
-                advanced: [{ torch: torch.value }],
-              })
+              if (flashLight.value) {
+                track.applyConstraints({
+                  advanced: [{ torch: true }],               
+                })
+              } else {
+                track.applyConstraints({
+                  advanced: [{ torch: false }],               
+                })
+              }
 
               setTimeout(() => {
                 videoLoaded.value = true;
