@@ -21,7 +21,7 @@
               size="md"
               flat
               round
-              style="position: absolute; top: 20px; right: 20px;"
+              style="position: absolute; top: 20px; right: 20px"
               @click="cancelCapture"
             />
             <q-btn
@@ -43,15 +43,22 @@
               v-if="videoLoaded && btnSwap"
               :disable="hideCameraBtn"
               class="text-amber"
+              icon="eva-bulb-outline"
+              size="md"
+              flat
+              round
+              style="position: absolute; bottom: 25px; left: 20px"
+              @click="flashLight = !flashLight"
+            />
+            <q-btn
+              v-if="videoLoaded && btnSwap"
+              :disable="hideCameraBtn"
+              class="text-green"
               icon="eva-swap-outline"
               size="md"
               flat
               round
-              style="
-                position: absolute;
-                bottom: 25px;
-                right: 20px;
-              "
+              style="position: absolute; bottom: 25px; right: 20px"
               @click="frontCamera = !frontCamera"
             />
             <canvas
@@ -99,6 +106,7 @@ export default {
     const btnSwap = ref(true);
     const stream = ref(null);
     const imageCaptured = ref(false);
+    const flashLight = ref(null);
     const hideCameraBtn = ref(false);
     const hasCameraSupport = ref(true);
     const videoLoaded = ref(false);
@@ -178,6 +186,14 @@ export default {
         })
         .then((stream) => {
           video.value.srcObject = stream;
+
+          const track = stream.getVideoTracks()[0];
+          const imageCapture = new ImageCapture(track);
+          imageCapture.getPhotoCapabilities().then(() => {
+            track.applyConstraints({
+              advanced: [{ torch: flashLight ? true : false }],
+            });
+          });
 
           setTimeout(() => {
             videoLoaded.value = true;
@@ -270,6 +286,7 @@ export default {
 
       video,
       canvas,
+      flashLight,
       frontCamera,
 
       btnSwap,
