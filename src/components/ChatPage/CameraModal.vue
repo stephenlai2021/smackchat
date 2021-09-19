@@ -40,7 +40,7 @@
               @click="captureImage"
             />
             <q-btn
-              v-if="videoLoaded && btnSwap"
+              v-if="videoLoaded"
               :disable="hideCameraBtn"
               class="text-amber"
               icon="eva-bulb-outline"
@@ -111,7 +111,7 @@ export default {
     const hasCameraSupport = ref(true);
     const videoLoaded = ref(false);
     const frontCamera = ref(true);
-    const torch = ref(false)
+    const torch = ref(false);
     const post = ref({
       id: uid(),
       caption: "",
@@ -134,9 +134,12 @@ export default {
       context.emit("close-cameraModal");
     };
 
-    watch(() => flashLight.value, () => {
-      flashLight.value ? torch.value = true : torch.value = false
-    })
+    watch(
+      () => flashLight.value,
+      () => {
+        flashLight.value ? (torch.value = true) : (torch.value = false);
+      }
+    );
 
     watch(
       () => frontCamera.value,
@@ -183,30 +186,34 @@ export default {
         btnSwap.value = false;
       }
 
-      navigator.mediaDevices
-        .getUserMedia({
-          video: {
-            facingMode: "user",
-          },
-        })
-        .then((stream) => {
-          video.value.srcObject = stream;
+      const SUPPORTS_MEDIA_DEVICES = "mediaDevices" in navigator;
 
-          const track = stream.getVideoTracks()[0];
-          const imageCapture = new ImageCapture(track);
-          imageCapture.getPhotoCapabilities().then(() => {
-            track.applyConstraints({
-              advanced: [{ torch: torch.value }],
-            });
+      if (SUPPORTS_MEDIA_DEVICES) {
+        navigator.mediaDevices
+          .getUserMedia({
+            video: {
+              facingMode: "user",
+            },
+          })
+          .then((stream) => {
+            video.value.srcObject = stream;
+
+            const track = stream.getVideoTracks()[0];
+            const imageCapture = new ImageCapture(track);
+            // imageCapture.getPhotoCapabilities().then(() => {
+              track.applyConstraints({
+                advanced: [{ torch: torch.value }],
+              });
+            // });
+
+            setTimeout(() => {
+              videoLoaded.value = true;
+            }, 250);
+          })
+          .catch((err) => {
+            hasCameraSupport.value = false;
           });
-
-          setTimeout(() => {
-            videoLoaded.value = true;
-          }, 250);
-        })
-        .catch((err) => {
-          hasCameraSupport.value = false;
-        });
+      }
     };
 
     const initBackCamera = async () => {
