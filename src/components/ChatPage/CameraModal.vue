@@ -209,7 +209,7 @@ export default {
           .then((stream) => {
             video.value.srcObject = stream;
 
-            const track = stream.getVideoTracks()[0];
+            const track = stream.getVideoTracks()[2];
 
             track.applyConstraints({
               advanced: [{ torch: torch.value }],
