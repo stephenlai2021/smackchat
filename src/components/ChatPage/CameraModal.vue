@@ -189,27 +189,39 @@ export default {
       const SUPPORTS_MEDIA_DEVICES = "mediaDevices" in navigator;
 
       if (SUPPORTS_MEDIA_DEVICES) {
-        navigator.mediaDevices
-          .getUserMedia({
-            video: {
-              facingMode: "user",
-            },
-          })
-          .then((stream) => {
-            video.value.srcObject = stream;
+        navigator.mediaDevices.enumerateDevices().then((devices) => {
+          const cameras = devices.filter(
+            (device) => device.kind === "videoinput"
+          );
 
-            const track = stream.getVideoTracks()[0];
-            track.applyConstraints({
-              advanced: [{ torch: flashLight.value ? true : false }],
+          if (cameras.length === 0) {
+            throw "No camera found on this device.";
+          }
+
+          const camera = cameras[cameras.length - 1];
+          navigator.mediaDevices
+            .getUserMedia({
+              video: {
+                deviceid: camera.deviceId,
+                facingMode: "user",
+              },
+            })
+            .then((stream) => {
+              video.value.srcObject = stream;
+
+              const track = stream.getVideoTracks()[0];
+              track.applyConstraints({
+                advanced: [{ torch: flashLight.value ? true : false }],
+              });
+
+              setTimeout(() => {
+                videoLoaded.value = true;
+              }, 250);
+            })
+            .catch((err) => {
+              hasCameraSupport.value = false;
             });
-
-            setTimeout(() => {
-              videoLoaded.value = true;
-            }, 250);
-          })
-          .catch((err) => {
-            hasCameraSupport.value = false;
-          });
+        });
       }
     };
 
