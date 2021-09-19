@@ -111,6 +111,7 @@ export default {
     const hasCameraSupport = ref(true);
     const videoLoaded = ref(false);
     const frontCamera = ref(true);
+    const track = ref(null);
     const torch = ref(false);
     const post = ref({
       id: uid(),
@@ -134,12 +135,22 @@ export default {
       context.emit("close-cameraModal");
     };
 
-    // watch(
-    //   () => flashLight.value,
-    //   () => {
-    //     flashLight.value ? (torch.value = true) : (torch.value = false);
-    //   }
-    // );
+    watch(
+      () => flashLight.value,
+      () => {
+        // flashLight.value ? (torch.value = true) : (torch.value = false);
+        if (flashLight.value) {
+          track.value.applyConstraints({
+            advanced: [{ torch: true }],
+          });
+        }
+        if (!flashLight.value) {
+          track.value.applyConstraints({
+            advanced: [{ torch: false }],
+          });
+        }
+      }
+    );
 
     watch(
       () => frontCamera.value,
@@ -209,10 +220,10 @@ export default {
             .then((stream) => {
               video.value.srcObject = stream;
 
-              const track = stream.getVideoTracks()[0];
-              track.applyConstraints({
-                advanced: [{ torch: flashLight.value ? true : false }],
-              });
+              track.value = stream.getVideoTracks()[0];
+              // track.applyConstraints({
+              //   advanced: [{ torch: flashLight.value ? true : false }],
+              // });
 
               setTimeout(() => {
                 videoLoaded.value = true;
