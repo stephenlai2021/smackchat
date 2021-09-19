@@ -189,37 +189,41 @@ export default {
       const SUPPORTS_MEDIA_DEVICES = "mediaDevices" in navigator;
 
       if (SUPPORTS_MEDIA_DEVICES) {
-          navigator.mediaDevices
-            .getUserMedia({
-              video: {
-                facingMode: "user",
-              },
-            })
-            .then((stream) => {
-              video.value.srcObject = stream;
+        navigator.mediaDevices
+          .getUserMedia({
+            video: {
+              facingMode: "user",
+            },
+          })
+          .then((stream) => {
+            video.value.srcObject = stream;
 
-              const track = stream.getVideoTracks()[0];
+            const track = stream.getVideoTracks()[1];
 
-              if (flashLight.value) {
-                track.applyConstraints({
-                  advanced: [{ torch: true }],               
-                })
-              } else {
-                track.applyConstraints({
-                  advanced: [{ torch: false }],               
-                })
-              }
-
-              setTimeout(() => {
-                videoLoaded.value = true;
-              }, 250);
-            })
-            .catch((err) => {
-              hasCameraSupport.value = false;
+            track.applyConstraints({
+              advanced: [{ torch: flashLight.value ? true : false }],
             });
+
+            // if (flashLight.value) {
+            //   track.applyConstraints({
+            //     advanced: [{ torch: true }],
+            //   })
+            // } else {
+            //   track.applyConstraints({
+            //     advanced: [{ torch: false }],
+            //   })
+            // }
+
+            setTimeout(() => {
+              videoLoaded.value = true;
+            }, 250);
+          })
+          .catch((err) => {
+            hasCameraSupport.value = false;
+          });
         // });
       } else {
-        console.log('Your browser does not support mediaDevices !')
+        console.log("Your browser does not support mediaDevices !");
       }
     };
 
