@@ -134,21 +134,12 @@ export default {
       context.emit("close-cameraModal");
     };
 
-    // watch(
-    //   () => flashLight.value,
-    //   () => {
-    //     if (flashLight.value) {
-    //       track.value.applyConstraints({
-    //         advanced: [{ torch: true }],
-    //       });
-    //     }
-    //     if (!flashLight.value) {
-    //       track.value.applyConstraints({
-    //         advanced: [{ torch: false }],
-    //       });
-    //     }
-    //   }
-    // );
+    watch(
+      () => flashLight.value,
+      () => {
+        console.log('flash light: ', flashLight.value)
+      }
+    );
 
     watch(
       () => frontCamera.value,
