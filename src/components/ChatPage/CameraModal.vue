@@ -195,7 +195,7 @@ export default {
         btnSwap.value = false;
       }
 
-      if ('mediaDevices' in navigator) {
+      if ("mediaDevices" in navigator) {
         navigator.mediaDevices
           .getUserMedia({
             video: {
@@ -204,16 +204,10 @@ export default {
           })
           .then((stream) => {
             video.value.srcObject = stream;
-  
+
             const track = stream.getVideoTracks()[0];
-  
-            const imageCapture = new ImageCapture(track)
-  
-            // imageCapture.getPhotoCapabilities().then(() => {
-            //   track.applyConstraints({
-            //     advanced: [{ torch: flashLight.value ? true : false }],
-            //   });
-            // });
+
+            const imageCapture = new ImageCapture(track);
 
             imageCapture.getPhotoCapabilities().then(() => {
               if (flashLight.value) {
@@ -227,18 +221,7 @@ export default {
                 });
               }
             });
-  
-            // if (flashLight.value) {
-            //   track.applyConstraints({
-            //     advanced: [{ torch: true }],
-            //   });
-            // }
-            // if (!flashLight.value) {
-            //   track.applyConstraints({
-            //     advanced: [{ torch: false }],
-            //   });
-            // }
-  
+
             setTimeout(() => {
               videoLoaded.value = true;
             }, 250);
@@ -268,10 +251,10 @@ export default {
 
         track.value = stream.value.getVideoTracks()[0];
         new ImageCapture(track.value).getPhotoCapabilities().then(() => {
-            track.value.applyConstraints({
-              advanced: [{ torch: flashLight.value ? true : false }],
-            });
+          track.value.applyConstraints({
+            advanced: [{ torch: flashLight.value ? true : false }],
           });
+        });
 
         // flashLight.value ?
 
