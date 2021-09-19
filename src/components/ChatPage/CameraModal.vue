@@ -205,15 +205,15 @@ export default {
           .then((stream) => {
             video.value.srcObject = stream;
 
-            track.value = stream.getVideoTracks()[0];
+            // const track = stream.getVideoTracks()[0];
 
-            const imageCapture = new ImageCapture(track.value);
+            // const imageCapture = new ImageCapture(track);
 
-            imageCapture.getPhotoCapabilities().then(() => {
-              track.value.applyConstraints({
-                advanced: [{ torch: flashLight.value ? true : false }],
-              });
-            });
+            // imageCapture.getPhotoCapabilities().then(() => {
+            //   track.applyConstraints({
+            //     advanced: [{ torch: flashLight.value ? true : false }],
+            //   });
+            // });
 
             setTimeout(() => {
               videoLoaded.value = true;
@@ -242,12 +242,12 @@ export default {
 
         video.value.srcObject = stream.value;
 
-        track.value = stream.value.getVideoTracks()[0];
-        new ImageCapture(track.value).getPhotoCapabilities().then(() => {
-          track.value.applyConstraints({
-            advanced: [{ torch: flashLight.value ? true : false }],
-          });
-        });
+        // const track = stream.value.getVideoTracks()[0];
+        // new ImageCapture(track.value).getPhotoCapabilities().then(() => {
+        //   track.value.applyConstraints({
+        //     advanced: [{ torch: flashLight.value ? true : false }],
+        //   });
+        // });
 
         // flashLight.value ?
 
