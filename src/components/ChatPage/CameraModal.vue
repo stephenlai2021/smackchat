@@ -134,21 +134,21 @@ export default {
       context.emit("close-cameraModal");
     };
 
-    watch(
-      () => flashLight.value,
-      () => {
-        if (flashLight.value) {
-          track.value.applyConstraints({
-            advanced: [{ torch: true }],
-          });
-        }
-        if (!flashLight.value) {
-          track.value.applyConstraints({
-            advanced: [{ torch: false }],
-          });
-        }
-      }
-    );
+    // watch(
+    //   () => flashLight.value,
+    //   () => {
+    //     if (flashLight.value) {
+    //       track.value.applyConstraints({
+    //         advanced: [{ torch: true }],
+    //       });
+    //     }
+    //     if (!flashLight.value) {
+    //       track.value.applyConstraints({
+    //         advanced: [{ torch: false }],
+    //       });
+    //     }
+    //   }
+    // );
 
     watch(
       () => frontCamera.value,
@@ -204,12 +204,11 @@ export default {
         .then((stream) => {
           video.value.srcObject = stream;
 
-          // track.value = stream.getVideoTracks()[0];
-
           const track = stream.getVideoTracks()[0];
-
-          track.applyConstraints({
-            advanced: [{ torch: flashLight.value ? true : false }],
+          new ImageCapture(track).getPhotoCapabilities().then(() => {
+            track.applyConstraints({
+              advanced: [{ torch: flashLight.value ? true : false }],
+            });
           });
 
           // if (flashLight.value) {
@@ -250,6 +249,11 @@ export default {
         video.value.srcObject = stream.value;
 
         track.value = stream.value.getVideoTracks()[0];
+        new ImageCapture(track.value).getPhotoCapabilities().then(() => {
+            track.applyConstraints({
+              advanced: [{ torch: flashLight.value ? true : false }],
+            });
+          });
 
         // flashLight.value ?
 
