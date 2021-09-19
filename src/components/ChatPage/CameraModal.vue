@@ -4,7 +4,6 @@
     enter-active-class="animated slideInRight"
     leave-active-class="animated slideOutLeft"
   >
-    <!-- <div v-if="showCameraModal" class="camera-modal"> -->
     <div class="camera-modal">
       <div class="constraint" style="height: 100vh">
         <div class="full-width camera-panel">
@@ -17,42 +16,50 @@
             />
             <q-btn
               v-if="videoLoaded"
-              color="red"
+              class="text-red"
               icon="eva-close-outline"
               size="md"
+              flat
               round
-              style="position: absolute; top: 20px; right: 20px; opacity: 0.5"
+              style="position: absolute; top: 20px; right: 20px"
               @click="cancelCapture"
             />
             <q-btn
               v-if="videoLoaded"
-              color="blue"
+              class="text-blue"
               icon="eva-camera-outline"
               size="lg"
+              flat
               round
               style="
                 position: absolute;
                 bottom: 20px;
                 left: 50%;
                 transform: translateX(-50%);
-                opacity: 0.5;
               "
               @click="captureImage"
             />
             <q-btn
               v-if="videoLoaded && btnSwap"
               :disable="hideCameraBtn"
-              color="amber-8"
+              class="text-green"
               icon="eva-swap-outline"
               size="md"
+              flat
               round
-              style="
-                position: absolute;
-                bottom: 30px;
-                right: 20px;
-                opacity: 0.5;
-              "
+              style="position: absolute; bottom: 20px; right: 20px"
               @click="frontCamera = !frontCamera"
+            />
+            <q-btn
+              v-if="videoLoaded"
+              :disable="hideCameraBtn"
+              class="text-amber"
+              icon="eva-bulb-outline"
+              size="md"
+              flat
+              round
+              style="position: absolute; bottom: 25px; left: 20px"
+              @click="flashLight = !flashLight"
             />
             <canvas
               v-show="imageCaptured"
@@ -94,15 +101,16 @@ export default {
 
     const route = useRoute();
 
+    const track = ref(null);
     const video = ref(null);
     const canvas = ref(null);
-    const btnSwap = ref(true);
     const stream = ref(null);
+    const btnSwap = ref(true);
     const imageCaptured = ref(false);
     const hideCameraBtn = ref(false);
     const hasCameraSupport = ref(true);
     const videoLoaded = ref(false);
-    // const showCameraModal = ref(false);
+    const flashLight = ref(false);
     const frontCamera = ref(true);
     const post = ref({
       id: uid(),
@@ -113,42 +121,39 @@ export default {
     });
 
     const cancelCapture = () => {
-      // showCameraModal.value = false;
       closeCameraModal();
-      // context.emit('close-cameraModal')
-      // disableCamera();
     };
 
-    // onMounted(() => {
     onBeforeMount(() => {
       initFrontCamera();
-
-      // if (store.state.desktop) {
-      //   btnSwap.value = false;
-      // }
     });
-
-    // const openCameraModal = () => {
-    //   showCameraModal.value = true;
-    //   initFrontCamera();
-
-    //   if (store.state.desktop) {
-    //     btnSwap.value = false;
-    //   }
-    // };
 
     const closeCameraModal = () => {
       videoLoaded.value = false;
-      // showCameraModal.value = false;
       disableCamera();
       context.emit("close-cameraModal");
     };
 
     watch(
+      () => flashLight.value,
+      () => {
+        if (flashLight.value) {
+          track.value.applyConstraints({
+            advanced: [{ torch: true }],
+          });
+        }
+        if (!flashLight.value) {
+          track.value.applyConstraints({
+            advanced: [{ torch: false }],
+          });
+        }
+      }
+    );
+
+    watch(
       () => frontCamera.value,
       () => {
         closeCameraModal();
-        // showCameraModal.value = true;
         context.emit("open-cameraModal");
 
         if (frontCamera.value) {
@@ -170,16 +175,10 @@ export default {
           createdAt: timestamp(),
         });
         if (store.state.uploadCompleted) {
-          // file.value = null;
-
           hideCameraBtn.value = false;
           imageCaptured.value = false;
-          // showCameraModal.value = false;
 
           closeCameraModal();
-          // context.emit('close-cameraModal')
-
-          // disableCamera();
         }
       }
     );
@@ -204,6 +203,8 @@ export default {
         })
         .then((stream) => {
           video.value.srcObject = stream;
+
+          track.value = stream.getVideoTracks()[0];
 
           setTimeout(() => {
             videoLoaded.value = true;
@@ -230,7 +231,9 @@ export default {
         });
 
         video.value.srcObject = stream.value;
-        // videoLoaded.value = true;
+
+        track.value = stream.value.getVideoTracks()[0];
+
         setTimeout(() => {
           videoLoaded.value = true;
         }, 250);
@@ -297,6 +300,7 @@ export default {
 
       video,
       canvas,
+      flashLight,
       frontCamera,
 
       btnSwap,
@@ -336,8 +340,7 @@ export default {
   width: 100%;
   height: 100vh;
   z-index: 600;
-  // background: black;
-  background: rgba(0, 0, 0, 0.95);
+  background: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(8px);
 }
 </style>

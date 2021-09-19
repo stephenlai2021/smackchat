@@ -58,7 +58,7 @@ export default {
 
     // methods
     const closeMapModal = () => {
-      context.emit("close-mapmodal");
+      context.emit("close-mapModal");
     };  
 
     const initMap = () => {

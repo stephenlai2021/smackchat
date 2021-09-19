@@ -1,138 +1,16 @@
 <template>
-  <q-page class="page-chat">
-    <q-header
-      class="bg-transparent"
-      style="backdrop-filter: blur(20px); z-index: 500"
-    >
-      <q-toolbar
-        class="constraint"
-        style="padding: 0; backdrop-filter: blur(8px)"
-      >
-        <q-btn
-          round
-          flat
-          color="white"
-          size="18px"
-          class=""
-          style="position: relative; z-index: 500"
-          icon="eva-arrow-ios-back-outline"
-          @click="router.push('/users')"
-        />
-        <span
-          class="text-white text-bold"
-          style="font-size: 18px; width: 100%"
-          color=""
-          v-if="store.state.otherUser"
-        >
-          {{ store.state.otherUser.name }}
-        </span>
-        <div class="flex row justify-end full-width">
-          <q-btn
-            round
-            dense
-            color="blue"
-            size="md"
-            icon="eva-pin-outline"
-            class="q-mr-md"
-            @click="showMapModal = true"
-          />
-          <q-btn
-            round
-            dense
-            color="green"
-            size="md"
-            icon="eva-phone-outline"
-            class="q-mr-md"
-            @click="showVideoModal = true"
-          />
-        </div>
-      </q-toolbar>
-    </q-header>
+  <q-page class="page-chat">  
+    <page-header @open-mapModal="showMapModal = true" @open-videoModal="showVideoModal = true" />
   
     <chat-messages />
 
     <image-modal :file="file" v-if="file" @close-imageModal="file = null" />
 
-    <map-modal v-if="showMapModal" @close-mapmodal="showMapModal = false" />
+    <map-modal v-if="showMapModal"  @close-mapModal="showMapModal = false" />
 
-    <video-modal v-if="showVideoModal" @close-videoModal="showVideoModal = false" />
-
-    <!-- Camera Modal -->
-    <camera-modal v-if="showCameraModal" @close-cameraModal="showCameraModal = false" @open-cameraModal="showCameraModal = true" />
-
-    <!-- <transition-group
-      appear
-      enter-active-class="animated zoomIn"
-      leave-active-class="animated zoomOut"
-    >
-      <div v-if="showCameraModal" class="camera-modal">
-        <div class="constraint" style="height: 100vh">
-          <div class="full-width camera-panel">
-            <div style="width: 100%; position: relative">
-              <video
-                v-show="!imageCaptured"
-                ref="video"
-                autoplay
-                style="width: 100%"
-              />
-              <q-btn
-                v-if="showCaptureBtn"
-                color="red"
-                icon="eva-close-outline"
-                size="md"
-                round
-                style="position: absolute; top: 20px; right: 20px; opacity: 0.5"
-                @click="cancelCapture"
-              />
-              <q-btn
-                v-if="showCaptureBtn"
-                color="blue"
-                icon="eva-camera-outline"
-                size="lg"
-                round
-                style="
-                  position: absolute;
-                  bottom: 20px;
-                  left: 50%;
-                  transform: translateX(-50%);
-                  opacity: 0.5;
-                "
-                @click="captureImage"
-              />
-              <q-btn
-                v-if="showCaptureBtn && btnSwap"
-                :disable="hideCameraBtn"
-                color="amber-8"
-                icon="eva-swap-outline"
-                size="md"
-                round
-                style="
-                  position: absolute;
-                  bottom: 30px;
-                  right: 20px;
-                  opacity: 0.5;
-                "
-                @click="frontCamera = !frontCamera"
-              />
-              <canvas
-                v-show="imageCaptured"
-                ref="canvas"
-                class="full-width"
-                height="240"
-              />
-              <div v-if="imageCaptured" class="constraint text-center q-pa-md">
-                <div>Uploading... {{ store.state.progress }}%</div>
-                <div
-                  class="progress-bar q-mt-md"
-                  :style="{ width: store.state.progress + '%' }"
-                ></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition-group> -->
-    <!-- End of Camera Modal -->
+    <video-modal v-if="showVideoModal"  @close-videoModal="showVideoModal = false" />
+   
+    <camera-modal v-if="showCameraModal" @open-cameraModal="showCameraModal = true" @close-cameraModal="showCameraModal = false" /> 
 
     <q-footer class="bg-transparent footer" style="backdrop-filter: blur(20px)">
       <q-form class="flex constraint" :class="{ 'q-mx-sm': inputFocus }">
@@ -222,6 +100,7 @@ import { EmojiButton } from "@joeattardi/emoji-button";
 
 export default {
   components: {
+    "page-header": require("components/ChatPage/PageHeader.vue").default,
     "map-modal": require("components/ChatPage/MapModal.vue").default,
     "video-modal": require("components/ChatPage/VideoModal.vue").default,
     "image-modal": require("components/ChatPage/ImageModal.vue").default,
@@ -238,186 +117,17 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
+    const to = ref({});
     const chats = ref(null);
     const input = ref(null);
-
     const desktop = ref(false);
     const newMessage = ref("");
     const indicator = ref(false);
     const inputFocus = ref(false);
     const showMessages = ref(false);
-    const to = ref({});
     const showMapModal = ref(false)
-    const showVideoModal = ref(false)
-
-    /****************/
-    /* Video Button */
-    /****************/
-
-    /* Enod of Video Button */
-
-    /****************/
-    /* Camera Button */
-    /****************/
-    // const video = ref(null);
-    // const canvas = ref(null);
-    // const btnSwap = ref(true);
-    // const stream = ref(null);
-    // const imageCaptured = ref(false);
-    // const hideCameraBtn = ref(false);
-    // const hasCameraSupport = ref(true);
-    // const cameraDisabled = ref(false);
-    // const showCaptureBtn = ref(false);
-    // const showMapModal = ref(false);
+    const showVideoModal = ref(false)   
     const showCameraModal = ref(false);
-    // const frontCamera = ref(true);
-    // const post = ref({
-    //   id: uid(),
-    //   caption: "",
-    //   location: "",
-    //   photo: null,
-    //   createdAt: Date.now(),
-    // });
-
-    // const cancelCapture = () => {
-    //   showCameraModal.value = false;
-    //   disableCamera();
-    // };
-
-    // const openCameraModal = () => {
-    //   showCameraModal.value = true;
-    //   initFrontCamera();
-
-    //   if (store.state.desktop) {
-    //     btnSwap.value = false;
-    //   }
-    // };
-
-    // const closeCameraModal = () => {
-    //   showCaptureBtn.value = false;
-    //   showCameraModal.value = false;
-    //   disableCamera();
-    // };
-
-    // watch(
-    //   () => frontCamera.value,
-    //   () => {
-    //     closeCameraModal();
-    //     showCameraModal.value = true;
-
-    //     if (frontCamera.value) {
-    //       initFrontCamera();
-    //     }
-    //     if (!frontCamera.value) {
-    //       initBackCamera();
-    //     }
-    //   }
-    // );
-
-    // const initFrontCamera = () => {
-    //   showCaptureBtn.value = false;
-
-    //   const supports = navigator.mediaDevices.getSupportedConstraints();
-    //   if (!supports["facingMode"]) {
-    //     alert("This browser does not support facingMode!");
-    //   }
-
-    //   if (store.state.desktop) {
-    //     btnSwap.value = false;
-    //   }
-
-    //   navigator.mediaDevices
-    //     .getUserMedia({
-    //       video: {
-    //         facingMode: "user",
-    //       },
-    //     })
-    //     .then((stream) => {
-    //       video.value.srcObject = stream;
-    //       showCaptureBtn.value = true;
-    //     })
-    //     .catch((err) => {
-    //       hasCameraSupport.value = false;
-    //     });
-    // };
-
-    // const initBackCamera = async () => {
-    //   showCaptureBtn.value = false;
-
-    //   const supports = navigator.mediaDevices.getSupportedConstraints();
-    //   if (!supports["facingMode"]) {
-    //     alert("This browser does not support facingMode!");
-    //   }
-
-    //   try {
-    //     stream.value = await navigator.mediaDevices.getUserMedia({
-    //       video: {
-    //         facingMode: { exact: "environment" },
-    //       },
-    //     });
-
-    //     video.value.srcObject = stream.value;
-    //     showCaptureBtn.value = true;
-    //   } catch (err) {
-    //     hasCameraSupport.value = false;
-    //   }
-    // };
-
-    // const captureImage = () => {
-    //   canvas.value.width = video.value.getBoundingClientRect().width;
-    //   canvas.value.height = video.value.getBoundingClientRect().height;
-
-    //   let context = canvas.value.getContext("2d");
-    //   context.drawImage(
-    //     video.value,
-    //     0,
-    //     0,
-    //     canvas.value.width,
-    //     canvas.value.height
-    //   );
-
-    //   showCaptureBtn.value = false;
-    //   imageCaptured.value = true;
-    //   hideCameraBtn.value = true;
-
-    //   post.value.photo = dataURItoBlob(canvas.value.toDataURL());
-    //   console.log("photo info: ", post.value.photo);
-
-    //   store.methods.useStorage2(post.value.photo, "smackchat");
-    //   store.state.progress = null;
-    // };
-
-    // const dataURItoBlob = (dataURI) => {
-    //   const byteString = atob(dataURI.split(",")[1]);
-
-    //   const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
-
-    //   const ab = new ArrayBuffer(byteString.length);
-
-    //   const ia = new Uint8Array(ab);
-
-    //   for (var i = 0; i < byteString.length; i++) {
-    //     ia[i] = byteString.charCodeAt(i);
-    //   }
-
-    //   const blob = new Blob([ab], { type: mimeString });
-    //   return blob;
-    // };
-
-    // const disableCamera = () => {
-    //   if (video.value) {
-    //     video.value.srcObject.getVideoTracks().forEach((track) => {
-    //       track.stop();
-    //     });
-    //   }
-    // };
-
-    // onBeforeUnmount(() => {
-    //   closeCameraModal();
-    // });
-    /************************/
-    /* End of Camera Button */
-    /************************/
 
     /***************/
     /* Image Button */
@@ -450,30 +160,6 @@ export default {
         });
       }
     };
-
-    // watch(
-    //   () => store.state.url,
-    //   (newVal, oldVal) => {
-    //     store.methods.sendMessage({
-    //       text: store.state.url,
-    //       from: "me",
-    //       to: route.params.to,
-    //       createdAt: timestamp(),
-    //     });
-    //     if (store.state.uploadCompleted) {
-    //       file.value = null;
-
-    //       // hideCameraBtn.value = false;
-    //       // imageCaptured.value = false;
-    //       // showCameraModal.value = false;
-
-    //       // disableCamera();
-    //     }
-    //   }
-    // );
-    /***********************/
-    /* End of Image Button */
-    /***********************/
 
     /***************/
     /* Emoji Modal */
@@ -516,8 +202,6 @@ export default {
         }
       }
     );
-
-    const call = () => {};
 
     const sendTypingIndicator = () => {
       indicator.value = true;
@@ -596,25 +280,10 @@ export default {
 
       /* map */
       showMapModal,
-
-      /* camera */
-      // post,
-      // video,
-      // canvas,
-      // btnSwap,
-      // frontCamera,
-      // imageCaptured,
-      // cancelCapture,
-      // hideCameraBtn,
-      // cameraDisabled,
-      // showCaptureBtn,
-      // showImageModal,
       showVideoModal,
       showCameraModal,
-      // hasCameraSupport,
 
       // methods
-      call,
       onBlur,
       onFocus,
       newMessage,
@@ -624,13 +293,6 @@ export default {
       showEmojiPicker,
       sendTypingIndicator,
       formatDistanceToNow,
-
-      /* camera */
-      // captureImage,
-      // disableCamera,
-      // openCameraModal,
-      // closeCameraModal,
-      /* end of camera */
     };
   },
 };
@@ -661,23 +323,6 @@ export default {
   border: 2px solid grey;
   border-radius: 10px;
 }
-// .progress-bar {
-//   display: block;
-//   height: 6px;
-//   background: #69f0ae;
-//   border-radius: 6px;
-//   margin-top: 20px;
-//   transition: width 0.3s ease;
-// }
-// .image-modal {
-//   position: fixed;
-//   bottom: 64px;
-//   left: 50%;
-//   transform: translateX(-50%);
-//   width: 100%;
-//   background: rgba(0, 0, 0, 0.8);
-//   backdrop-filter: blur(8px);
-// }
 .footer {
   z-index: 300;
 }
@@ -695,9 +340,7 @@ export default {
   display: block;
   height: 6px;
   background: #5ad8d2;
-  // padding: 20px;
   border-radius: 6px;
-  // margin-top: 10px;
   transition: width 0.3s ease;
 }
 .file-input {
