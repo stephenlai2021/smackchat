@@ -209,10 +209,23 @@ export default {
   
             const imageCapture = new ImageCapture(track)
   
+            // imageCapture.getPhotoCapabilities().then(() => {
+            //   track.applyConstraints({
+            //     advanced: [{ torch: flashLight.value ? true : false }],
+            //   });
+            // });
+
             imageCapture.getPhotoCapabilities().then(() => {
-              track.applyConstraints({
-                advanced: [{ torch: flashLight.value ? true : false }],
-              });
+              if (flashLight.value) {
+                track.applyConstraints({
+                  advanced: [{ torch: true }],
+                });
+              }
+              if (!flashLight.value) {
+                track.applyConstraints({
+                  advanced: [{ torch: false }],
+                });
+              }
             });
   
             // if (flashLight.value) {
