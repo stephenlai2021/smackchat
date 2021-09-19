@@ -106,7 +106,7 @@ export default {
     const btnSwap = ref(true);
     const stream = ref(null);
     const imageCaptured = ref(false);
-    const flashLight = ref(null);
+    const flashLight = ref(false);
     const hideCameraBtn = ref(false);
     const hasCameraSupport = ref(true);
     const videoLoaded = ref(false);
@@ -134,12 +134,12 @@ export default {
       context.emit("close-cameraModal");
     };
 
-    watch(
-      () => flashLight.value,
-      () => {
-        flashLight.value ? (torch.value = true) : (torch.value = false);
-      }
-    );
+    // watch(
+    //   () => flashLight.value,
+    //   () => {
+    //     flashLight.value ? (torch.value = true) : (torch.value = false);
+    //   }
+    // );
 
     watch(
       () => frontCamera.value,
@@ -199,12 +199,9 @@ export default {
             video.value.srcObject = stream;
 
             const track = stream.getVideoTracks()[0];
-            const imageCapture = new ImageCapture(track);
-            // imageCapture.getPhotoCapabilities().then(() => {
-              track.applyConstraints({
-                advanced: [{ torch: torch.value }],
-              });
-            // });
+            track.applyConstraints({
+              advanced: [{ torch: flashLight.value ? true : false }],
+            });
 
             setTimeout(() => {
               videoLoaded.value = true;
