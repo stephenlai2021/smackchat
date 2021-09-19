@@ -135,21 +135,22 @@ export default {
       context.emit("close-cameraModal");
     };
 
-    // watch(
-    //   () => flashLight.value,
-    //   () => {
-    //     // flashLight.value ? (torch.value = true) : (torch.value = false);
-    //     if (flashLight.value) {
-    //       track.value.applyConstraints({
-    //         advanced: [{ torch: true }],
-    //       });
-    //     } else {
-    //       track.value.applyConstraints({
-    //         advanced: [{ torch: false }],
-    //       });
-    //     }
-    //   }
-    // );
+    watch(
+      () => flashLight.value,
+      () => {
+        // flashLight.value ? (torch.value = true) : (torch.value = false);
+        // if (flashLight.value) {
+        //   track.value.applyConstraints({
+        //     advanced: [{ torch: true }],
+        //   });
+        // } else {
+        //   track.value.applyConstraints({
+        //     advanced: [{ torch: false }],
+        //   });
+        // }
+        flashLight.value ? torch.value = true : torch.value = false
+      }
+    );
 
     watch(
       () => frontCamera.value,
@@ -210,19 +211,19 @@ export default {
 
             track.value = stream.getVideoTracks()[1];
 
-            // track.applyConstraints({
-            //   advanced: [{ torch: flashLight.value ? true : false }],
-            // });
+            track.applyConstraints({
+              advanced: [{ torch: torch.value }],
+            });
 
-            if (flashLight.value) {
-              track.applyConstraints({
-                advanced: [{ torch: true }],
-              })
-            } else {
-              track.applyConstraints({
-                advanced: [{ torch: false }],
-              })
-            }
+            // if (flashLight.value) {
+            //   track.applyConstraints({
+            //     advanced: [{ torch: true }],
+            //   })
+            // } else {
+            //   track.applyConstraints({
+            //     advanced: [{ torch: false }],
+            //   })
+            // }
 
             setTimeout(() => {
               videoLoaded.value = true;
