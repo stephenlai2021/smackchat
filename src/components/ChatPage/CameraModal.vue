@@ -47,7 +47,7 @@
               size="md"
               flat
               round
-              style="position: absolute; bottom: 20px; right: 20px"
+              style="position: absolute; bottom: 25px; right: 20px"
               @click="frontCamera = !frontCamera"
             />
             <q-btn
@@ -204,7 +204,24 @@ export default {
         .then((stream) => {
           video.value.srcObject = stream;
 
-          track.value = stream.getVideoTracks()[0];
+          // track.value = stream.getVideoTracks()[0];
+
+          const track = stream.getVideoTracks()[0];
+
+          track.applyConstraints({
+            advanced: [{ torch: flashLight.value ? true : false }],
+          });
+
+          // if (flashLight.value) {
+          //   track.applyConstraints({
+          //     advanced: [{ torch: true }],
+          //   });
+          // }
+          // if (!flashLight.value) {
+          //   track.applyConstraints({
+          //     advanced: [{ torch: false }],
+          //   });
+          // }
 
           setTimeout(() => {
             videoLoaded.value = true;
@@ -233,6 +250,23 @@ export default {
         video.value.srcObject = stream.value;
 
         track.value = stream.value.getVideoTracks()[0];
+
+        // flashLight.value ?
+
+        track.value.applyConstraints({
+          advanced: [{ torch: flashLight.value ? true : false }],
+        });
+
+        // if (flashLight.value) {
+        //   track.applyConstraints({
+        //     advanced: [{ torch: true }],
+        //   });
+        // }
+        // if (!flashLight.value) {
+        //   track.applyConstraints({
+        //     advanced: [{ torch: false }],
+        //   });
+        // }
 
         setTimeout(() => {
           videoLoaded.value = true;
