@@ -138,17 +138,17 @@ export default {
     watch(
       () => flashLight.value,
       () => {
-        // flashLight.value ? (torch.value = true) : (torch.value = false);
-        if (flashLight.value) {
-          track.value.applyConstraints({
-            advanced: [{ torch: true }],
-          });
-        }
-        if (!flashLight.value) {
-          track.value.applyConstraints({
-            advanced: [{ torch: false }],
-          });
-        }
+        flashLight.value ? (torch.value = true) : (torch.value = false);
+        // if (flashLight.value) {
+        //   track.value.applyConstraints({
+        //     advanced: [{ torch: true }],
+        //   });
+        // }
+        // if (!flashLight.value) {
+        //   track.value.applyConstraints({
+        //     advanced: [{ torch: false }],
+        //   });
+        // }
       }
     );
 
@@ -200,30 +200,21 @@ export default {
       const SUPPORTS_MEDIA_DEVICES = "mediaDevices" in navigator;
 
       if (SUPPORTS_MEDIA_DEVICES) {
-        navigator.mediaDevices.enumerateDevices().then((devices) => {
-          const cameras = devices.filter(
-            (device) => device.kind === "videoinput"
-          );
-
-          if (cameras.length === 0) {
-            throw "No camera found on this device.";
-          }
-
-          const camera = cameras[cameras.length - 1];
           navigator.mediaDevices
             .getUserMedia({
               video: {
-                deviceid: camera.deviceId,
                 facingMode: "user",
               },
             })
             .then((stream) => {
               video.value.srcObject = stream;
 
-              track.value = stream.getVideoTracks()[0];
-              // track.applyConstraints({
-              //   advanced: [{ torch: flashLight.value ? true : false }],
-              // });
+              const track = stream.getVideoTracks()[0];
+
+              track.applyConstraints({
+                // advanced: [{ torch: true }],
+                advanced: [{ torch: torch.value }],
+              })
 
               setTimeout(() => {
                 videoLoaded.value = true;
@@ -232,7 +223,9 @@ export default {
             .catch((err) => {
               hasCameraSupport.value = false;
             });
-        });
+        // });
+      } else {
+        console.log('Your browser does not support mediaDevices !')
       }
     };
 
