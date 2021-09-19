@@ -4,7 +4,6 @@
     enter-active-class="animated slideInRight"
     leave-active-class="animated slideOutLeft"
   >
-    <!-- <div v-if="showCameraModal" class="camera-modal"> -->
     <div class="camera-modal">
       <div class="constraint" style="height: 100vh">
         <div class="full-width camera-panel">
@@ -17,40 +16,41 @@
             />
             <q-btn
               v-if="videoLoaded"
-              color="red"
+              class="text-red"
               icon="eva-close-outline"
               size="md"
+              flat
               round
-              style="position: absolute; top: 20px; right: 20px; opacity: 0.5"
+              style="position: absolute; top: 20px; right: 20px;"
               @click="cancelCapture"
             />
             <q-btn
               v-if="videoLoaded"
-              color="blue"
+              class="text-blue"
               icon="eva-camera-outline"
               size="lg"
+              flat
               round
               style="
                 position: absolute;
                 bottom: 20px;
                 left: 50%;
                 transform: translateX(-50%);
-                opacity: 0.5;
               "
               @click="captureImage"
             />
             <q-btn
               v-if="videoLoaded && btnSwap"
               :disable="hideCameraBtn"
-              color="amber-8"
+              class="text-amber"
               icon="eva-swap-outline"
               size="md"
+              flat
               round
               style="
                 position: absolute;
-                bottom: 30px;
+                bottom: 25px;
                 right: 20px;
-                opacity: 0.5;
               "
               @click="frontCamera = !frontCamera"
             />
@@ -102,7 +102,6 @@ export default {
     const hideCameraBtn = ref(false);
     const hasCameraSupport = ref(true);
     const videoLoaded = ref(false);
-    // const showCameraModal = ref(false);
     const frontCamera = ref(true);
     const post = ref({
       id: uid(),
@@ -113,33 +112,15 @@ export default {
     });
 
     const cancelCapture = () => {
-      // showCameraModal.value = false;
       closeCameraModal();
-      // context.emit('close-cameraModal')
-      // disableCamera();
     };
 
-    // onMounted(() => {
     onBeforeMount(() => {
       initFrontCamera();
-
-      // if (store.state.desktop) {
-      //   btnSwap.value = false;
-      // }
     });
-
-    // const openCameraModal = () => {
-    //   showCameraModal.value = true;
-    //   initFrontCamera();
-
-    //   if (store.state.desktop) {
-    //     btnSwap.value = false;
-    //   }
-    // };
 
     const closeCameraModal = () => {
       videoLoaded.value = false;
-      // showCameraModal.value = false;
       disableCamera();
       context.emit("close-cameraModal");
     };
@@ -148,7 +129,6 @@ export default {
       () => frontCamera.value,
       () => {
         closeCameraModal();
-        // showCameraModal.value = true;
         context.emit("open-cameraModal");
 
         if (frontCamera.value) {
@@ -170,16 +150,10 @@ export default {
           createdAt: timestamp(),
         });
         if (store.state.uploadCompleted) {
-          // file.value = null;
-
           hideCameraBtn.value = false;
           imageCaptured.value = false;
-          // showCameraModal.value = false;
 
           closeCameraModal();
-          // context.emit('close-cameraModal')
-
-          // disableCamera();
         }
       }
     );
@@ -230,7 +204,6 @@ export default {
         });
 
         video.value.srcObject = stream.value;
-        // videoLoaded.value = true;
         setTimeout(() => {
           videoLoaded.value = true;
         }, 250);
