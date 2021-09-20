@@ -5,25 +5,25 @@
       enter-active-class="animated fadeIn"
       leave-active-class="animated fadeOut"
     > -->
-      <div>
-        <q-btn
-          round
-          dense
-          size="md"
-          class="bg-red-8"
-          icon="eva-close-outline"
-          style="
-            position: fixed;
-            left: 50%;
-            transform: translate(-50%);
-            bottom: 20px;
-            z-index: 700;
-            opacity: 0.5;
-          "
-          @click="closeMapModal"
-        />
-      </div>
-      <div id="map"></div>
+    <div>
+      <q-btn
+        round
+        dense
+        size="md"
+        class="bg-red-8"
+        icon="eva-close-outline"
+        style="
+          position: fixed;
+          left: 50%;
+          transform: translate(-50%);
+          bottom: 20px;
+          z-index: 700;
+          opacity: 0.5;
+        "
+        @click="closeMapModal"
+      />
+    </div>
+    <div id="map"></div>
     <!-- </transition-group> -->
   </q-page>
 </template>
@@ -95,6 +95,18 @@ export default {
         })
         .addTo(map.value);
     };
+
+    const removeAllMarkers = () => {
+      map.value.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          map.value.removeLayer(layer);
+        }
+      });
+    };
+
+    onBeforeUnmount(() => {
+      removeAllMarkers();
+    });
 
     onMounted(() => {
       initMap();
