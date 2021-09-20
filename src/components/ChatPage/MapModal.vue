@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { ref, onMounted, inject } from "vue";
+import { ref, onMounted, onBeforeUnmount, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 export default {
@@ -106,9 +106,9 @@ export default {
       });
     };
 
-    onBeforeUnmount(() => {
-      removeAllMarkers();
-    });
+    // onBeforeUnmount(() => {
+    //   removeAllMarkers();
+    // });
 
     onMounted(() => {
       initMap();
