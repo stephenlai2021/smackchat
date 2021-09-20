@@ -34,6 +34,8 @@ export default {
     const store = inject("store");
 
     const map = ref(null);
+    const users = ref(null);
+    const mapTile = ref(null);
 
     const zoom = ref(3);
     const zoomControl = ref(null);
@@ -53,7 +55,7 @@ export default {
       setControl();
 
       store.state.users.map((item) => {
-        return L.marker([item.lat, item.lng], {
+        return (users.value = L.marker([item.lat, item.lng], {
           icon: new L.Icon({
             iconUrl: item.avatar,
             shadowUrl: "/marker/marker-shadow.png",
@@ -65,14 +67,17 @@ export default {
         })
           .addTo(map.value)
           .bindPopup(item.name + " is here")
-          .openPopup();
+          .openPopup());
       });
 
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution:
-          '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>         contributors',
-        maxZoom: 18,
-      }).addTo(map.value);
+      mapTile.value = L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          attribution:
+            '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>         contributors',
+          maxZoom: 18,
+        }
+      ).addTo(map.value);
     };
 
     const setControl = () => {
@@ -91,12 +96,13 @@ export default {
       });
     };
 
-    onBeforeMount(() => {
-      removeAllMarkers()
-    })
+    // onBeforeMount(() => {
+    //   removeAllMarkers()
+    // })
 
     onBeforeUnmount(() => {
-      removeAllMarkers()
+      map.value.removeLayer(me.value);
+      map.value.removeLayer(mapTile.value);
 
       if (!route.fullPath.includes("/users")) {
         store.state.tab = "home";

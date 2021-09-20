@@ -39,8 +39,9 @@ export default {
 
     const store = inject("store");
 
-    const map = ref(null);
     const me = ref(null);
+    const map = ref(null);
+    const mapTile = ref(null)
 
     const zoom = ref(7);
     const zoomControl = ref(null);
@@ -70,7 +71,7 @@ export default {
         .bindPopup(store.state.otherUser.name + " is here")
         .openPopup();
 
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      mapTile.value = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
           '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>         contributors',
         maxZoom: 18,
@@ -104,12 +105,13 @@ export default {
       });
     };
 
-    onBeforeMount(() => {
-      removeAllMarkers();
-    });
+    // onBeforeMount(() => {
+    //   removeAllMarkers();
+    // });
 
     onBeforeUnmount(() => {
-      removeAllMarkers();
+      map.value.removeLayer(me.value);
+      map.value.removeLayer(mapTile.value);
     });
 
     onMounted(() => {
