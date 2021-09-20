@@ -33,8 +33,9 @@ export default {
 
     const store = inject("store");
 
+    const me = ref(null);
     const map = ref(null);
-    const users = ref(null);
+    const filteredUsers = ref(null);
     const mapTile = ref(null);
 
     const zoom = ref(3);
@@ -52,22 +53,40 @@ export default {
         zoomControl: false,
       });
 
-      setControl();
-
-      store.state.users.map((item) => {
-        return (users.value = L.marker([item.lat, item.lng], {
+      me.value = L.marker(
+        [store.state.userDetails.lat, store.state.userDetails.lng],
+        {
           icon: new L.Icon({
-            iconUrl: item.avatar,
-            shadowUrl: "/marker/marker-shadow.png",
+            iconUrl: store.state.userDetails.avatar,
+            // shadowUrl: "/marker/marker-shadow.png",
             iconSize: [40, 40],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
-            shadowSize: [41, 41],
+            // shadowSize: [41, 41],
+          }),
+        }
+      )
+        .addTo(map.value)
+        .bindPopup("You are here")
+        .openPopup();
+
+      setControl();
+
+      store.getters.filteredUsers().map((item) => {
+        return (filteredUsers.value = L.marker([item.lat, item.lng], {
+          icon: new L.Icon({
+            iconUrl: item.avatar,
+            // shadowUrl: "/marker/marker-shadow.png",
+            iconSize: [40, 40],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            // shadowSize: [41, 41],
           }),
         })
           .addTo(map.value)
           .bindPopup(item.name + " is here")
-          .openPopup());
+          // .openPopup()
+          );
       });
 
       mapTile.value = L.tileLayer(
@@ -88,20 +107,9 @@ export default {
         .addTo(map.value);
     };
 
-    const removeAllMarkers = () => {
-      map.value.eachLayer((layer) => {
-        if (layer instanceof L.Marker) {
-          map.value.removeLayer(layer);
-        }
-      });
-    };
-
-    // onBeforeMount(() => {
-    //   removeAllMarkers()
-    // })
-
     onBeforeUnmount(() => {
-      map.value.removeLayer(users.value);
+      map.value.removeLayer(me.value);
+      map.value.removeLayer(filteredUsers.value);
       map.value.removeLayer(mapTile.value);
 
       if (!route.fullPath.includes("/users")) {
