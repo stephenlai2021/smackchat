@@ -35,7 +35,7 @@ export default {
 
     const map = ref(null);
 
-    const zoom = ref(5);
+    const zoom = ref(3);
     const zoomControl = ref(null);
 
     const closeUsersMapModal = () => {
@@ -53,7 +53,7 @@ export default {
       setControl();
 
       store.state.users.map((item) => {
-        return (L.marker([item.lat, item.lng], {
+        return L.marker([item.lat, item.lng], {
           icon: new L.Icon({
             iconUrl: item.avatar,
             shadowUrl: "/marker/marker-shadow.png",
@@ -65,7 +65,7 @@ export default {
         })
           .addTo(map.value)
           .bindPopup(item.name + " is here")
-          .openPopup());
+          .openPopup();
       });
 
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -83,7 +83,17 @@ export default {
         .addTo(map.value);
     };
 
+    const removeAllMarkers = () => {
+      map.value.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          map.value.removeLayer(layer);
+        }
+      });
+    };
+
     onBeforeUnmount(() => {
+      removeAllMarkers()
+      
       if (!route.fullPath.includes("/users")) {
         store.state.tab = "home";
       }
