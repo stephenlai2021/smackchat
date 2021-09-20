@@ -43,8 +43,8 @@ export default {
     };
 
     const initMap = () => {
-      removeAllMarkers()
-      
+      // removeAllMarkers()
+
       map.value = L.map("map", {
         center: [store.state.userDetails.lat, store.state.userDetails.lng],
         zoom: zoom.value,
@@ -94,7 +94,7 @@ export default {
     };
 
     onBeforeUnmount(() => {
-      // removeAllMarkers()
+      removeAllMarkers()
 
       if (!route.fullPath.includes("/users")) {
         store.state.tab = "home";

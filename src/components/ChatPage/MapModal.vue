@@ -52,7 +52,7 @@ export default {
     };
 
     const initMap = () => {
-      removeAllMarkers()
+      // removeAllMarkers()
 
       map.value = L.map("map", {
         center: [store.state.otherUser.lat, store.state.otherUser.lng],
@@ -106,9 +106,9 @@ export default {
       });
     };
 
-    // onBeforeUnmount(() => {
-    //   removeAllMarkers();
-    // });
+    onBeforeUnmount(() => {
+      removeAllMarkers();
+    });
 
     onMounted(() => {
       initMap();
