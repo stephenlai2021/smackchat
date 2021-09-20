@@ -52,8 +52,6 @@ export default {
     };
 
     const initMap = () => {
-      console.log('other user avatar: ', store.state.otherUser.avatar)
-
       map.value = L.map("map", {
         center: [store.state.otherUser.lat, store.state.otherUser.lng],
         zoom: zoom.value,

@@ -1,10 +1,5 @@
 <template>
   <q-page>
-    <!-- <transition-group
-      appear
-      enter-active-class="animated fadeIn"
-      leave-active-class="animated fadeOut"
-    > -->
     <div>
       <q-btn
         round
@@ -24,7 +19,6 @@
       />
     </div>
     <div id="map"></div>
-    <!-- </transition-group> -->
   </q-page>
 </template>
 
@@ -40,9 +34,8 @@ export default {
     const store = inject("store");
 
     const map = ref(null);
-    const users = ref(null);
 
-    const zoom = ref(1);
+    const zoom = ref(5);
     const zoomControl = ref(null);
 
     const closeUsersMapModal = () => {
@@ -60,7 +53,7 @@ export default {
       setControl();
 
       store.state.users.map((item) => {
-        return (users.value = L.marker([item.lat, item.lng], {
+        return (L.marker([item.lat, item.lng], {
           icon: new L.Icon({
             iconUrl: item.avatar,
             shadowUrl: "/marker/marker-shadow.png",
@@ -74,7 +67,7 @@ export default {
           .bindPopup(item.name + " is here")
           .openPopup());
       });
-      
+
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
           '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>         contributors',
