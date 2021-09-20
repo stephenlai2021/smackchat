@@ -60,7 +60,7 @@ export default {
       setControl();
 
       store.state.users.map((item) => {
-        users.value = L.marker([item.lat, item.lng], {
+        return (users.value = L.marker([item.lat, item.lng], {
           icon: new L.Icon({
             iconUrl: item.avatar,
             shadowUrl: "/marker/marker-shadow.png",
@@ -72,14 +72,14 @@ export default {
         })
           .addTo(map.value)
           .bindPopup(item.name + " is here")
-          .openPopup();
-
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution:
-            '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>         contributors',
-          maxZoom: 18,
-        }).addTo(map.value);
+          .openPopup());
       });
+      
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>         contributors',
+        maxZoom: 18,
+      }).addTo(map.value);
     };
 
     const setControl = () => {
@@ -91,10 +91,10 @@ export default {
     };
 
     onBeforeUnmount(() => {
-      if (!route.fullPath.includes('/users')) {
-        store.state.tab = 'home'
+      if (!route.fullPath.includes("/users")) {
+        store.state.tab = "home";
       }
-    })
+    });
 
     onMounted(() => {
       initMap();
