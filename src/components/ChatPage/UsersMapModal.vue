@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount, inject } from "vue";
+import { ref, onMounted, onBeforeMount, onBeforeUnmount, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 export default {
@@ -43,8 +43,6 @@ export default {
     };
 
     const initMap = () => {
-      // removeAllMarkers()
-
       map.value = L.map("map", {
         center: [store.state.userDetails.lat, store.state.userDetails.lng],
         zoom: zoom.value,
@@ -92,6 +90,10 @@ export default {
         }
       });
     };
+
+    onBeforeMount(() => {
+      removeAllMarkers()
+    })
 
     onBeforeUnmount(() => {
       removeAllMarkers()
