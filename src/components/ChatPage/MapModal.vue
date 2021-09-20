@@ -52,6 +52,8 @@ export default {
     };
 
     const initMap = () => {
+      removeAllMarkers()
+      
       map.value = L.map("map", {
         center: [store.state.otherUser.lat, store.state.otherUser.lng],
         zoom: zoom.value,
