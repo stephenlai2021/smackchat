@@ -35,13 +35,17 @@ export default {
 
     const me = ref(null);
     const map = ref(null);
-    const filteredUsers = ref(null);
     const mapTile = ref(null);
+    const filteredUsers = ref(null);
 
     const zoom = ref(3);
     const zoomControl = ref(null);
 
     const closeUsersMapModal = () => {
+      map.value.removeLayer(me.value);
+      map.value.removeLayer(filteredUsers.value);
+      map.value.removeLayer(mapTile.value);
+      
       context.emit("close-usersMapModal");
     };
 
@@ -76,17 +80,16 @@ export default {
         return (filteredUsers.value = L.marker([item.lat, item.lng], {
           icon: new L.Icon({
             iconUrl: item.avatar,
-            // shadowUrl: "/marker/marker-shadow.png",
+            shadowUrl: "/marker/marker-shadow.png",
             iconSize: [40, 40],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
-            // shadowSize: [41, 41],
+            shadowSize: [41, 41],
           }),
         })
           .addTo(map.value)
-          .bindPopup(item.name + " is here")
-          // .openPopup()
-          );
+          .bindPopup(item.name + " is here"));
+        // .openPopup()
       });
 
       mapTile.value = L.tileLayer(
