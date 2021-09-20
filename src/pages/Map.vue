@@ -53,62 +53,28 @@ export default {
     const grey = ref(null);
     const icon = ref(null);
 
-    // methods
-    const getUserGeoLocation = () => {
+    const initMap = () => {
       map.value = L.map("map", {
-        center: [store.state.geoLocation.lat, store.state.geoLocation.lng],
+        center: [store.state.lat.value, lng.value],
         zoom: zoom.value,
         maxZoom: 18,
         zoomControl: false,
       });
 
       setControl();
+      // setIcon();
 
-      user.value = L.marker([store.state.user.geoLocation.lat, store.state.user.geoLocation.lng])
+      // me.value = L.marker([lat.value, lng.value], { icon: red.value })
+      me.value = L.marker([lat.value, lng.value])
         .addTo(map.value)
-        .bindPopup(`${store.state.user.name} is here`)
+        .bindPopup("您的位置")
         .openPopup();
-
-      // addStores();
 
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
           '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>         contributors',
         maxZoom: 18,
       }).addTo(map.value);
-    };
-
-    const initMap = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((pos) => {
-          lat.value = pos.coords.latitude;
-          lng.value = pos.coords.longitude;
-
-          map.value = L.map("map", {
-            center: [lat.value, lng.value],
-            zoom: zoom.value,
-            maxZoom: 18,
-            zoomControl: false,
-          });
-
-          setControl();
-          // setIcon();
-
-          // me.value = L.marker([lat.value, lng.value], { icon: red.value })
-          me.value = L.marker([lat.value, lng.value])
-            .addTo(map.value)
-            .bindPopup("您的位置")
-            .openPopup();
-
-          // addStores();
-
-          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution:
-              '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>         contributors',
-            maxZoom: 18,
-          }).addTo(map.value);
-        });
-      }
     };
 
     const setIcon = () => {

@@ -39,7 +39,7 @@
               "
               @click="captureImage"
             />
-            <q-btn
+            <!-- <q-btn
               v-if="videoLoaded"
               :disable="hideCameraBtn"
               class="text-amber"
@@ -49,7 +49,7 @@
               round
               style="position: absolute; bottom: 30px; left: 20px"
               @click="flashLight = !flashLight"
-            />
+            /> -->
             <q-btn
               v-if="videoLoaded && btnSwap"
               :disable="hideCameraBtn"
@@ -135,22 +135,12 @@ export default {
       context.emit("close-cameraModal");
     };
 
-    watch(
-      () => flashLight.value,
-      () => {
-        // flashLight.value ? (torch.value = true) : (torch.value = false);
-        // if (flashLight.value) {
-        //   track.value.applyConstraints({
-        //     advanced: [{ torch: true }],
-        //   });
-        // } else {
-        //   track.value.applyConstraints({
-        //     advanced: [{ torch: false }],
-        //   });
-        // }
-        flashLight.value ? torch.value = true : torch.value = false
-      }
-    );
+    // watch(
+    //   () => flashLight.value,
+    //   () => {
+    //     flashLight.value ? torch.value = true : torch.value = false
+    //   }
+    // );
 
     watch(
       () => frontCamera.value,
@@ -209,11 +199,11 @@ export default {
           .then((stream) => {
             video.value.srcObject = stream;
 
-            const track = stream.getVideoTracks()[0];
+            // const track = stream.getVideoTracks()[0];
 
-            track.applyConstraints({
-              advanced: [{ torch: true }],
-            });
+            // track.applyConstraints({
+            //   advanced: [{ torch: true }],
+            // });
 
             // if (flashLight.value) {
             //   track.applyConstraints({

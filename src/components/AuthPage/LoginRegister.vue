@@ -81,9 +81,9 @@ export default {
     const types = ["image/png", "image/jpeg", "image/jpg"];
 
     const formData = ref({
-      name: null,
-      email: null,
-      password: null,
+      name: 'me',
+      email: 'me@test.com',
+      password: '123456',
       geolocation: {
         lat: null,
         lng: null,
@@ -118,6 +118,11 @@ export default {
     const submitForm = () => {
       if (props.tab === "login") {
         store.state.login = true;
+
+        console.log('latitude: ', lat.value )
+        console.log('longitude: ', lng.value )
+        
+        formData.value = { ...formData.value, lat: lat.value, lng: lng.value };
         store.methods.loginUser(formData.value);
         console.log("login: ", formData.value);
 
@@ -127,13 +132,7 @@ export default {
         }
       }
       if (props.tab === "register") {
-        formData.value = { ...formData.value, avatar: store.state.url };
-        // formData.value = {
-        //   name: "me",
-        //   email: "me@test.com",
-        //   password: "123456",
-        //   avatar: store.state.url,
-        // };
+        formData.value = { ...formData.value, avatar: store.state.url, lat: lat.value, lng: lng.value };
         store.methods.registerUser(formData.value);
 
         if (store.state.successMessage === "user register successfully") {
@@ -148,25 +147,13 @@ export default {
     };
 
     onMounted(() => {
-      if (navigator.geolocation) {
+      if (navigator.geolocation) {        
         navigator.geolocation.getCurrentPosition((pos) => {
           lat.value = pos.coords.latitude;
           lng.value = pos.coords.longitude;
-
-          formData.value = {
-            name: "me",
-            email: "me@test.com",
-            password: "123456",
-            geolocation: {
-              lat: lat.value,
-              lng: lng.value,
-            },
-          };
-          console.log(`geolocation: 
-            lat: ${lat.value}
-            lng: ${lng.value}
-          `);
         });
+      } else {
+        console.log('Your browser does not support map features')
       }
     });
 

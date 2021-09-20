@@ -255,7 +255,7 @@ export default {
       store.methods.getUser(route.params.to);
 
       if (store.state.otherUser) {
-        console.log("getUser | Chat: ", store.state.otherUser);
+        console.log("Other User | Chat Page", store.state.otherUser);
       }
     });
 

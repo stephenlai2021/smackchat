@@ -175,7 +175,8 @@ const methods = {
           email: data.email,
           avatar: data.avatar,
           userId: user.uid,
-          geolocation: data.geolocation,
+          lat: data.lat,
+          lng: data.lng,
         });
 
         state.tab = "home";
@@ -193,6 +194,11 @@ const methods = {
       .then((cred) => {
         const user = cred.user;
         console.log("user: ", user);
+
+        db.collection("chat-users").doc(data.name).update({
+          lat: data.lat,
+          lng: data.lng,
+        });
 
         state.tab = "home";
         state.login = true;
@@ -337,6 +343,7 @@ const methods = {
       .doc(to)
       .onSnapshot((doc) => {
         state.otherUser = doc.data();
+        console.log("other user | store", state.otherUser);
       });
 
     watchEffect((onInvalidate) => {

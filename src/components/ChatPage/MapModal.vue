@@ -1,10 +1,10 @@
 <template>
   <q-page>
-    <transition-group
+    <!-- <transition-group
       appear
       enter-active-class="animated fadeIn"
       leave-active-class="animated fadeOut"
-    >
+    > -->
       <div>
         <q-btn
           round
@@ -18,13 +18,13 @@
             transform: translate(-50%);
             bottom: 20px;
             z-index: 700;
-             opacity: 0.5;
+            opacity: 0.5;
           "
           @click="closeMapModal"
         />
       </div>
       <div id="map"></div>
-    </transition-group>
+    <!-- </transition-group> -->
   </q-page>
 </template>
 
@@ -39,82 +39,51 @@ export default {
 
     const store = inject("store");
 
-    // ref
-    const lat = ref(null);
-    const lng = ref(null);
     const map = ref(null);
     const me = ref(null);
-    const user = ref(null);
 
-    // init zoom
     const zoom = ref(7);
     const zoomControl = ref(null);
 
-    /* init icon */
-    const red = ref(null);
-    const green = ref(null);
-    const grey = ref(null);
-    const icon = ref(null);
+    const otherUser = ref(null);
 
-    // methods
     const closeMapModal = () => {
       context.emit("close-mapModal");
-    };  
+    };
 
     const initMap = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((pos) => {
-          lat.value = pos.coords.latitude;
-          lng.value = pos.coords.longitude;
+      console.log('other user avatar: ', store.state.otherUser.avatar)
 
-          map.value = L.map("map", {
-            center: [lat.value, lng.value],
-            zoom: zoom.value,
-            maxZoom: 18,
-            zoomControl: false,
-          });
+      map.value = L.map("map", {
+        center: [store.state.otherUser.lat, store.state.otherUser.lng],
+        zoom: zoom.value,
+        maxZoom: 18,
+        zoomControl: false,
+      });
 
-          setControl();
-          setIcon();
+      setControl();
+      setIcon();
 
-          // me.value = L.marker([lat.value, lng.value], { icon: red.value })
-          me.value = L.marker([lat.value, lng.value])
-            .addTo(map.value)
-            .bindPopup("您的位置")
-            .openPopup();
+      me.value = L.marker(
+        [store.state.otherUser.lat, store.state.otherUser.lng],
+        { icon: otherUser.value }
+      )
+        .addTo(map.value)
+        .bindPopup(store.state.otherUser.name + " is here")
+        .openPopup();
 
-          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution:
-              '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>         contributors',
-            maxZoom: 18,
-          }).addTo(map.value);
-        });
-      }
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>         contributors',
+        maxZoom: 18,
+      }).addTo(map.value);
     };
 
     const setIcon = () => {
-      red.value = new L.Icon({
-        iconUrl: "/marker/marker-icon-2x-red.png",
+      otherUser.value = new L.Icon({
+        iconUrl: store.state.otherUser.avatar,
         shadowUrl: "/marker/marker-shadow.png",
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-      });
-
-      green.value = new L.Icon({
-        iconUrl: "/marker/marker-icon-2x-green.png",
-        shadowUrl: "/marker/marker-shadow.png",
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-      });
-
-      grey.value = new L.Icon({
-        iconUrl: "/marker/marker-icon-2x-grey.png",
-        shadowUrl: "marker/marker-shadow.png",
-        iconSize: [25, 41],
+        iconSize: [40, 40],
         iconAnchor: [12, 41],
         popupAnchor: [1, -34],
         shadowSize: [41, 41],
