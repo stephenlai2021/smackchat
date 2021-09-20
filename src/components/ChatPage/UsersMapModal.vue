@@ -101,7 +101,7 @@ export default {
     // })
 
     onBeforeUnmount(() => {
-      map.value.removeLayer(me.value);
+      map.value.removeLayer(users.value);
       map.value.removeLayer(mapTile.value);
 
       if (!route.fullPath.includes("/users")) {
