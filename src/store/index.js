@@ -337,7 +337,7 @@ const methods = {
       onInvalidate(() => unsub());
     });
   },
-  getUser(to) {
+  getOtherUser(to) {
     const unsub = db
       .collection("chat-users")
       .doc(to)

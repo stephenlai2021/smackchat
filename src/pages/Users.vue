@@ -1,7 +1,7 @@
 <template>
   <q-page class="">
     <!-- <q-header reveal class="bg-white" style="border-bottom: 1px solid red;"> -->
-    <q-header reveal class="">
+    <q-header reveal class="" style="z-index: 500;">
       <q-toolbar class="constraint">
         <span class="text-bold q-ml-sm" style="font-size: 20px; width: 100%">
           {{ t("chatRoom") }}
@@ -16,9 +16,23 @@
             icon="eva-person-add-outline"
             @click="router.push('/finduser')"
           />
+          <q-btn
+            round
+            dense
+            flat
+            color=""
+            size="md"
+            icon="eva-pin-outline"
+            @click="showUsersMapModal = true"
+          />
         </div>
       </q-toolbar>
     </q-header>
+
+    <usersmap-modal
+      v-if="showUsersMapModal"
+      @close-usersMapModal="showUsersMapModal = false"
+    />
 
     <!-- <q-page-sticky expand position="top" style="z-index: 500" class="q-my-sm"> -->
     <!-- <q-toolbar class="constraint"> -->
@@ -158,7 +172,7 @@
       />
     </q-page-sticky> -->
 
-    <q-footer>
+    <q-footer style="z-index: 500;">
       <div class="constraint">
         <q-tabs
           v-model="store.state.tab"
@@ -189,9 +203,12 @@
 <script>
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { ref, onMounted, computed, inject, watch, watchEffect } from "vue";
+import { ref, onMounted, onBeforeMount, computed, inject, watch, watchEffect } from "vue";
 
 export default {
+  components: {
+    "usersmap-modal": require("components/ChatPage/UsersMapModal.vue").default,
+  },
   setup() {
     const store = inject("store");
 
@@ -201,6 +218,7 @@ export default {
 
     const search = ref("");
     const noUserMessages = ref(false);
+    const showUsersMapModal = ref(false)
 
     // methods
     const findUser = () => {
@@ -242,6 +260,7 @@ export default {
     });
 
     onMounted(() => {
+      // store.state.tab = 'users'
       setTimeout(() => {
         if (!store.state.users.length) {
           noUserMessages.value = true;
@@ -262,6 +281,7 @@ export default {
       // ref
       search,
       noUserMessages,
+      showUsersMapModal,
 
       // computed
       matchingUsers,

@@ -252,7 +252,7 @@ export default {
         store.state.desktop = false;
       }
 
-      store.methods.getUser(route.params.to);
+      store.methods.getOtherUser(route.params.to);
 
       if (store.state.otherUser) {
         console.log("Other User | Chat Page", store.state.otherUser);
