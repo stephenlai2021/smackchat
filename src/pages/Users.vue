@@ -58,7 +58,7 @@
     <!-- </q-toolbar> -->
     <!-- </q-page-sticky> -->
 
-    <div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap;">
+    <div class="full-width" style="overflow-x: auto; overflow-y: hidden; white-space: nowrap;">
       <div
         @click="goChat(user)"
         v-for="(user, index) in matchingUsers"
