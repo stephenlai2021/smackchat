@@ -14,20 +14,21 @@
 
     <q-footer class="bg-transparent footer" style="backdrop-filter: blur(20px)">
       <q-form class="flex constraint" :class="{ 'q-mx-sm': inputFocus }">
-        <q-btn-group
+        <div
           v-if="!inputFocus"
           flat
           round
           class="flex row justify-evenly"
-          style="width: 50%"
+          style="width: 50%; display: flex; align-items: center;"
         >
-          <label class="q-ma-md" style="cursor: pointer">
+          <label class="q-ma-" style="cursor: pointer">
             <input class="file-input" type="file" @change="handleChange" />
             <q-icon color="green-12" size="md" name="eva-image-outline" />
           </label>
           <q-icon
+          round
             size="md"
-            class="q-ma-md"
+            class="q-ma-"
             color="green-12"
             style="cursor: pointer"
             name="eva-camera-outline"
@@ -37,19 +38,19 @@
             round
             size="16px"
             flat
-            class="q-ma-sm"
+            class="q-ma-"
             ref="btnEmoji"
             color="green-12"
             icon="eva-smiling-face-outline"
             @click="showEmojiPicker"
           />
-        </q-btn-group>
+        </div>
 
         <div style="width: 50%" :style="{ width: inputFocus ? '100%' : '50%' }">
           <q-input
             ref="input"
             v-model="newMessage"
-            class="q-px-md q-py-sm full-width"
+            class="q-px-md q-py-md full-width"
             outlined
             rounded
             :label="t('message')"

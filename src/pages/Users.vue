@@ -1,7 +1,7 @@
 <template>
   <q-page class="">
     <!-- <q-header reveal class="bg-white" style="border-bottom: 1px solid red;"> -->
-    <q-header reveal class="" style="z-index: 500">
+    <q-header reveal class="bg-transparent" style="z-index: 500; backdrop-filter: blur(20px);">
       <q-toolbar class="constraint">
         <span class="text-bold q-ml-sm" style="font-size: 20px; width: 100%">
           {{ t("chatRoom") }}
@@ -176,7 +176,7 @@
       />
     </q-page-sticky> -->
 
-    <q-footer style="z-index: 500">
+    <q-footer style="z-index: 500; backdrop-filter: blur(20px);" class="bg-transparent" >
       <div class="constraint">
         <q-tabs
           v-model="store.state.tab"
