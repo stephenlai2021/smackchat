@@ -108,7 +108,7 @@
           </div>
         </div>
         <div v-if="file" class="row justify-center">
-          <div class="output-1 text-center q-mt-md" style="width: 250px">
+          <div class="output-1 text-center q-mt-sm" style="width: 200px">
             <div v-if="fileError" class="error">{{ fileError }}</div>
             <div>{{ file.name }}</div>
             <div
@@ -266,8 +266,6 @@ export default {
         fileError.value = null;
 
         store.methods.useStorage(file.value, "smackchat");
-
-        // store.state.progress = null;
       } else {
         file.value = null;
         fileError.value = "Please select an image file (png or jpeg/jpg)";
@@ -290,30 +288,6 @@ export default {
       }
     );
 
-    // watch(
-    //   () => file.value,
-    //   (newVal, oldVal) => {
-    //     console.log("You have selected: ", newVal);
-
-    //     if (file.value && types.includes(file.value.type)) {
-    //       console.log("file name: ", file.value.name);
-
-    //       fileError.value = null;
-    //       store.methods.useStorage(file.value, "smackchat");
-
-    //       // setTimeout(() => {
-    //       // if (store.state.uploadCompleted) {
-    //       if (store.state.url) {
-    //         file.value = null;
-    //       }
-    //       // }, 2000);
-    //     } else {
-    //       file.value = null;
-    //       fileError.value = "Please select an image file (png or jpeg/jpg)";
-    //     }
-    //   }
-    // );
-
     watchEffect(() => {
       if (route.fullPath.includes(`/chat/`)) {
         userPage.value = false;
@@ -332,20 +306,7 @@ export default {
       store.methods.logoutUser();
       router.push("/auth");
     };
-
-    const handleChange = (e) => {
-      let selected = e.target.files[0];
-      console.log("You have selected: ", selected);
-
-      if (selected && types.includes(selected.type)) {
-        file.value = selected;
-        fileError.value = null;
-      } else {
-        file.value = null;
-        fileError.value = "Please select an image file (png or jpeg/jpg)";
-      }
-    };
-
+    
     const toggleDark = () => {
       store.state.darkMode.value = !store.state.darkMode.value;
 
