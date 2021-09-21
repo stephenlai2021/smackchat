@@ -1,12 +1,12 @@
 <template>
   <q-page>
-    <transition-group
+    <!-- <transition-group
       appear
       enter-active-class="animated fadeIn"
       leave-active-class="animated fadeOut"
-    >
+    > -->
       <div class="video-modal">
-        <h5>Video Chat</h5>
+        <h5 style="border: 1px solid white;">Video Chat</h5>
         <q-btn
           round
           dense
@@ -23,7 +23,7 @@
           @click="closeVideoModal"
         />
       </div>
-    </transition-group>
+    <!-- </transition-group> -->
   </q-page>
 </template>
 
@@ -42,6 +42,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+* {
+  margin: 0;
+  padding: 0;
+}
 .video-modal {
   position: fixed;
   top: 0;

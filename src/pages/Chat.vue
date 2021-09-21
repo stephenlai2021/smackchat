@@ -45,13 +45,14 @@
           />
         </div>
 
-        <div class="q-pr-md" style="width: 50%; display: flex; align-items: center;" :style="{ width: inputFocus ? '100%' : '50%' }">
+        <div :class="inputFocus ? 'q-pl-md' : ''" class="q-pr-md" style="width: 50%; display: flex; align-items: center;" :style="{ width: inputFocus ? '100%' : '50%' }">
           <q-input
             ref="input"
             v-model="newMessage"
             class="q-mr-md full-width"
             outlined
             rounded
+            color="white"
             :label="t('message')"
             dense
             focus="false"

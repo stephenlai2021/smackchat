@@ -34,13 +34,13 @@
 
     <!-- <q-page-sticky expand position="top" style="z-index: 500" class="q-my-sm"> -->
     <!-- <q-toolbar class="constraint"> -->
-    <div class="full-width q-px-md" style="display: inline-block">
+    <div class="full-width q-pa-sm" style="display: inline-block;">
       <q-input
         v-model="search"
         standout
         :label="t('searchUser')"
         dense
-        class="q-mb-md"
+        class="q-mb-"
       >
         <template v-slot:prepend>
           <q-icon
@@ -55,7 +55,7 @@
     <!-- </q-toolbar> -->
     <!-- </q-page-sticky> -->
 
-    <div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap;">
+    <!-- <div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap;">
       <div
         @click="goChat(user)"
         v-for="(user, index) in matchingUsers"
@@ -96,7 +96,7 @@
           </span>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="spinner" v-if="!store.state.users.length && !noUserMessages">
       <q-spinner-ios color="primary" size="3em" />
@@ -111,7 +111,7 @@
       </p>
     </div>
 
-    <q-list v-else class="full-width q-mt-md">
+    <q-list v-else class="full-width q-mt-">
       <q-item
         v-for="(user, index) in matchingUsers"
         :key="index"
