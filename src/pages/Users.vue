@@ -1,9 +1,9 @@
 <template>
-  <q-page class="">
-    <!-- <q-header reveal class="bg-white" style="border-bottom: 1px solid red;"> -->
-    <q-header reveal class="bg-transparent" style="z-index: 500; backdrop-filter: blur(20px);">
+  <q-page>
+    <q-header reveal style="z-index: 600;">
+    <!-- <q-header class="bg-transparent" style="z-index: 500; backdrop-filter: blur(20px);"> -->
       <q-toolbar class="constraint">
-        <span class="text-bold q-ml-sm text-warning" style="font-size: 20px; width: 100%">
+        <span class="text-bold q-ml-sm" style="font-size: 20px; width: 100%">
           {{ t("chatRoom") }}
         </span>
         <div class="flex row justify-end full-width">
@@ -11,7 +11,6 @@
             round
             dense
             flat
-            class="text-warning"
             size="md"
             icon="eva-person-add-outline"
             @click="router.push('/finduser')"
@@ -20,7 +19,6 @@
             round
             dense
             flat
-            class="text-warning"
             size="md"
             icon="eva-pin-outline"
             @click="showUsersMapModal = true"
@@ -42,7 +40,6 @@
         standout
         :label="t('searchUser')"
         dense
-        bg-color=""
         class="q-mb-md"
       >
         <template v-slot:prepend>
@@ -58,7 +55,7 @@
     <!-- </q-toolbar> -->
     <!-- </q-page-sticky> -->
 
-    <div class="full-width" style="overflow-x: auto; overflow-y: hidden; white-space: nowrap;">
+    <div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap;">
       <div
         @click="goChat(user)"
         v-for="(user, index) in matchingUsers"
@@ -74,7 +71,6 @@
               border: user.online ? '2px solid #e6ee9c' : '2px solid #e0e0e0',
             }"
           />
-
           <q-badge
             rounded
             class="float-right"
@@ -176,7 +172,8 @@
       />
     </q-page-sticky> -->
 
-    <q-footer style="z-index: 500; backdrop-filter: blur(20px);" class="bg-transparent" >
+    <!-- <q-footer style="z-index: 500; backdrop-filter: blur(20px);" class="bg-transparent" > -->
+    <q-footer style="z-index: 500;" reveal>
       <div class="constraint">
         <q-tabs
           v-model="store.state.tab"
@@ -187,14 +184,14 @@
           <q-tab
             name="home"
             :label="t('posts')"
-            class="text-warning"
+            class="text-"
             icon="eva-home-outline"
             style="width: 50%"
             @click="router.push('/')"
           />
           <q-tab
             name="chat"
-            class="text-warning"
+            class="text-"
             :label="t('chat')"
             icon="eva-message-circle-outline"
             style="width: 50%"

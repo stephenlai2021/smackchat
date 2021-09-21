@@ -12,7 +12,8 @@
    
     <camera-modal v-if="showCameraModal" @open-cameraModal="showCameraModal = true" @close-cameraModal="showCameraModal = false" /> 
 
-    <q-footer class="bg-transparent footer" style="backdrop-filter: blur(20px)">
+    <!-- <q-footer class="bg-transparent footer" style="backdrop-filter: blur(20px)"> -->
+    <q-footer style="z-index: 500;" reveal>
       <q-form class="flex constraint" :class="{ 'q-mx-sm': inputFocus }">
         <div
           v-if="!inputFocus"
@@ -23,12 +24,12 @@
         >
           <label class="q-mr-sm" style="cursor: pointer">
             <input class="file-input" type="file" @change="handleChange" />
-            <q-icon class="text-warning" size="md" name="eva-image-outline" />
+            <q-icon class="text-" size="md" name="eva-image-outline" />
           </label>
           <q-icon
           round
             size="md"
-            class="text-warning"
+            class="text-"
             style="cursor: pointer"
             name="eva-camera-outline"
             @click="showCameraModal = true"
@@ -38,17 +39,17 @@
             size="16px"
             flat
             ref="btnEmoji"
-            class="text-warning"
+            class="text-"
             icon="eva-smiling-face-outline"
             @click="showEmojiPicker"
           />
         </div>
 
-        <div style="width: 50%" :style="{ width: inputFocus ? '100%' : '50%' }">
+        <div class="q-pr-md" style="width: 50%; display: flex; align-items: center;" :style="{ width: inputFocus ? '100%' : '50%' }">
           <q-input
             ref="input"
             v-model="newMessage"
-            class="q-px- q-py- full-width"
+            class="q-mr-md full-width"
             outlined
             rounded
             :label="t('message')"

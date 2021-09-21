@@ -4,7 +4,7 @@
       <q-toolbar class="constraint">
         <q-avatar>
           <img
-            style="width: 32px; height: 32px"
+            style="width: 30px; height: 30px"
             :src="
               !store.state.userDetails.avatar
                 ? '/avatar.png'

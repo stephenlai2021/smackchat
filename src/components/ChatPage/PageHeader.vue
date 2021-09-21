@@ -1,23 +1,37 @@
 <template>
-  <q-header
+  <!-- <q-header
     class="bg-transparent"
     style="backdrop-filter: blur(20px); z-index: 500"
-  >
+  > -->
+  <q-header style="z-index: 500;">
     <q-toolbar
       class="constraint"
-      style="padding: 0; backdrop-filter: blur(8px)"
+      style="padding
+      : 0; backdrop-filter: blur(8px)"
     >
       <q-btn
         round
         flat
-        class="text-warning"
+        class="text-"
         size="18px"
         style="position: relative; z-index: 500"
         icon="eva-arrow-ios-back-outline"
         @click="router.push('/users')"
       />
+      <q-avatar v-if="store.state.otherUser">
+        <img
+          style="width: 30px; height: 30px"
+          :src="
+            !store.state.otherUser.avatar
+              ? '/avatar.png'
+              : store.state.otherUser.avatar
+          "
+
+          alt="user avatar"
+        />
+      </q-avatar>
       <span
-        class="text-warning text-bold"
+        class="text- text-bold q-ml-sm"
         style="font-size: 18px; width: 100%"
         color=""
         v-if="store.state.otherUser"
@@ -26,21 +40,21 @@
       </span>
       <div class="flex row justify-end full-width">
         <q-btn
+          flat
           round
           dense
-          color="blue"
           size="md"
           icon="eva-pin-outline"
-          class="q-mr-md"
+          class="q-mr-xs text-"
           @click="showMapModal"
         />
         <q-btn
+          flat
           round
           dense
-          color="green"
           size="md"
           icon="eva-phone-outline"
-          class="q-mr-md"
+          class="q-mr-sm text-"
           @click="showVideoModal"
         />
       </div>
@@ -49,24 +63,24 @@
 </template>
 
 <script>
-import { inject } from 'vue'
-import { useRouter } from 'vue-router'
+import { inject } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   setup(props, context) {
-    const store = inject('store')
+    const store = inject("store");
 
-    const router = useRouter()
+    const router = useRouter();
 
     const showMapModal = () => {
-      console.log('open map modal')
-      context.emit('open-mapModal')
-    }
+      console.log("open map modal");
+      context.emit("open-mapModal");
+    };
 
     const showVideoModal = () => {
-      console.log('open video modal')
-      context.emit('open-videoModal')
-    }
+      console.log("open video modal");
+      context.emit("open-videoModal");
+    };
 
     return {
       store,
@@ -74,8 +88,8 @@ export default {
 
       showMapModal,
       showVideoModal,
-    }
-  }
+    };
+  },
 };
 </script>
 
