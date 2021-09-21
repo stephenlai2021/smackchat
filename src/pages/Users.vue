@@ -7,7 +7,7 @@
           {{ t("chatRoom") }}
         </span>
         <div class="flex row justify-end full-width">
-          <!-- <q-btn
+          <q-btn
             round
             dense
             flat
@@ -15,7 +15,7 @@
             size="md"
             icon="eva-person-add-outline"
             @click="router.push('/finduser')"
-          /> -->
+          />
           <q-btn
             round
             dense
@@ -158,13 +158,13 @@
       </q-item>
     </q-list>
 
-    <q-btn
+    <!-- <q-btn
       round
       color="orange"
       icon="eva-person-add-outline"
-      style="position: fixed; right: 16px; bottom: 65px; z-index: 600;"
+      style="position: fixed; right: 16px; bottom: 65px; z-index: 500;"
       @click="router.push('/finduser')"
-    />
+    /> -->
     <!-- icon="eva-arrow-circle-up-outline" -->
 
     <!-- <q-page-sticky class="constraint" position="bottom-right" :offset="[18, 18]">

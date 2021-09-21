@@ -269,11 +269,11 @@ export default {
           fileError.value = null;
           store.methods.useStorage(file.value, "smackchat");
 
-          setTimeout(() => {
+          // setTimeout(() => {
             if (store.state.uploadCompleted) {
               file.value = null;
             }
-          }, 2000);
+          // }, 2000);
         } else {
           file.value = null;
           fileError.value = "Please select an image file (png or jpeg/jpg)";

@@ -4,10 +4,8 @@
       enter-active-class="animated slideInUp"
       leave-active-class="animated slideOutDown"
     >
-      <!-- <div v-if="file" class="image-modal constraint text-center q-pa-md"> -->
       <div class="image-modal constraint text-center q-pa-md">
         <div>{{ file.name }}</div>
-        <!-- <div v-if="file">Uploading... {{ store.state.progress }}%</div> -->
         <div>Uploading... {{ store.state.progress }}%</div>
         <div
           class="progress-bar"
@@ -29,8 +27,6 @@ export default {
 
     const route = useRoute()
 
-    // const showImageModal = ref(false)
-
     watch(
       () => store.state.url,
       (newVal, oldVal) => {
@@ -41,24 +37,13 @@ export default {
           createdAt: timestamp(),
         });
         if (store.state.uploadCompleted) {
-          // file.value = null;
-          // file = null;
           context.emit('close-imageModal')
-          // showImageModal.value = false
-
-          // hideCameraBtn.value = false;
-          // imageCaptured.value = false;
-          // showCameraModal.value = false;
-
-          // disableCamera();
         }
       }
     );
 
     return {
       store,
-
-      // showImageModal,
     };
   },
 };
