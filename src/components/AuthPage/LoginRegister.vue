@@ -28,15 +28,19 @@
           <q-icon name="attach_file" />
         </template>
       </q-file>
-      <div class="output-2 text-center">
-        <p v-if="file">{{ file.name }}</p>
+      <div v-if="file" class="output-2 text-center">
+        <p>{{ file.name }}</p>
         <div v-if="fileError" class="error">{{ fileError }}</div>
-        <q-linear-progress
+        <!-- <q-linear-progress
           v-if="file"
           class="q-mt-sm"
           color="primary"
           :value="store.state.progress"
-        />
+        /> -->
+        <div
+          class="progress-bar q-mt-sm"
+          :style="{ width: store.state.progress + '%' }"
+        ></div>
       </div>
     </div>
     <p style="color: red">{{ store.state.errorMessage }}</p>
@@ -88,7 +92,6 @@ export default {
       lng: null,
     });
 
-    // watch
     watch(
       () => file.value,
       (newVal, oldVal) => {
@@ -98,10 +101,20 @@ export default {
           console.log("file name: ", file.value.name);
 
           fileError.value = null;
+          store.state.register = false
           store.methods.useStorage(file.value, "smackchat");
         } else {
           file.value = null;
           // fileError.value = "Please select an image file (png or jpeg/jpg)";
+        }
+      }
+    );
+
+    watch(
+      () => store.state.url,
+      (newVal, oldVal) => {
+        if (store.state.uploadCompleted) {
+          file.value = null;
         }
       }
     );
@@ -181,4 +194,14 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.progress-bar {
+  display: block;
+  height: 6px;
+  background: #5ad8d2;
+  // padding: 20px;
+  border-radius: 6px;
+  // margin-top: 10px;
+  transition: width 0.3s ease;
+}
+</style>

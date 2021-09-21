@@ -264,6 +264,7 @@ export default {
       if (selected && types.includes(selected.type)) {
         file.value = selected;
         fileError.value = null;
+        store.state.register = true
 
         store.methods.useStorage(file.value, "smackchat");
       } else {
@@ -281,9 +282,9 @@ export default {
 
     watch(
       () => store.state.url,
-      (newVal, oldVal) => {     
+      (newVal, oldVal) => {
         if (store.state.uploadCompleted) {
-          file.value = null
+          file.value = null;
         }
       }
     );
@@ -306,7 +307,7 @@ export default {
       store.methods.logoutUser();
       router.push("/auth");
     };
-    
+
     const toggleDark = () => {
       store.state.darkMode.value = !store.state.darkMode.value;
 

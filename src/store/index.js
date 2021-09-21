@@ -17,7 +17,6 @@ const state = reactive({
     from: null,
     typing: false,
   },
-  // avatar: null,
   user: {},
   darkMode: false,
   chinese: false,
@@ -26,9 +25,8 @@ const state = reactive({
   tab: "home",
   to: null,
   geoLocation: null,
-  // userName: null,
+  register: false,
 
-  // storeage
   url: null,
   error: null,
   progress: null,
@@ -65,9 +63,11 @@ const methods = {
           state.url = await storageRef.getDownloadURL();
           console.log("image url | store: ", state.url);
 
-          db.collection("chat-users").doc(state.userDetails.name).update({
-            avatar: state.url,
-          });
+          if (state.register) {
+            db.collection("chat-users").doc(state.userDetails.name).update({
+              avatar: state.url,
+            });
+          }
         }
       );
     });
