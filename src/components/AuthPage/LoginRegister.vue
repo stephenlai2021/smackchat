@@ -81,6 +81,8 @@ export default {
     const lat = ref(null);
     const lng = ref(null);
 
+    const peerId = ref(null);
+
     // allowed file types
     const types = ["image/png", "image/jpeg", "image/jpg"];
 
@@ -101,7 +103,7 @@ export default {
           console.log("file name: ", file.value.name);
 
           fileError.value = null;
-          store.state.register = false
+          store.state.register = false;
           store.methods.useStorage(file.value, "smackchat");
         } else {
           file.value = null;
@@ -133,7 +135,12 @@ export default {
         console.log("latitude: ", lat.value);
         console.log("longitude: ", lng.value);
 
-        formData.value = { ...formData.value, lat: lat.value, lng: lng.value };
+        formData.value = {
+          ...formData.value,
+          lat: lat.value,
+          lng: lng.value,
+          peerId: peerId.value,
+        };
         store.methods.loginUser(formData.value);
         console.log("login: ", formData.value);
 
@@ -148,6 +155,7 @@ export default {
           avatar: store.state.url,
           lat: lat.value,
           lng: lng.value,
+          peerId: peerId.value,
         };
         store.methods.registerUser(formData.value);
 
@@ -171,6 +179,15 @@ export default {
       } else {
         console.log("Your browser does not support map features");
       }
+
+      // connect to Peer server
+      const peer = new Peer();
+
+      // get a random id assigned by Peer server
+      peer.on("open", (id) => {
+        peerId.value = id;
+        // store.state.peerId = id;
+      });
     });
 
     return {

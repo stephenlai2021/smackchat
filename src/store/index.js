@@ -198,6 +198,7 @@ const methods = {
         db.collection("chat-users").doc(data.name).update({
           lat: data.lat,
           lng: data.lng,
+          peerId: data.peerId,
         });
 
         state.tab = "home";
@@ -372,6 +373,11 @@ const methods = {
   toggleLeftDrawer() {
     state.leftDrawerOpen = !state.leftDrawerOpen;
   },
+  // savePeerId(id) {
+  //   db.collection("chat-users").doc(data.name).update({
+  //     peerId: id,
+  //   });
+  // },
 };
 
 const getters = {

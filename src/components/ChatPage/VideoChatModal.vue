@@ -101,6 +101,21 @@
         </div>
       </div>
     </div>
+    <q-btn
+      round
+      dense
+      size="md"
+      class="bg-red-3"
+      icon="eva-close-outline"
+      style="
+        position: fixed;
+        left: 50%;
+        transform: translate(-50%);
+        bottom: 20px;
+        z-index: 700;
+      "
+      @click="closeVideoModal"
+    />
   </q-page>
 </template>
 
@@ -110,7 +125,7 @@ import { db } from "src/boot/firebase";
 import { ref, onMounted, onBeforeUnmount, watch, inject } from "vue";
 
 export default {
-  setup() {
+  setup(props, context) {
     const $q = useQuasar();
 
     const store = inject("store");
@@ -138,6 +153,10 @@ export default {
       store.state.peerId = id;
     });
 
+    const closeVideoModal = () => {
+      context.emit("close-videoModal");
+    };
+
     peer.on("call", (call) => {
       $q.dialog({
         title: "Confirm",
@@ -156,7 +175,7 @@ export default {
         })
         .onCancel(() => {
           console.log(">>>> Cancel");
-        })
+        });
     });
 
     const hangUp = () => {
@@ -166,7 +185,8 @@ export default {
     };
 
     const call = () => {
-      const call = peer.call(idInput.value, localStream.value);
+      // const call = peer.call(idInput.value, localStream.value);
+      const call = peer.call(store.state.otherUser.peerId, localStream.value);
 
       remoteVideoShow.value = true;
 
@@ -267,7 +287,7 @@ export default {
 
     return {
       store,
-      
+
       myId,
       idInput,
       cameraEnabled,
@@ -278,16 +298,15 @@ export default {
       hangUp,
       videoOn,
       audioOn,
-      
-      playVideo,
       localVideo,
-      
+
+      openCamera,
       pauseVideo,
       remoteVideo,
       toggleVideo,
       resumeVideo,
       toggleAudio,
-      openCamera,
+      closeVideoModal,
     };
   },
 };

@@ -1,33 +1,43 @@
 <template>
-  <q-page class="page-chat">  
-    <page-header @open-mapModal="showMapModal = true" @open-videoModal="showVideoModal = true" />
-  
+  <q-page class="page-chat">
+    <page-header
+      @open-mapModal="showMapModal = true"
+      @open-videoModal="showVideoModal = true"
+    />
+
     <chat-messages />
 
     <image-modal :file="file" v-if="file" @close-imageModal="file = null" />
 
-    <map-modal v-if="showMapModal"  @close-mapModal="showMapModal = false" />
+    <map-modal v-if="showMapModal" @close-mapModal="showMapModal = false" />
 
-    <video-modal v-if="showVideoModal"  @close-videoModal="showVideoModal = false" />
-   
-    <camera-modal v-if="showCameraModal" @open-cameraModal="showCameraModal = true" @close-cameraModal="showCameraModal = false" /> 
+    <video-modal
+      v-if="showVideoModal"
+      @close-videoModal="showVideoModal = false"
+    />
+
+    <camera-modal
+      v-if="showCameraModal"
+      @open-cameraModal="showCameraModal = true"
+      @close-cameraModal="showCameraModal = false"
+    />
 
     <!-- <q-footer class="bg-transparent footer" style="backdrop-filter: blur(20px)"> -->
-    <q-footer style="z-index: 500;" reveal class="q-py-xs">
+    <q-footer style="z-index: 500" reveal class="q-py-xs">
       <q-form class="flex constraint" :class="{ 'q-mx-sm': inputFocus }">
         <div
           v-if="!inputFocus"
           flat
           round
           class="flex row justify-evenly"
-          style="width: 50%; display: flex; align-items: center;"
+          style="width: 50%; display: flex; align-items: center"
         >
           <label class="q-mr-sm" style="cursor: pointer">
             <input class="file-input" type="file" @change="handleChange" />
             <q-icon class="text-" size="md" name="eva-image-outline" />
           </label>
           <q-icon
-          round
+            round
             size="md"
             class="text-"
             style="cursor: pointer"
@@ -45,7 +55,12 @@
           />
         </div>
 
-        <div :class="inputFocus ? 'q-pl-md' : ''" class="q-pr-md" style="width: 50%; display: flex; align-items: center;" :style="{ width: inputFocus ? '100%' : '50%' }">
+        <div
+          :class="inputFocus ? 'q-pl-md' : ''"
+          class="q-pr-md"
+          style="width: 50%; display: flex; align-items: center"
+          :style="{ width: inputFocus ? '100%' : '50%' }"
+        >
           <q-input
             ref="input"
             v-model="newMessage"
@@ -102,7 +117,7 @@ export default {
   components: {
     "page-header": require("components/ChatPage/PageHeader.vue").default,
     "map-modal": require("components/ChatPage/MapModal.vue").default,
-    "video-modal": require("components/ChatPage/VideoModal.vue").default,
+    "video-modal": require("components/ChatPage/VideoChatModal.vue").default,
     "image-modal": require("components/ChatPage/ImageModal.vue").default,
     "camera-modal": require("components/ChatPage/CameraModal.vue").default,
     "chat-messages": require("components/ChatPage/ChatMessages.vue").default,
@@ -125,9 +140,22 @@ export default {
     const indicator = ref(false);
     const inputFocus = ref(false);
     const showMessages = ref(false);
-    const showMapModal = ref(false)
-    const showVideoModal = ref(false)   
+    const showMapModal = ref(false);
+    const showVideoModal = ref(false);
     const showCameraModal = ref(false);
+
+    /***************/
+    /* Phone Button */
+    // /***************/
+
+    // // connect to Peer server
+    // const peer = new Peer();
+
+    // // get a random id assigned by Peer server
+    // peer.on("open", (id) => {
+    //   myId.value = id;
+    //   store.state.peerId = id;
+    // });
 
     /***************/
     /* Image Button */
