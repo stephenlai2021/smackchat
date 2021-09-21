@@ -81,13 +81,11 @@ export default {
     const types = ["image/png", "image/jpeg", "image/jpg"];
 
     const formData = ref({
-      name: 'me',
-      email: 'me@test.com',
-      password: '123456',
-      geolocation: {
-        lat: null,
-        lng: null,
-      },
+      name: "me",
+      email: "me@test.com",
+      password: "123456",
+      lat: null,
+      lng: null,
     });
 
     // watch
@@ -103,7 +101,7 @@ export default {
           store.methods.useStorage(file.value, "smackchat");
         } else {
           file.value = null;
-          fileError.value = "Please select an image file (png or jpeg/jpg)";
+          // fileError.value = "Please select an image file (png or jpeg/jpg)";
         }
       }
     );
@@ -119,9 +117,9 @@ export default {
       if (props.tab === "login") {
         store.state.login = true;
 
-        console.log('latitude: ', lat.value )
-        console.log('longitude: ', lng.value )
-        
+        console.log("latitude: ", lat.value);
+        console.log("longitude: ", lng.value);
+
         formData.value = { ...formData.value, lat: lat.value, lng: lng.value };
         store.methods.loginUser(formData.value);
         console.log("login: ", formData.value);
@@ -132,7 +130,12 @@ export default {
         }
       }
       if (props.tab === "register") {
-        formData.value = { ...formData.value, avatar: store.state.url, lat: lat.value, lng: lng.value };
+        formData.value = {
+          ...formData.value,
+          avatar: store.state.url,
+          lat: lat.value,
+          lng: lng.value,
+        };
         store.methods.registerUser(formData.value);
 
         if (store.state.successMessage === "user register successfully") {
@@ -147,13 +150,13 @@ export default {
     };
 
     onMounted(() => {
-      if (navigator.geolocation) {        
+      if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((pos) => {
           lat.value = pos.coords.latitude;
           lng.value = pos.coords.longitude;
         });
       } else {
-        console.log('Your browser does not support map features')
+        console.log("Your browser does not support map features");
       }
     });
 
