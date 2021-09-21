@@ -97,7 +97,7 @@
               style="width: 120px; border-radius: 8px"
             />
             <label class="full-width btn-1" style="cursor: pointer">
-              <input v-if="file" class="file-input" type="file" @change="handleChange" />
+              <input class="file-input" type="file" @change="handleChange" />
               <q-icon
                 color="green"
                 size="md"
@@ -113,7 +113,7 @@
             <div v-if="file">{{ file.name }}</div>
             <div
               v-if="file"
-              class="progress-bar"
+              class="progress-bar q-mt-md"
               :style="{ width: store.state.progress + '%' }"
             ></div>
           </div>
