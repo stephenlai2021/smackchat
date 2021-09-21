@@ -108,11 +108,11 @@
           </div>
         </div>
         <div v-if="file" class="row justify-center">
-          <div class="output-1 text-center q-mt-sm" style="width: 250px">
+          <div class="output-1 text-center q-mt-md" style="width: 250px">
             <div v-if="fileError" class="error">{{ fileError }}</div>
             <div>{{ file.name }}</div>
             <div
-              class="progress-bar q-mt-md"
+              class="progress-bar q-mt-sm"
               :style="{ width: store.state.progress + '%' }"
             ></div>
           </div>
@@ -267,7 +267,7 @@ export default {
 
         store.methods.useStorage(file.value, "smackchat");
 
-        store.state.progress = null;
+        // store.state.progress = null;
       } else {
         file.value = null;
         fileError.value = "Please select an image file (png or jpeg/jpg)";
