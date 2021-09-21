@@ -21,7 +21,7 @@
           class="flex row justify-evenly"
           style="width: 50%; display: flex; align-items: center;"
         >
-          <label class="q-ma-" style="cursor: pointer">
+          <label class="q-mr-sm" style="cursor: pointer">
             <input class="file-input" type="file" @change="handleChange" />
             <q-icon color="green-12" size="md" name="eva-image-outline" />
           </label>
@@ -50,7 +50,7 @@
           <q-input
             ref="input"
             v-model="newMessage"
-            class="q-px-md q-py-md full-width"
+            class="q-px- q-py- full-width"
             outlined
             rounded
             :label="t('message')"

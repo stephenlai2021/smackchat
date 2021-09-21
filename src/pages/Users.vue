@@ -3,7 +3,7 @@
     <!-- <q-header reveal class="bg-white" style="border-bottom: 1px solid red;"> -->
     <q-header reveal class="bg-transparent" style="z-index: 500; backdrop-filter: blur(20px);">
       <q-toolbar class="constraint">
-        <span class="text-bold q-ml-sm" style="font-size: 20px; width: 100%">
+        <span class="text-bold q-ml-sm text-green" style="font-size: 20px; width: 100%">
           {{ t("chatRoom") }}
         </span>
         <div class="flex row justify-end full-width">
@@ -11,7 +11,7 @@
             round
             dense
             flat
-            color=""
+            class="text-green"
             size="md"
             icon="eva-person-add-outline"
             @click="router.push('/finduser')"
@@ -20,7 +20,7 @@
             round
             dense
             flat
-            color=""
+            class="text-green"
             size="md"
             icon="eva-pin-outline"
             @click="showUsersMapModal = true"
@@ -43,7 +43,7 @@
         :label="t('searchUser')"
         dense
         bg-color=""
-        class="q-my-md"
+        class="q-mb-md"
       >
         <template v-slot:prepend>
           <q-icon
@@ -66,7 +66,7 @@
         style="display: inline-block;"
         class="flex row q-ml-md q-my-sm"
       >
-        <q-avatar size="45px" style="position: relative">
+        <q-avatar size="45px" style="position: relative; cursor: pointer;">
           <img
             :src="user.avatar"
             alt="user avatar"
@@ -187,12 +187,14 @@
           <q-tab
             name="home"
             :label="t('posts')"
+            class="text-green"
             icon="eva-home-outline"
             style="width: 50%"
             @click="router.push('/')"
           />
           <q-tab
             name="chat"
+            class="text-green"
             :label="t('chat')"
             icon="eva-message-circle-outline"
             style="width: 50%"
