@@ -12,7 +12,6 @@
       <q-btn
         round
         flat
-        class="text-"
         size="18px"
         style="position: relative; z-index: 500"
         icon="eva-arrow-ios-back-outline"
