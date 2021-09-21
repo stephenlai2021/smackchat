@@ -110,9 +110,8 @@
         <div v-if="file" class="row justify-center">
           <div class="output-1 text-center q-mt-md" style="width: 150px">
             <div v-if="fileError" class="error">{{ fileError }}</div>
-            <div v-if="file">{{ file.name }}</div>
-            <div
-              v-if="file"
+            <div>{{ file.name }}</div>
+            <div              
               class="progress-bar q-mt-md"
               :style="{ width: store.state.progress + '%' }"
             ></div>
