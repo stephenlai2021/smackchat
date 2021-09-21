@@ -162,7 +162,7 @@
       round
       color="orange"
       icon="eva-person-add-outline"
-      style="position: absolute; right: 16px; bottom: 20px"
+      style="position: fixed; right: 16px; bottom: 20px"
       @click="router.push('/finduser')"
     />
     <!-- icon="eva-arrow-circle-up-outline" -->
