@@ -3,7 +3,7 @@
     <!-- <q-header reveal class="bg-white" style="border-bottom: 1px solid red;"> -->
     <q-header reveal class="bg-transparent" style="z-index: 500; backdrop-filter: blur(20px);">
       <q-toolbar class="constraint">
-        <span class="text-bold q-ml-sm text-green" style="font-size: 20px; width: 100%">
+        <span class="text-bold q-ml-sm text-myColor" style="font-size: 20px; width: 100%">
           {{ t("chatRoom") }}
         </span>
         <div class="flex row justify-end full-width">
@@ -11,7 +11,7 @@
             round
             dense
             flat
-            class="text-green"
+            class="text-myColor"
             size="md"
             icon="eva-person-add-outline"
             @click="router.push('/finduser')"
@@ -20,7 +20,7 @@
             round
             dense
             flat
-            class="text-green"
+            class="text-myColor"
             size="md"
             icon="eva-pin-outline"
             @click="showUsersMapModal = true"
@@ -187,14 +187,14 @@
           <q-tab
             name="home"
             :label="t('posts')"
-            class="text-green"
+            class="text-myColor"
             icon="eva-home-outline"
             style="width: 50%"
             @click="router.push('/')"
           />
           <q-tab
             name="chat"
-            class="text-green"
+            class="text-myColor"
             :label="t('chat')"
             icon="eva-message-circle-outline"
             style="width: 50%"
