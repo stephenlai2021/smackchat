@@ -71,7 +71,7 @@ export default {
         { icon: otherUser.value }
       )
         .addTo(map.value)
-        .bindPopup(store.state.otherUser.name + ' ' + t('location'))
+        .bindPopup(store.state.otherUser.name + t('location'))
         .openPopup();
 
       mapTile.value = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {

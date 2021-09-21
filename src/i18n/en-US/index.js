@@ -24,6 +24,6 @@ export default {
   offline: "Offline",
   posts: "Posts",
   chat: "Chat",
-  location: "is here",
+  location: " is here",
   singleLocation: "Your location",
 };
