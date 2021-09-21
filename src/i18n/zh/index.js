@@ -23,4 +23,6 @@ export default {
   offline: "下線",
   posts: "貼文",
   chat: "聊天",
+  location: '在這裡',
+  singleLocation: '您的位置',
 };

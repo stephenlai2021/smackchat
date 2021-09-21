@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { useI18n } from "vue-i18n";
 import { ref, onMounted, onBeforeUnmount, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -38,6 +39,8 @@ export default {
     const router = useRouter();
 
     const store = inject("store");
+
+    const { t, locale } = useI18n();
 
     const me = ref(null);
     const map = ref(null);
@@ -68,7 +71,7 @@ export default {
         { icon: otherUser.value }
       )
         .addTo(map.value)
-        .bindPopup(store.state.otherUser.name + " is here")
+        .bindPopup(store.state.otherUser.name + t('location'))
         .openPopup();
 
       mapTile.value = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -96,18 +99,6 @@ export default {
         })
         .addTo(map.value);
     };
-
-    const removeAllMarkers = () => {
-      map.value.eachLayer((layer) => {
-        if (layer instanceof L.Marker) {
-          map.value.removeLayer(layer);
-        }
-      });
-    };
-
-    // onBeforeMount(() => {
-    //   removeAllMarkers();
-    // });
 
     onBeforeUnmount(() => {
       map.value.removeLayer(me.value);

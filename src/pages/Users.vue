@@ -1,13 +1,13 @@
 <template>
   <q-page class="">
     <!-- <q-header reveal class="bg-white" style="border-bottom: 1px solid red;"> -->
-    <q-header reveal class="" style="z-index: 500;">
+    <q-header reveal class="" style="z-index: 500">
       <q-toolbar class="constraint">
         <span class="text-bold q-ml-sm" style="font-size: 20px; width: 100%">
           {{ t("chatRoom") }}
         </span>
         <div class="flex row justify-end full-width">
-          <q-btn
+          <!-- <q-btn
             round
             dense
             flat
@@ -15,7 +15,7 @@
             size="md"
             icon="eva-person-add-outline"
             @click="router.push('/finduser')"
-          />
+          /> -->
           <q-btn
             round
             dense
@@ -58,45 +58,47 @@
     <!-- </q-toolbar> -->
     <!-- </q-page-sticky> -->
 
-    <div
-      @click="goChat(user)"
-      v-for="(user, index) in matchingUsers"
-      :key="index"
-      style="display: inline-block"
-      class="flex row q-ml-md q-my-sm"
-    >
-      <q-avatar size="45px" style="position: relative">
-        <img
-          :src="user.avatar"
-          alt="user avatar"
-          :style="{
-            border: user.online ? '2px solid #e6ee9c' : '2px solid #e0e0e0',
-          }"
-        />
+    <div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap;">
+      <div
+        @click="goChat(user)"
+        v-for="(user, index) in matchingUsers"
+        :key="index"
+        style="display: inline-block;"
+        class="flex row q-ml-md q-my-sm"
+      >
+        <q-avatar size="45px" style="position: relative">
+          <img
+            :src="user.avatar"
+            alt="user avatar"
+            :style="{
+              border: user.online ? '2px solid #e6ee9c' : '2px solid #e0e0e0',
+            }"
+          />
 
-        <q-badge
-          rounded
-          class="float-right"
-          style="position: absolute; left: 32px; top: 32px"
-          :style="{ background: user.online ? '#dcedc8' : '#e0e0e0' }"
-        />
-      </q-avatar>
-      <div class="flex">
-        <span
-          style="
-            white-space: break-spaces;
-            word-wrap: break-word;
-            height: 21px;
-            width: 50px;
-            text-align: center;
-          "
-        >
-          {{
-            user.name.split(" ")[0].length > 6
-              ? user.name.split(" ")[0].substring(6, 0) + "."
-              : user.name.split(" ")[0]
-          }}
-        </span>
+          <q-badge
+            rounded
+            class="float-right"
+            style="position: absolute; left: 32px; top: 32px"
+            :style="{ background: user.online ? '#dcedc8' : '#e0e0e0' }"
+          />
+        </q-avatar>
+        <div class="flex">
+          <span
+            style="
+              white-space: break-spaces;
+              word-wrap: break-word;
+              height: 21px;
+              width: 50px;
+              text-align: center;
+            "
+          >
+            {{
+              user.name.split(" ")[0].length > 6
+                ? user.name.split(" ")[0].substring(6, 0) + "."
+                : user.name.split(" ")[0]
+            }}
+          </span>
+        </div>
       </div>
     </div>
 
@@ -159,9 +161,11 @@
     <q-btn
       round
       color="orange"
-      icon="eva-arrow-circle-up-outline"
+      icon="eva-person-add-outline"
       style="position: absolute; right: 16px; bottom: 20px"
+      @click="router.push('/finduser')"
     />
+    <!-- icon="eva-arrow-circle-up-outline" -->
 
     <!-- <q-page-sticky class="constraint" position="bottom-right" :offset="[18, 18]">
       <q-btn
@@ -172,7 +176,7 @@
       />
     </q-page-sticky> -->
 
-    <q-footer style="z-index: 500;">
+    <q-footer style="z-index: 500">
       <div class="constraint">
         <q-tabs
           v-model="store.state.tab"
@@ -203,7 +207,15 @@
 <script>
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { ref, onMounted, onBeforeMount, computed, inject, watch, watchEffect } from "vue";
+import {
+  ref,
+  onMounted,
+  onBeforeMount,
+  computed,
+  inject,
+  watch,
+  watchEffect,
+} from "vue";
 
 export default {
   components: {
@@ -218,7 +230,7 @@ export default {
 
     const search = ref("");
     const noUserMessages = ref(false);
-    const showUsersMapModal = ref(false)
+    const showUsersMapModal = ref(false);
 
     // methods
     const findUser = () => {

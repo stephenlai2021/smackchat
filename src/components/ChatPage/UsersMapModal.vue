@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { useI18n } from "vue-i18n";
 import { ref, onMounted, onBeforeMount, onBeforeUnmount, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -32,6 +33,8 @@ export default {
     const router = useRouter();
 
     const store = inject("store");
+
+    const { t, locale } = useI18n();
 
     const me = ref(null);
     const map = ref(null);
@@ -43,9 +46,9 @@ export default {
 
     const closeUsersMapModal = () => {
       map.value.removeLayer(me.value);
-      map.value.removeLayer(filteredUsers.value);
       map.value.removeLayer(mapTile.value);
-      
+      map.value.removeLayer(filteredUsers.value);
+
       context.emit("close-usersMapModal");
     };
 
@@ -62,16 +65,16 @@ export default {
         {
           icon: new L.Icon({
             iconUrl: store.state.userDetails.avatar,
-            // shadowUrl: "/marker/marker-shadow.png",
+            shadowUrl: "/marker/marker-shadow.png",
             iconSize: [40, 40],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
-            // shadowSize: [41, 41],
+            shadowSize: [41, 41],
           }),
         }
       )
         .addTo(map.value)
-        .bindPopup("You are here")
+        .bindPopup(t('singleLocation'))
         .openPopup();
 
       setControl();
@@ -88,7 +91,7 @@ export default {
           }),
         })
           .addTo(map.value)
-          .bindPopup(item.name + " is here"));
+          .bindPopup(item.name + ' ' + t('location')));
         // .openPopup()
       });
 
