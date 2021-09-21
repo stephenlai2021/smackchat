@@ -10,15 +10,14 @@
       <q-btn
         round
         flat
-        color="white"
+        class="text-warning"
         size="18px"
-        class=""
         style="position: relative; z-index: 500"
         icon="eva-arrow-ios-back-outline"
         @click="router.push('/users')"
       />
       <span
-        class="text-white text-bold"
+        class="text-warning text-bold"
         style="font-size: 18px; width: 100%"
         color=""
         v-if="store.state.otherUser"

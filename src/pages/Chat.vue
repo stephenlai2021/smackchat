@@ -23,13 +23,12 @@
         >
           <label class="q-mr-sm" style="cursor: pointer">
             <input class="file-input" type="file" @change="handleChange" />
-            <q-icon color="green-12" size="md" name="eva-image-outline" />
+            <q-icon class="text-warning" size="md" name="eva-image-outline" />
           </label>
           <q-icon
           round
             size="md"
-            class="q-ma-"
-            color="green-12"
+            class="text-warning"
             style="cursor: pointer"
             name="eva-camera-outline"
             @click="showCameraModal = true"
@@ -38,9 +37,8 @@
             round
             size="16px"
             flat
-            class="q-ma-"
             ref="btnEmoji"
-            color="green-12"
+            class="text-warning"
             icon="eva-smiling-face-outline"
             @click="showEmojiPicker"
           />
@@ -56,7 +54,6 @@
             :label="t('message')"
             dense
             focus="false"
-            bg-color=""
             @keydown.enter="sendMessage"
             @keyup="sendTypingIndicator()"
             @focus="onFocus"
