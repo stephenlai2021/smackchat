@@ -108,10 +108,10 @@
           </div>
         </div>
         <div v-if="file" class="row justify-center">
-          <div class="output-1 text-center q-mt-md" style="width: 150px">
+          <div class="output-1 text-center q-mt-sm" style="width: 250px">
             <div v-if="fileError" class="error">{{ fileError }}</div>
             <div>{{ file.name }}</div>
-            <div              
+            <div
               class="progress-bar q-mt-md"
               :style="{ width: store.state.progress + '%' }"
             ></div>
@@ -257,28 +257,62 @@ export default {
       }
     );
 
+    const handleChange = (e) => {
+      let selected = e.target.files[0];
+      console.log("You have selected: ", selected);
+
+      if (selected && types.includes(selected.type)) {
+        file.value = selected;
+        fileError.value = null;
+
+        store.methods.useStorage(file.value, "smackchat");
+
+        store.state.progress = null;
+      } else {
+        file.value = null;
+        fileError.value = "Please select an image file (png or jpeg/jpg)";
+
+        $q.notify({
+          message: fileError.value,
+          color: "purple",
+          position: "bottom",
+          timeout: 2000,
+        });
+      }
+    };
+
     watch(
-      () => file.value,
-      (newVal, oldVal) => {
-        console.log("You have selected: ", newVal);
-
-        if (file.value && types.includes(file.value.type)) {
-          console.log("file name: ", file.value.name);
-
-          fileError.value = null;
-          store.methods.useStorage(file.value, "smackchat");
-
-          // setTimeout(() => {
-            if (store.state.uploadCompleted) {
-              file.value = null;
-            }
-          // }, 2000);
-        } else {
-          file.value = null;
-          fileError.value = "Please select an image file (png or jpeg/jpg)";
+      () => store.state.url,
+      (newVal, oldVal) => {     
+        if (store.state.uploadCompleted) {
+          file.value = null
         }
       }
     );
+
+    // watch(
+    //   () => file.value,
+    //   (newVal, oldVal) => {
+    //     console.log("You have selected: ", newVal);
+
+    //     if (file.value && types.includes(file.value.type)) {
+    //       console.log("file name: ", file.value.name);
+
+    //       fileError.value = null;
+    //       store.methods.useStorage(file.value, "smackchat");
+
+    //       // setTimeout(() => {
+    //       // if (store.state.uploadCompleted) {
+    //       if (store.state.url) {
+    //         file.value = null;
+    //       }
+    //       // }, 2000);
+    //     } else {
+    //       file.value = null;
+    //       fileError.value = "Please select an image file (png or jpeg/jpg)";
+    //     }
+    //   }
+    // );
 
     watchEffect(() => {
       if (route.fullPath.includes(`/chat/`)) {
