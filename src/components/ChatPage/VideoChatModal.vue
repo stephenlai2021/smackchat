@@ -12,24 +12,24 @@
           top: 50%;
           transform: translate(-50%, -50%);
           width: 100%;
+          z-index: 500;
         "
       >
         <q-btn
           round
           dense
-          size="md"
           class="bg-red-3 q-mx-lg"
           icon="eva-close-outline"
-          style="cursor: pointer; z-index: 500"
+          style="cursor: pointer; "
           @click="closeVideoModal"
         />
         <q-btn
+          round
           dense
           v-if="pause && cameraEnabled"
-          round
           color="grey"
           class="q-mx-sm"
-          style="opacity: 0.7; cursor: pointer; z-index: 500"
+          style="opacity: 0.7; cursor: pointer; "
           icon="eva-play-circle-outline"
           @click="resumeVideo"
         />
@@ -39,7 +39,7 @@
           round
           color="grey"
           class="q-mx-sm"
-          style="opacity: 0.7; cursor: pointer; z-index: 500"
+          style="opacity: 0.7; cursor: pointer; "
           icon="eva-pause-circle-outline"
           @click="pauseVideo"
         />
@@ -49,7 +49,7 @@
           round
           color="grey"
           class="q-mx-sm"
-          style="opacity: 0.7; cursor: pointer; z-index: 500"
+          style="opacity: 0.7; cursor: pointer; "
           icon="eva-volume-up-outline"
           @click="toggleAudio"
         />
