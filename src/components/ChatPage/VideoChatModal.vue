@@ -1,25 +1,6 @@
 <template>
   <q-page class="page-chat">
-    <!-- <p class="q-mt-md text-center text-bold" style="font-size: 16px">
-      My ID: <br />
-      {{ myId }}
-    </p> -->
     <div class="row justify-center q-mx-sm">
-      <!-- <q-input
-        v-model="idInput"
-        label="Please paste peer id here ..."
-        style="width: 600px"
-      >
-        <template v-slot:append>
-          <q-btn
-            round
-            dense
-            @click="call"
-            color="green"
-            icon="eva-phone-outline"
-          />
-        </template>
-      </q-input> -->
     </div>
     <div class="row justify-center q-my-lg">
       <div style="position: relative" class="q-mx-sm">
@@ -161,7 +142,8 @@ export default {
     peer.on("call", (call) => {
       $q.dialog({
         title: "Confirm",
-        message: "Would you like to answer this call ?",
+        // message: "Would you like to answer this call ?",
+        message: "Incoming call from " + store.state.otherUser.name,
         cancel: true,
         persistent: true,
       })

@@ -52,7 +52,7 @@
           round
           dense
           size="md"
-          icon="eva-phone-outline"
+          icon="eva-video-outline"
           class="q-mr-sm text-"
           @click="showVideoModal"
         />
