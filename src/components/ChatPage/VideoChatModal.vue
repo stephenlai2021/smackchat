@@ -1,91 +1,90 @@
 <template>
   <q-page class="page-chat">
     <div class="row justify-center">
-      <div style="position: relative" class="q-mx-">
-        <video class="remote-video" ref="remoteVideo" autoplay />
-        <video class="local-video" ref="localVideo" autoplay />
+      <!-- <div style="position: relative" class="q-mx-"> -->
+      <video class="remote-video" ref="remoteVideo" autoplay />
+      <video class="local-video" ref="localVideo" autoplay />
+      <div
+      class="row justify-center"
+        style="
+          position: fixed;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: 100%;
+        "
+      >
         <q-btn
           round
           dense
           size="md"
           class="bg-red-3 q-mx-lg"
           icon="eva-close-outline"
-          style="
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            cursor: pointer;
-            z-index: 500;
-          "
+          style="cursor: pointer; z-index: 500"
           @click="closeVideoModal"
         />
-        <div
-          class="row justify-center"
-          style="position: absolute; bottom: 30px; left: 0; width: 100%"
-        >
-          <q-btn
-            dense
-            v-if="pause && cameraEnabled"
-            round
-            color="grey"
-            class="q-mx-sm"
-            style="opacity: 0.7; cursor: pointer; z-index: 500"
-            icon="eva-play-circle-outline"
-            @click="resumeVideo"
-          />
-          <q-btn
-            dense
-            v-if="!pause && cameraEnabled"
-            round
-            color="grey"
-            class="q-mx-sm"
-            style="opacity: 0.7; cursor: pointer; z-index: 500"
-            icon="eva-pause-circle-outline"
-            @click="pauseVideo"
-          />
-          <q-btn
-            dense
-            v-if="audioOn && cameraEnabled"
-            round
-            color="grey"
-            class="q-mx-sm"
-            style="opacity: 0.7; cursor: pointer; z-index: 500"
-            icon="eva-volume-up-outline"
-            @click="toggleAudio"
-          />
-          <q-btn
-            dense
-            v-if="!audioOn && cameraEnabled"
-            round
-            color="grey"
-            class="q-mx-sm"
-            icon="eva-volume-off-outline"
-            style="opacity: 0.7; cursor: pointer; z-index: 500"
-            @click="toggleAudio"
-          />
-          <q-btn
-            v-if="!remoteVideoShow"
-            round
-            dense
-            class="q-mx-lg"
-            style="cursor: pointer; z-index: 500"
-            @click="call"
-            color="green"
-            icon="eva-phone-outline"
-          />
-          <q-btn
-            v-if="remoteVideoShow"
-            dense
-            round
-            color="red"
-            class="q-mx-sm"
-            icon="eva-phone-off-outline"
-            style="opacity: 0.7; cursor: pointer; z-index: 500"
-            @click="hangUp"
-          />
-        </div>
+        <q-btn
+          dense
+          v-if="pause && cameraEnabled"
+          round
+          color="grey"
+          class="q-mx-sm"
+          style="opacity: 0.7; cursor: pointer; z-index: 500"
+          icon="eva-play-circle-outline"
+          @click="resumeVideo"
+        />
+        <q-btn
+          dense
+          v-if="!pause && cameraEnabled"
+          round
+          color="grey"
+          class="q-mx-sm"
+          style="opacity: 0.7; cursor: pointer; z-index: 500"
+          icon="eva-pause-circle-outline"
+          @click="pauseVideo"
+        />
+        <q-btn
+          dense
+          v-if="audioOn && cameraEnabled"
+          round
+          color="grey"
+          class="q-mx-sm"
+          style="opacity: 0.7; cursor: pointer; z-index: 500"
+          icon="eva-volume-up-outline"
+          @click="toggleAudio"
+        />
+        <q-btn
+          dense
+          v-if="!audioOn && cameraEnabled"
+          round
+          color="grey"
+          class="q-mx-sm"
+          icon="eva-volume-off-outline"
+          style="opacity: 0.7; cursor: pointer; z-index: 500"
+          @click="toggleAudio"
+        />
+        <q-btn
+          v-if="!remoteVideoShow"
+          round
+          dense
+          class="q-mx-lg"
+          style="cursor: pointer; z-index: 500"
+          @click="call"
+          color="green"
+          icon="eva-phone-outline"
+        />
+        <q-btn
+          v-if="remoteVideoShow"
+          dense
+          round
+          color="red"
+          class="q-mx-sm"
+          icon="eva-phone-off-outline"
+          style="opacity: 0.7; cursor: pointer; z-index: 500"
+          @click="hangUp"
+        />
       </div>
+      <!-- </div> -->
     </div>
   </q-page>
 </template>
@@ -300,17 +299,17 @@ export default {
   width: 100%;
   // min-height: 300px;
   height: 50vh;
-  border: 1px solid;
+  // border: 1px solid;
 }
 .local-video {
   // width: 100px;
   width: 100%;
   height: 50vh;
   // height: 100px;
-  border: 1px solid white;
+  // border: 1px solid white;
   // position: absolute;
   // top: 10px;
   // right: 10px;
-  z-index: 500;
+  // z-index: 500;
 }
 </style>
