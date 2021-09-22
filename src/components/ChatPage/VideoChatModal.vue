@@ -1,7 +1,6 @@
 <template>
   <q-page class="page-chat">
-    <div class="row justify-center q-mx-sm">
-    </div>
+    <div class="row justify-center q-mx-sm"></div>
     <div class="row justify-center q-my-lg">
       <div style="position: relative" class="q-mx-sm">
         <video class="local-video" ref="localVideo" autoplay />
@@ -16,7 +15,7 @@
             round
             color="grey"
             class="q-mx-sm"
-            style="opacity: 0.7; cursor: pointer; z-index: 500;"
+            style="opacity: 0.7; cursor: pointer; z-index: 500"
             icon="eva-play-circle-outline"
             @click="resumeVideo"
           />
@@ -26,7 +25,7 @@
             round
             color="grey"
             class="q-mx-sm"
-            style="opacity: 0.7; cursor: pointer; z-index: 500;"
+            style="opacity: 0.7; cursor: pointer; z-index: 500"
             icon="eva-pause-circle-outline"
             @click="pauseVideo"
           />
@@ -56,7 +55,7 @@
             round
             color="grey"
             class="q-mx-sm"
-            style="opacity: 0.7; cursor: pointer; z-index: 500;"
+            style="opacity: 0.7; cursor: pointer; z-index: 500"
             icon="eva-volume-up-outline"
             @click="toggleAudio"
           />
@@ -67,14 +66,14 @@
             color="grey"
             class="q-mx-sm"
             icon="eva-volume-off-outline"
-            style="opacity: 0.7; cursor: pointer; z-index: 500;"
+            style="opacity: 0.7; cursor: pointer; z-index: 500"
             @click="toggleAudio"
           />
           <q-btn
             dense
             round
             color="red"
-            style="opacity: 0.7; cursor: pointer; z-index: 500;"
+            style="opacity: 0.7; cursor: pointer; z-index: 500"
             class="q-mx-sm"
             icon="eva-phone-off-outline"
             @click="hangUp"
@@ -84,7 +83,7 @@
     </div>
     <div class="text-center" style="position: relative; z-index: 600">
       <q-btn
-      v-if="!remoteVideoShow"
+        v-if="!remoteVideoShow"
         round
         dense
         class="q-mx-lg"
@@ -128,7 +127,7 @@ export default {
     const pause = ref(false);
     const cameraEnabled = ref(false);
     const remoteVideoShow = ref(false);
-    const closeRemoteVideo = ref(false)
+    const closeRemoteVideo = ref(false);
 
     const peer = new Peer();
 
@@ -137,7 +136,7 @@ export default {
     });
 
     const closeVideoModal = () => {
-      closeCamera()
+      closeCamera();
       context.emit("close-videoModal");
     };
 
@@ -149,18 +148,25 @@ export default {
         persistent: true,
       })
         .onOk(() => {
-          context.emit('open-videoModal')
+          context.emit("open-videoModal");
           remoteVideoShow.value = true;
 
           call.answer(localStream.value);
 
-          if (!closeRemoteVideo.value) {
+          // call.on("stream", (remoteStream) => {
+          //   remoteVideo.value.srcObject = remoteStream;
+          // });
+
             call.on("stream", (remoteStream) => {
+              if (!closeRemoteVideo.value) {
               remoteVideo.value.srcObject = remoteStream;
+              } elses {
+                remoteVideo.value.srcObject = null
+              }
             });
-          } else {
-              remoteVideo.value.srcObject = null
-          }
+          // } else {
+          //   remoteVideo.value.srcObject = null;
+          // }
         })
         .onCancel(() => {
           console.log(">>>> Cancel");
@@ -170,13 +176,12 @@ export default {
     const hangUp = () => {
       console.log("close connection");
       peer.destroy();
-      closeRemoteVideo.value = true
+      closeRemoteVideo.value = true;
     };
 
     const call = () => {
       console.log("making call to ", store.state.otherUser.name);
       const call = peer.call(store.state.otherUser.peerId, localStream.value);
-
 
       call.on("stream", (remoteStream) => {
         remoteVideo.value.srcObject = remoteStream;
@@ -205,7 +210,7 @@ export default {
     };
 
     const toggleVideo = () => {
-      console.log('toggle video')
+      console.log("toggle video");
       videoOn.value = !videoOn.value;
 
       if (videoOn.value) {
