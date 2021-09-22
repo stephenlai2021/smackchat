@@ -137,6 +137,8 @@ export default {
 
     const closeVideoModal = () => {
       console.log("close video modal");
+      closeCamera()
+      remoteVideo.value.srcObject = null
       context.emit("close-videoModal");
     };
 
@@ -166,6 +168,7 @@ export default {
       console.log("close connection");
 
       peer.destroy();
+      remoteVideo.value.srcObject = null
     };
 
     const call = () => {
