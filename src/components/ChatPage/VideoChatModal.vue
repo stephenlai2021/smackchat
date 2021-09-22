@@ -128,6 +128,7 @@ export default {
     const pause = ref(false);
     const cameraEnabled = ref(false);
     const remoteVideoShow = ref(false);
+    const closeVideo = ref(false)
 
     const peer = new Peer();
 
@@ -138,7 +139,8 @@ export default {
     const closeVideoModal = () => {
       console.log("close video modal");
       closeCamera()
-      remoteVideo.value.srcObject = null
+      // remoteVideo.value.srcObject = null
+      closeVideo.value = true
       context.emit("close-videoModal");
     };
 
@@ -157,6 +159,10 @@ export default {
 
           call.on("stream", (remoteStream) => {
             remoteVideo.value.srcObject = remoteStream;
+
+            if (closeVideo.value) {
+              remoteVideo.value.srcObject = null
+            }
           });
         })
         .onCancel(() => {
@@ -167,8 +173,9 @@ export default {
     const hangUp = () => {
       console.log("close connection");
 
+      // remoteVideo.value.srcObject = null
+      closeVideo.value = true
       peer.destroy();
-      remoteVideo.value.srcObject = null
     };
 
     const call = () => {
@@ -180,6 +187,10 @@ export default {
       call.on("stream", (remoteStream) => {
         remoteVideo.value.srcObject = remoteStream;
         remoteVideoShow.value = true;
+
+        if (closeVideo.value) {
+          remoteVideo.value.srcObject = null
+        }
       });
     };
 
