@@ -24,7 +24,7 @@
     />
 
     <!-- <q-footer class="bg-transparent footer" style="backdrop-filter: blur(20px)"> -->
-    <q-footer style="z-index: 500" reveal class="q-py-xs">
+    <q-footer style="z-index: 300" reveal class="q-py-xs">
       <q-form class="flex constraint" :class="{ 'q-mx-sm': inputFocus }">
         <div
           v-if="!inputFocus"

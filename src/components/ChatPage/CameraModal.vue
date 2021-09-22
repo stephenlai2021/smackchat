@@ -16,7 +16,7 @@
             />
             <q-btn
               v-if="videoLoaded"
-              class="text-red"
+              class="text-warning"
               icon="eva-close-outline"
               size="md"
               flat
@@ -26,7 +26,7 @@
             />
             <q-btn
               v-if="videoLoaded"
-              class="text-blue"
+              class="text-warning"
               icon="eva-camera-outline"
               size="lg"
               flat
@@ -42,7 +42,7 @@
             <!-- <q-btn
               v-if="videoLoaded"
               :disable="hideCameraBtn"
-              class="text-amber"
+              class="text-warning"
               icon="eva-bulb-outline"
               size="md"
               flat
@@ -53,7 +53,7 @@
             <q-btn
               v-if="videoLoaded && btnSwap"
               :disable="hideCameraBtn"
-              class="text-green"
+              class="text-warning"
               icon="eva-swap-outline"
               size="md"
               flat

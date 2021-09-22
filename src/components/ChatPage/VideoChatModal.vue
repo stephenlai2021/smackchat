@@ -136,7 +136,7 @@ export default {
     });
 
     const closeVideoModal = () => {
-      closeCamera();
+      // closeCamera();
       context.emit("close-videoModal");
     };
 

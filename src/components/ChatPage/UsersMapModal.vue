@@ -54,14 +54,14 @@ export default {
 
     const initMap = () => {
       map.value = L.map("map", {
-        center: [store.state.userDetails.lat, store.state.userDetails.lng],
+        center: [store.state.userDetails.geolocation.lat, store.state.userDetails.geolocation.lng],
         zoom: zoom.value,
         maxZoom: 18,
         zoomControl: false,
       });
 
       me.value = L.marker(
-        [store.state.userDetails.lat, store.state.userDetails.lng],
+        [store.state.userDetails.geolocation.lat, store.state.userDetails.geolocation.lng],
         {
           icon: new L.Icon({
             iconUrl: store.state.userDetails.avatar,
@@ -80,7 +80,7 @@ export default {
       setControl();
 
       store.getters.filteredUsers().map((item) => {
-        return (filteredUsers.value = L.marker([item.lat, item.lng], {
+        return (filteredUsers.value = L.marker([item.geolocation.lat, item.geolocation.lng], {
           icon: new L.Icon({
             iconUrl: item.avatar,
             shadowUrl: "/marker/marker-shadow.png",
