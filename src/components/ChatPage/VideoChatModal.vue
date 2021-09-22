@@ -35,7 +35,7 @@
             round
             color="grey"
             class="q-mx-sm"
-            style="opacity: 0.7"
+            style="opacity: 0.7; cursor: pointer; z-index: 500;"
             icon="eva-play-circle-outline"
             @click="resumeVideo"
           />
@@ -45,7 +45,7 @@
             round
             color="grey"
             class="q-mx-sm"
-            style="opacity: 0.7"
+            style="opacity: 0.7; cursor: pointer; z-index: 500;"
             icon="eva-pause-circle-outline"
             @click="pauseVideo"
           />
@@ -55,7 +55,7 @@
             round
             color="grey"
             class="q-mx-sm"
-            style="opacity: 0.7"
+            style="opacity: 0.7; cursor: pointer;"
             icon="eva-video-outline"
             @click="toggleVideo"
           />
@@ -65,7 +65,7 @@
             round
             color="grey"
             class="q-mx-sm"
-            style="opacity: 0.7"
+            style="opacity: 0.7; cursor: pointer;"
             icon="eva-video-off-outline"
             @click="toggleVideo"
           /> -->
@@ -75,7 +75,7 @@
             round
             color="grey"
             class="q-mx-sm"
-            style="opacity: 0.7"
+            style="opacity: 0.7; cursor: pointer; z-index: 500;"
             icon="eva-volume-up-outline"
             @click="toggleAudio"
           />
@@ -86,14 +86,14 @@
             color="grey"
             class="q-mx-sm"
             icon="eva-volume-off-outline"
-            style="opacity: 0.7"
+            style="opacity: 0.7; cursor: pointer; z-index: 500;"
             @click="toggleAudio"
           />
           <q-btn
             dense
             round
             color="red"
-            style="opacity: 0.7"
+            style="opacity: 0.7; cursor: pointer; z-index: 500;"
             class="q-mx-sm"
             icon="eva-phone-off-outline"
             @click="hangUp"
@@ -218,6 +218,7 @@ export default {
     };
 
     const toggleVideo = () => {
+      console.log('toggle video')
       videoOn.value = !videoOn.value;
 
       if (videoOn.value) {
