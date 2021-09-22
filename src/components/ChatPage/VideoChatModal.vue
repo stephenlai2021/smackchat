@@ -173,10 +173,10 @@ export default {
       console.log("making call to ", store.state.otherUser.name);
       const call = peer.call(store.state.otherUser.peerId, localStream.value);
 
-      remoteVideoShow.value = true;
 
       call.on("stream", (remoteStream) => {
         remoteVideo.value.srcObject = remoteStream;
+        remoteVideoShow.value = true;
       });
     };
 
