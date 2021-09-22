@@ -7,6 +7,7 @@
       v-model="name"
       :label="t('name')"
       required
+      placeholder="Please enter user name"
     />
     <q-input
       class="q-mb-md"
@@ -14,6 +15,7 @@
       v-model="email"
       type="email"
       :label="t('email')"
+      placeholder="Please enter user email"
     />
     <q-input
       class="q-mb-md"
@@ -87,7 +89,7 @@ export default {
     const email = ref("me@test.com");
     const password = ref("123456");
 
-    const peerId = ref(null);
+    // const peerId = ref(null);
 
     // allowed file types
     const types = ["image/png", "image/jpeg", "image/jpg"];
@@ -133,8 +135,8 @@ export default {
         const data = {
           name: name.value,
           email: email.value,
-          password: password.value,
-          peerId: peerId.value,
+          // password: password.value,
+          peerId: null,
           geolocation: {
             lat: lat.value,
             lng: lng.value,
@@ -154,7 +156,8 @@ export default {
           email: email.value,
           password: password.value,
           avatar: store.state.url,
-          peerId: peerId.value,
+          // peerId: peerId.value,
+          peerId: null,
           geolocation: {
             lat: lat.value,
             lng: lng.value,
@@ -184,11 +187,11 @@ export default {
         console.log("Your browser does not support map features");
       }
 
-      const peer = new Peer();
-      peer.on("open", (id) => {
-        peerId.value = id;
-        console.log("peer id: ", peerId.value);
-      });
+      // const peer = new Peer();
+      // peer.on("open", (id) => {
+      //   peerId.value = id;
+      //   console.log("peer id: ", peerId.value);
+      // });
     });
 
     return {

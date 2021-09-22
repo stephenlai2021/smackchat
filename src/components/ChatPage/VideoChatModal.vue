@@ -102,7 +102,14 @@
       </div>
     </div>
     <div class="text-center" style="position: relative; z-index: 600">
-      <q-btn round dense class="q-mx-lg" @click="call" color="green" icon="eva-phone-outline" />
+      <q-btn
+        round
+        dense
+        class="q-mx-lg"
+        @click="call"
+        color="green"
+        icon="eva-phone-outline"
+      />
       <q-btn
         round
         dense
@@ -140,14 +147,11 @@ export default {
     const cameraEnabled = ref(false);
     const remoteVideoShow = ref(false);
 
-    // connect to Peer server
     const peer = new Peer();
 
-    // get a random id assigned by Peer server
-    // peer.on("open", (id) => {
-    //   myId.value = id;
-    //   store.state.peerId = id;
-    // });
+    peer.on("open", (id) => {
+      store.methods.savePeerId(id);
+    });
 
     const closeVideoModal = () => {
       console.log("close video modal");
@@ -183,6 +187,7 @@ export default {
 
     const call = () => {
       // const call = peer.call(idInput.value, localStream.value);
+      console.log("making call to ", store.state.otherUser.name);
       const call = peer.call(store.state.otherUser.peerId, localStream.value);
 
       remoteVideoShow.value = true;
