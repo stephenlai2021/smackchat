@@ -128,7 +128,7 @@ export default {
     const pause = ref(false);
     const cameraEnabled = ref(false);
     const remoteVideoShow = ref(false);
-    // const closeVideo = ref(false)
+    const closeRemoteVideo = ref(false)
 
     const peer = new Peer();
 
@@ -144,7 +144,6 @@ export default {
     peer.on("call", (call) => {
       $q.dialog({
         title: "Confirm",
-        // message: "Would you like to answer this call ?",
         message: "Incoming call from " + store.state.otherUser.name,
         cancel: true,
         persistent: true,
@@ -155,13 +154,13 @@ export default {
 
           call.answer(localStream.value);
 
-          call.on("stream", (remoteStream) => {
-            remoteVideo.value.srcObject = remoteStream;
-
-            // if (closeVideo.value) {
-            //   remoteVideo.value.srcObject = null
-            // }
-          });
+          if (!closeRemoteVideo.value) {
+            call.on("stream", (remoteStream) => {
+              remoteVideo.value.srcObject = remoteStream;
+            });
+          } else {
+              remoteVideo.value.srcObject = null
+          }
         })
         .onCancel(() => {
           console.log(">>>> Cancel");
@@ -170,9 +169,8 @@ export default {
 
     const hangUp = () => {
       console.log("close connection");
-
-      // closeVideo.value = true
       peer.destroy();
+      closeRemoteVideo.value = true
     };
 
     const call = () => {
@@ -183,10 +181,6 @@ export default {
       call.on("stream", (remoteStream) => {
         remoteVideo.value.srcObject = remoteStream;
         remoteVideoShow.value = true;
-
-        // if (closeVideo.value) {
-        //   remoteVideo.value.srcObject = null
-        // }
       });
     };
 
