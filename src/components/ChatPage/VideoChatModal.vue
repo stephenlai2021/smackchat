@@ -153,20 +153,9 @@ export default {
 
           call.answer(localStream.value);
 
-          // call.on("stream", (remoteStream) => {
-          //   remoteVideo.value.srcObject = remoteStream;
-          // });
-
-            call.on("stream", (remoteStream) => {
-              if (!closeRemoteVideo.value) {
-              remoteVideo.value.srcObject = remoteStream;
-              } elses {
-                remoteVideo.value.srcObject = null
-              }
-            });
-          // } else {
-          //   remoteVideo.value.srcObject = null;
-          // }
+          call.on("stream", (remoteStream) => {
+            remoteVideo.value.srcObject = remoteStream;
+          });
         })
         .onCancel(() => {
           console.log(">>>> Cancel");
