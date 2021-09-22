@@ -143,22 +143,30 @@ const methods = {
               state.userDetails = doc.data();
               console.log("user details | store", state.userDetails);
 
-              db.collection("chat-users")
-                .doc(state.userDetails.name)
-                .update({ online: true })
-                .then(() => {
-                  state.online = true;
-                  state.login = false;
-                });
+              // db.collection("chat-users")
+              //   .doc(state.userDetails.name)
+              //   .update({
+              //     online: true,
+              //     lat: state.userDetails.lat,
+              //     lng: state.userDetails.lng,
+              //     peerId: state.userDetails.peerId,
+              //   })
+              //   // .update({ online: true })
+              //   .then(() => {
+              //     state.online = true;
+              //     state.login = false;
+              //   });
+
+              // state.online = true;
+              state.login = false;
             });
-          });
-        // .catch((err) => {
-        //   console.log("error message: ", err.message);
-        // });
+          })
       }
       if (!user) {
         console.log("there is no user | auth state change");
-        state.online = false;
+        // state.online = false;
+        state.userDetails = {};
+        console.log("user details | store", state.userDetails);
         router.push("/auth");
       }
     });
@@ -173,10 +181,14 @@ const methods = {
         db.collection("chat-users").doc(data.name).set({
           name: data.name,
           email: data.email,
+          password: data.password,
+
           avatar: data.avatar,
+          peerId: data.peerId,
+          geolocation: data.geolocation,
+
           userId: user.uid,
-          lat: data.lat,
-          lng: data.lng,
+          online: true,
         });
 
         state.tab = "home";
@@ -196,8 +208,8 @@ const methods = {
         console.log("user: ", user);
 
         db.collection("chat-users").doc(data.name).update({
-          lat: data.lat,
-          lng: data.lng,
+          online: true,
+          geolocation: data.geolocation,
           peerId: data.peerId,
         });
 
@@ -217,9 +229,10 @@ const methods = {
     auth.signOut().then(() => {
       db.collection("chat-users")
         .doc(state.userDetails.name)
-        .update({ online: false })
+        .update({ online: false, lat: null, lng: null, peerId: null })
         .then(() => {
-          console.log("user is offline");
+          // console.log("user is offline");
+          // console.log('user details: ', state.userDetails)
           state.userDetails = {};
         });
     });
@@ -373,11 +386,11 @@ const methods = {
   toggleLeftDrawer() {
     state.leftDrawerOpen = !state.leftDrawerOpen;
   },
-  // savePeerId(id) {
-  //   db.collection("chat-users").doc(data.name).update({
-  //     peerId: id,
-  //   });
-  // },
+  savePeerId(id) {
+    db.collection("chat-users").doc(state.userDetails.name).update({
+      peerId: id,
+    });
+  },
 };
 
 const getters = {

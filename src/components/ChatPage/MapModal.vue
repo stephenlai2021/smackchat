@@ -1,10 +1,5 @@
 <template>
   <q-page>
-    <!-- <transition-group
-      appear
-      enter-active-class="animated fadeIn"
-      leave-active-class="animated fadeOut"
-    > -->
     <div>
       <q-btn
         round
@@ -24,7 +19,6 @@
       />
     </div>
     <div id="map"></div>
-    <!-- </transition-group> -->
   </q-page>
 </template>
 
@@ -57,7 +51,7 @@ export default {
 
     const initMap = () => {
       map.value = L.map("map", {
-        center: [store.state.otherUser.lat, store.state.otherUser.lng],
+        center: [store.state.otherUser.geolocation.lat, store.state.otherUser.geolocation.lng],
         zoom: zoom.value,
         maxZoom: 18,
         zoomControl: false,
@@ -67,7 +61,7 @@ export default {
       setIcon();
 
       me.value = L.marker(
-        [store.state.otherUser.lat, store.state.otherUser.lng],
+        [store.state.otherUser.geolocation.lat, store.state.otherUser.geolocation.lng],
         { icon: otherUser.value }
       )
         .addTo(map.value)

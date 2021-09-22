@@ -1,9 +1,9 @@
 <template>
-  <transition-group
+  <!-- <transition-group
     appear
     enter-active-class="animated slideInRight"
     leave-active-class="animated slideOutLeft"
-  >
+  > -->
     <div class="camera-modal">
       <div class="constraint" style="height: 100vh">
         <div class="full-width camera-panel">
@@ -78,7 +78,7 @@
         </div>
       </div>
     </div>
-  </transition-group>
+  <!-- </transition-group> -->
 </template>
 
 <script>

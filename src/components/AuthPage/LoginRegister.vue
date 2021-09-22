@@ -1,24 +1,24 @@
 <template>
   <q-form @submit="submitForm">
+      <!-- v-if="tab === 'register'" -->
     <q-input
-      v-if="tab === 'register'"
       class="q-mb-md"
       outlined
-      v-model="formData.name"
+      v-model="name"
       :label="t('name')"
       required
     />
     <q-input
       class="q-mb-md"
       outlined
-      v-model="formData.email"
+      v-model="email"
       type="email"
       :label="t('email')"
     />
     <q-input
       class="q-mb-md"
       outlined
-      v-model="formData.password"
+      v-model="password"
       type="password"
       :label="t('password')"
     />
@@ -58,6 +58,8 @@
       />
     </div>
   </q-form>
+  <p>{{ name }}</p>
+  <p>{{ email }}</p>
 </template>
 
 <script>
@@ -81,18 +83,14 @@ export default {
     const lat = ref(null);
     const lng = ref(null);
 
+    const name = ref("me");
+    const email = ref("me@test.com");
+    const password = ref("123456");
+
     const peerId = ref(null);
 
     // allowed file types
     const types = ["image/png", "image/jpeg", "image/jpg"];
-
-    const formData = ref({
-      name: "me",
-      email: "me@test.com",
-      password: "123456",
-      lat: null,
-      lng: null,
-    });
 
     watch(
       () => file.value,
@@ -132,17 +130,18 @@ export default {
       if (props.tab === "login") {
         store.state.login = true;
 
-        console.log("latitude: ", lat.value);
-        console.log("longitude: ", lng.value);
-
-        formData.value = {
-          ...formData.value,
-          lat: lat.value,
-          lng: lng.value,
+        const data = {
+          name: name.value,
+          email: email.value,
+          password: password.value,
           peerId: peerId.value,
+          geolocation: {
+            lat: lat.value,
+            lng: lng.value,
+          },
         };
-        store.methods.loginUser(formData.value);
-        console.log("login: ", formData.value);
+
+        store.methods.loginUser(data);
 
         if (store.state.successMessage === "user login successfully") {
           store.state.login = false;
@@ -150,14 +149,18 @@ export default {
         }
       }
       if (props.tab === "register") {
-        formData.value = {
-          ...formData.value,
+        const data = {
+          name: name.value,
+          email: email.value,
+          password: password.value,
           avatar: store.state.url,
-          lat: lat.value,
-          lng: lng.value,
           peerId: peerId.value,
+          geolocation: {
+            lat: lat.value,
+            lng: lng.value,
+          },
         };
-        store.methods.registerUser(formData.value);
+        store.methods.registerUser(data);
 
         if (store.state.successMessage === "user register successfully") {
           router.push("/");
@@ -175,18 +178,16 @@ export default {
         navigator.geolocation.getCurrentPosition((pos) => {
           lat.value = pos.coords.latitude;
           lng.value = pos.coords.longitude;
+          console.log("geolocation | loginRegister", pos);
         });
       } else {
         console.log("Your browser does not support map features");
       }
 
-      // connect to Peer server
       const peer = new Peer();
-
-      // get a random id assigned by Peer server
       peer.on("open", (id) => {
         peerId.value = id;
-        // store.state.peerId = id;
+        console.log("peer id: ", peerId.value);
       });
     });
 
@@ -201,7 +202,11 @@ export default {
       // ref
       file,
       fileError,
-      formData,
+      // formData,
+
+      name,
+      email,
+      password,
 
       // methods
       submitForm,

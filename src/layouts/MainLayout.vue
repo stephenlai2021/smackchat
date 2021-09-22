@@ -175,7 +175,7 @@
             <q-item-section avatar>
               <q-icon
                 color="white"
-                :name="!store.state.online ? 'login' : 'logout'"
+                name="logout"
                 class="icon"
                 style="background: red"
               />
@@ -305,7 +305,9 @@ export default {
     // methods
     const logoutUser = () => {
       store.methods.logoutUser();
-      router.push("/auth");
+      if (!store.state.userDetails) {
+        router.push("/auth");
+      }
     };
 
     const toggleDark = () => {

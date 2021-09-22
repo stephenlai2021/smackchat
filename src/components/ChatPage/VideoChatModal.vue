@@ -1,11 +1,11 @@
 <template>
   <q-page class="page-chat">
-    <p class="q-mt-md text-center text-bold" style="font-size: 16px">
+    <!-- <p class="q-mt-md text-center text-bold" style="font-size: 16px">
       My ID: <br />
       {{ myId }}
-    </p>
+    </p> -->
     <div class="row justify-center q-mx-sm">
-      <q-input
+      <!-- <q-input
         v-model="idInput"
         label="Please paste peer id here ..."
         style="width: 600px"
@@ -19,7 +19,7 @@
             icon="eva-phone-outline"
           />
         </template>
-      </q-input>
+      </q-input> -->
     </div>
     <div class="row justify-center q-my-lg">
       <div style="position: relative" class="q-mx-sm">
@@ -101,21 +101,17 @@
         </div>
       </div>
     </div>
-    <q-btn
-      round
-      dense
-      size="md"
-      class="bg-red-3"
-      icon="eva-close-outline"
-      style="
-        position: fixed;
-        left: 50%;
-        transform: translate(-50%);
-        bottom: 20px;
-        z-index: 700;
-      "
-      @click="closeVideoModal"
-    />
+    <div class="text-center" style="position: relative; z-index: 600">
+      <q-btn round dense class="q-mx-lg" @click="call" color="green" icon="eva-phone-outline" />
+      <q-btn
+        round
+        dense
+        size="md"
+        class="bg-red-3 q-mx-lg"
+        icon="eva-close-outline"
+        @click="closeVideoModal"
+      />
+    </div>
   </q-page>
 </template>
 
@@ -148,12 +144,13 @@ export default {
     const peer = new Peer();
 
     // get a random id assigned by Peer server
-    peer.on("open", (id) => {
-      myId.value = id;
-      store.state.peerId = id;
-    });
+    // peer.on("open", (id) => {
+    //   myId.value = id;
+    //   store.state.peerId = id;
+    // });
 
     const closeVideoModal = () => {
+      console.log("close video modal");
       context.emit("close-videoModal");
     };
 
@@ -314,9 +311,16 @@ export default {
 
 <style lang="scss" scoped>
 .page-chat {
-  max-width: 700px;
-  margin: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  // max-width: 700px;
+  z-index: 600;
+  // margin: auto;
   // border: 1px solid;
+  background: black;
 }
 .remote-video {
   width: 100%;

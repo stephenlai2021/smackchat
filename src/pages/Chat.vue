@@ -145,19 +145,6 @@ export default {
     const showCameraModal = ref(false);
 
     /***************/
-    /* Phone Button */
-    // /***************/
-
-    // // connect to Peer server
-    // const peer = new Peer();
-
-    // // get a random id assigned by Peer server
-    // peer.on("open", (id) => {
-    //   myId.value = id;
-    //   store.state.peerId = id;
-    // });
-
-    /***************/
     /* Image Button */
     /***************/
     const file = ref(null);
@@ -204,9 +191,6 @@ export default {
     const showEmojiPicker = () => {
       picker.value.togglePicker(btnEmoji.value);
     };
-    /***********************/
-    /* End of Emoji Modal */
-    /***********************/
 
     watch(
       () => indicator.value,
