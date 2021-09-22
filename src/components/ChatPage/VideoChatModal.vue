@@ -150,6 +150,7 @@ export default {
         persistent: true,
       })
         .onOk(() => {
+          context.emit('open-videoModal')
           remoteVideoShow.value = true;
 
           call.answer(localStream.value);

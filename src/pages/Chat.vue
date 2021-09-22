@@ -14,6 +14,7 @@
     <video-modal
       v-if="showVideoModal"
       @close-videoModal="showVideoModal = false"
+      @open-videoModal="showVideoModal = true"
     />
 
     <camera-modal
