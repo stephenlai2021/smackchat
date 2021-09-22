@@ -84,6 +84,7 @@
     </div>
     <div class="text-center" style="position: relative; z-index: 600">
       <q-btn
+      v-if="!remoteVideoShow"
         round
         dense
         class="q-mx-lg"
