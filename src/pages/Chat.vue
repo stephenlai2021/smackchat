@@ -3,9 +3,16 @@
     <page-header
       @open-mapModal="showMapModal = true"
       @open-videoModal="showVideoModal = true"
+      @notification="sendVideochatNotification"
     />
 
     <chat-messages />
+
+    <!-- <sending-notification v-if="sendingNotification" @close-notification="sendingNotification = false, showVideoModal = true" />
+    <receiving-notification v-if="receivingNotification" @close-notification="receivingNotification = false, showVideoModal = true" /> -->
+
+    <sending-notification v-if="sendingNotification" @close-notification="sendingNotification = false" />
+    <receiving-notification v-if="receivingNotification" @close-notification="receivingNotification = false" />
 
     <image-modal :file="file" v-if="file" @close-imageModal="file = null" />
 
@@ -35,11 +42,11 @@
         >
           <label class="q-mr-sm" style="cursor: pointer">
             <input class="file-input" type="file" @change="handleChange" />
-            <q-icon class="text-" size="md" name="eva-image-outline" />
+            <q-icon class="text-" size="sm" name="eva-image-outline" />
           </label>
           <q-icon
             round
-            size="md"
+            size="sm"
             class="text-"
             style="cursor: pointer"
             name="eva-camera-outline"
@@ -47,7 +54,7 @@
           />
           <q-btn
             round
-            size="16px"
+            size=""
             flat
             ref="btnEmoji"
             class="text-"
@@ -73,7 +80,7 @@
             dense
             focus="false"
             @keydown.enter="sendMessage"
-            @keyup="sendTypingIndicator()"
+            @keyup="sendTypingIndicator"
             @focus="onFocus"
             @blur="onBlur"
             :style="{ width: inputFocus ? '100%' : '50%' }"
@@ -111,7 +118,7 @@ import { useQuasar } from "quasar";
 import { timestamp } from "src/boot/firebase";
 import { formatDistanceToNow } from "date-fns";
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted, inject, watch } from "vue";
+import { ref, onMounted, inject, watch, watchEffect } from "vue";
 import { EmojiButton } from "@joeattardi/emoji-button";
 
 export default {
@@ -122,6 +129,10 @@ export default {
     "image-modal": require("components/ChatPage/ImageModal.vue").default,
     "camera-modal": require("components/ChatPage/CameraModal.vue").default,
     "chat-messages": require("components/ChatPage/ChatMessages.vue").default,
+    "sending-notification":
+      require("src/components/ChatPage/SendingNotification.vue").default,
+    "receiving-notification":
+      require("src/components/ChatPage/ReceivingNotification.vue").default,
   },
   setup() {
     const $q = useQuasar();
@@ -144,6 +155,9 @@ export default {
     const showMapModal = ref(false);
     const showVideoModal = ref(false);
     const showCameraModal = ref(false);
+    const notification = ref(false);
+    const sendingNotification = ref(false)
+    const receivingNotification = ref(false)
 
     /***************/
     /* Image Button */
@@ -193,6 +207,52 @@ export default {
       picker.value.togglePicker(btnEmoji.value);
     };
 
+    /**************************/
+    /* Videochat Notification */
+    /**************************/
+    const sendVideochatNotification = () => {
+      console.log('receive notification | chat page')
+      notification.value = true;
+
+      store.methods.sendVideochatNotification({
+        from: "me",
+        to: route.params.to,
+      });
+
+      sendingNotification.value = true
+    };
+
+    watch(
+      () => notification.value,
+      () => {
+        store.methods.getVideochatNotification(
+          route.params.from,
+          route.params.to
+        );
+      }
+    );
+
+    watch(
+      () => store.state.videochat,
+      () => {
+        if (store.state.videochat) {
+          receivingNotification.value = true
+        }
+      }
+    );
+
+    /********************/
+    /* Typing Indicator */
+    /********************/    
+    const sendTypingIndicator = () => {
+      indicator.value = true;
+
+      store.methods.sendTypingIndicator({
+        from: "me",
+        to: route.params.to,
+      });
+    };
+
     watch(
       () => indicator.value,
       (newVal, oldVal) => {
@@ -215,15 +275,6 @@ export default {
         }
       }
     );
-
-    const sendTypingIndicator = () => {
-      indicator.value = true;
-
-      store.methods.sendTypingIndicator({
-        from: "me",
-        to: route.params.to,
-      });
-    };
 
     const sendMessage = () => {
       if (newMessage.value === "") return;
@@ -285,11 +336,14 @@ export default {
       chats,
       input,
       desktop,
+      notification,
       btnEmoji,
       indicator,
       fileError,
       inputFocus,
       showCameraModal,
+      sendingNotification,
+      receivingNotification,
 
       /* map */
       showMapModal,
@@ -306,6 +360,7 @@ export default {
       showEmojiPicker,
       sendTypingIndicator,
       formatDistanceToNow,
+      sendVideochatNotification,
     };
   },
 };

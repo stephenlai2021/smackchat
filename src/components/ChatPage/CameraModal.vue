@@ -12,7 +12,7 @@
               v-show="!imageCaptured"
               ref="video"
               autoplay
-              style="width: 100%"
+              style="width: 100%;"
             />
             <q-btn
               v-if="videoLoaded"

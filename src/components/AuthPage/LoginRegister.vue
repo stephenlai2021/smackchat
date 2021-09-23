@@ -62,6 +62,7 @@
   </q-form>
   <p>{{ name }}</p>
   <p>{{ email }}</p>
+  <p>{{ password }}</p>
 </template>
 
 <script>
@@ -135,7 +136,7 @@ export default {
         const data = {
           name: name.value,
           email: email.value,
-          // password: password.value,
+          password: password.value,
           peerId: null,
           geolocation: {
             lat: lat.value,

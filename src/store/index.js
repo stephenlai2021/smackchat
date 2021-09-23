@@ -33,6 +33,9 @@ const state = reactive({
   uploadCompleted: false,
 
   isChatPage: false,
+  videochat: false,
+  videochatIndicator: false,
+  from: null,
 });
 
 const methods = {
@@ -143,28 +146,12 @@ const methods = {
               state.userDetails = doc.data();
               console.log("user details | store", state.userDetails);
 
-              // db.collection("chat-users")
-              //   .doc(state.userDetails.name)
-              //   .update({
-              //     online: true,
-              //     lat: state.userDetails.lat,
-              //     lng: state.userDetails.lng,
-              //     peerId: state.userDetails.peerId,
-              //   })
-              //   // .update({ online: true })
-              //   .then(() => {
-              //     state.online = true;
-              //     state.login = false;
-              //   });
-
-              // state.online = true;
               state.login = false;
             });
-          })
+          });
       }
       if (!user) {
         console.log("there is no user | auth state change");
-        // state.online = false;
         state.userDetails = {};
         console.log("user details | store", state.userDetails);
         router.push("/auth");
@@ -192,7 +179,6 @@ const methods = {
         });
 
         state.tab = "home";
-
         router.push("/");
       })
       .catch((err) => {
@@ -231,8 +217,6 @@ const methods = {
         .doc(state.userDetails.name)
         .update({ online: false, lat: null, lng: null, peerId: null })
         .then(() => {
-          // console.log("user is offline");
-          // console.log('user details: ', state.userDetails)
           state.userDetails = {};
         });
     });
@@ -329,8 +313,43 @@ const methods = {
       .collection(to)
       .doc("typing indicator")
       .onSnapshot((doc) => {
-        // state.typing = doc.data()
         state.typing.typing = doc.data().typing;
+      });
+
+    watchEffect((onInvalidate) => {
+      onInvalidate(() => unsub());
+    });
+  },
+  sendVideochatNotification(data) {
+    let from = state.userDetails.name;
+
+    db.collection("chat-messages")
+      .doc(from)
+      .collection(data.to)
+      .doc("videochat notification")
+      .set({
+        from: "me",
+        videochat: false,
+      });
+
+    db.collection("chat-messages")
+      .doc(data.to)
+      .collection(from)
+      .doc("videochat notification")
+      .set({
+        from: "them",
+        videochat: true,
+      });
+  },
+  getVideochatNotification(from, to) {
+    const unsub = db
+      .collection("chat-messages")
+      .doc(from)
+      .collection(to)
+      .doc("videochat notification")
+      .onSnapshot((doc) => {
+        state.from = doc.data().from;
+        state.videochat = doc.data().videochat;
       });
 
     watchEffect((onInvalidate) => {

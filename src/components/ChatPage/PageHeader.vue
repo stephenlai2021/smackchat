@@ -3,11 +3,10 @@
     class="bg-transparent"
     style="backdrop-filter: blur(20px); z-index: 500"
   > -->
-  <q-header style="z-index: 500;">
+  <q-header style="z-index: 500">
     <q-toolbar
       class="constraint"
-      style="padding
-      : 0; backdrop-filter: blur(8px)"
+      style="padding: 0; backdrop-filter: blur(8px)"
     >
       <q-btn
         round
@@ -25,7 +24,6 @@
               ? '/avatar.png'
               : store.state.otherUser.avatar
           "
-
           alt="user avatar"
         />
       </q-avatar>
@@ -42,7 +40,6 @@
           flat
           round
           dense
-          size="md"
           icon="eva-pin-outline"
           class="q-mr-xs text-"
           @click="showMapModal"
@@ -51,11 +48,11 @@
           flat
           round
           dense
-          size="md"
           icon="eva-video-outline"
           class="q-mr-sm text-"
-          @click="showVideoModal"
+          @click="sendVideochatNotification"
         />
+        <!-- @click="showVideoModal" -->
       </div>
     </q-toolbar>
   </q-header>
@@ -63,13 +60,19 @@
 
 <script>
 import { inject } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   setup(props, context) {
     const store = inject("store");
 
+    const route = useRoute();
     const router = useRouter();
+
+    const sendVideochatNotification = () => {
+      console.log('notification | page header')
+      context.emit('notification')
+    };
 
     const showMapModal = () => {
       console.log("open map modal");
@@ -87,6 +90,7 @@ export default {
 
       showMapModal,
       showVideoModal,
+      sendVideochatNotification,
     };
   },
 };
