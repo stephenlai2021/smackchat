@@ -34,7 +34,6 @@ const state = reactive({
 
   isChatPage: false,
   videochat: false,
-  videochatIndicator: false,
   from: null,
 });
 
@@ -77,17 +76,13 @@ const methods = {
   },
   useStorage2(file, data) {
     watchEffect(() => {
-      // references
       const storageRef = disk.ref(data + "/" + file.name);
 
-      // upload file
       storageRef.put(file).on(
         "state_changed",
         (snap) => {
-          // update the progress as file uploads
           let percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
 
-          // state.progress = percentage;
           state.progress = Math.round(percentage);
           console.log("progress: ", state.progress);
 
@@ -350,6 +345,7 @@ const methods = {
       .onSnapshot((doc) => {
         state.from = doc.data().from;
         state.videochat = doc.data().videochat;
+        console.log('videochat | store', state.videochat)
       });
 
     watchEffect((onInvalidate) => {
@@ -360,7 +356,6 @@ const methods = {
     const unsub = db.collection("chat-users").onSnapshot((snap) => {
       console.log("snapshot: getUsers");
       state.users = snap.docs.map((doc) => {
-        // return { ...doc.data(), userId: doc.id };
         return doc.data();
       });
       console.log("init users | store: ", state.users);

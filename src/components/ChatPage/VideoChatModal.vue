@@ -5,7 +5,7 @@
       <video class="remote-video" ref="remoteVideo" autoplay />
       <video class="local-video" ref="localVideo" autoplay />
       <div
-      class="row justify-center"
+        class="row justify-center"
         style="
           position: fixed;
           left: 50%;
@@ -20,7 +20,7 @@
           dense
           class="bg-red-3 q-mx-lg"
           icon="eva-close-outline"
-          style="cursor: pointer; "
+          style="cursor: pointer"
           @click="closeVideoModal"
         />
         <q-btn
@@ -29,7 +29,7 @@
           v-if="pause && cameraEnabled"
           color="grey"
           class="q-mx-sm"
-          style="opacity: 0.7; cursor: pointer; "
+          style="opacity: 0.7; cursor: pointer"
           icon="eva-play-circle-outline"
           @click="resumeVideo"
         />
@@ -39,7 +39,7 @@
           round
           color="grey"
           class="q-mx-sm"
-          style="opacity: 0.7; cursor: pointer; "
+          style="opacity: 0.7; cursor: pointer"
           icon="eva-pause-circle-outline"
           @click="pauseVideo"
         />
@@ -49,7 +49,7 @@
           round
           color="grey"
           class="q-mx-sm"
-          style="opacity: 0.7; cursor: pointer; "
+          style="opacity: 0.7; cursor: pointer"
           icon="eva-volume-up-outline"
           @click="toggleAudio"
         />
@@ -65,14 +65,14 @@
         />
         <q-btn
           v-if="!remoteVideoShow"
-          round
-          dense
+          rounded
           class="q-mx-lg"
           style="cursor: pointer; z-index: 500"
           @click="call"
           color="green"
-          icon="eva-phone-outline"
+          label="Connect"
         />
+          <!-- icon="eva-phone-outline" -->
         <q-btn
           v-if="remoteVideoShow"
           dense

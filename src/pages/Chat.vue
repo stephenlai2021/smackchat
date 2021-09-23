@@ -11,8 +11,14 @@
     <!-- <sending-notification v-if="sendingNotification" @close-notification="sendingNotification = false, showVideoModal = true" />
     <receiving-notification v-if="receivingNotification" @close-notification="receivingNotification = false, showVideoModal = true" /> -->
 
-    <sending-notification v-if="sendingNotification" @close-notification="sendingNotification = false" />
-    <receiving-notification v-if="receivingNotification" @close-notification="receivingNotification = false" />
+    <sending-notification
+      v-if="sendingNotification"
+      @close-notification="sendingNotification = false, showVideoModal = true"
+    />
+    <receiving-notification
+      v-if="receivingNotification"
+      @close-notification="receivingNotification = false, showVideoModal = true"
+    />
 
     <image-modal :file="file" v-if="file" @close-imageModal="file = null" />
 
@@ -156,8 +162,8 @@ export default {
     const showVideoModal = ref(false);
     const showCameraModal = ref(false);
     const notification = ref(false);
-    const sendingNotification = ref(false)
-    const receivingNotification = ref(false)
+    const sendingNotification = ref(false);
+    const receivingNotification = ref(false);
 
     /***************/
     /* Image Button */
@@ -211,39 +217,45 @@ export default {
     /* Videochat Notification */
     /**************************/
     const sendVideochatNotification = () => {
-      console.log('receive notification | chat page')
-      notification.value = true;
+      // notification.value = true;
 
       store.methods.sendVideochatNotification({
         from: "me",
         to: route.params.to,
       });
 
-      sendingNotification.value = true
+      sendingNotification.value = true;
+
+      store.methods.getVideochatNotification(
+        route.params.from,
+        route.params.to
+      );
     };
 
-    watch(
-      () => notification.value,
-      () => {
-        store.methods.getVideochatNotification(
-          route.params.from,
-          route.params.to
-        );
-      }
-    );
+    // watch(
+    //   () => notification.value,
+    //   () => {
+    //     store.methods.getVideochatNotification(
+    //       route.params.from,
+    //       route.params.to
+    //     );
+    //   }
+    // );
 
     watch(
-      () => store.state.videochat,
-      () => {
+      () => [store.state.videochat],
+      (newVal, oldVal) => {
+        console.log("videochat | watch: ", newVal);
         if (store.state.videochat) {
-          receivingNotification.value = true
+          receivingNotification.value = true;
         }
+        // notification.value = false
       }
     );
 
     /********************/
     /* Typing Indicator */
-    /********************/    
+    /********************/
     const sendTypingIndicator = () => {
       indicator.value = true;
 
