@@ -75,14 +75,14 @@
           <!-- icon="eva-phone-outline" -->
         <q-btn
           v-if="remoteVideoShow"
-          dense
-          round
+          rounded
           color="red"
           class="q-mx-sm"
-          icon="eva-phone-off-outline"
           style="opacity: 0.7; cursor: pointer; z-index: 500"
+          label="Disconnet"
           @click="hangUp"
         />
+          <!-- icon="eva-phone-off-outline" -->
       </div>
       <!-- </div> -->
     </div>
