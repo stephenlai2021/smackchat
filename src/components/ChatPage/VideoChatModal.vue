@@ -74,7 +74,7 @@
           @click="call"
         />
         <q-btn
-          v-if="remoteVideoShow"
+          v-if="remoteVideoShow && !btnHangup"
           rounded
           dense
           color="pink-3"
@@ -113,6 +113,7 @@ export default {
     const cameraEnabled = ref(false);
     const remoteVideoShow = ref(false);
     const closeRemoteVideo = ref(false);
+    const btnHangup = ref(false)
 
     const peer = new Peer();
 
@@ -159,6 +160,7 @@ export default {
       console.log("close connection");
       peer.destroy();
       closeRemoteVideo.value = true;
+      btnHangup.value = true
     };
 
     const call = () => {
@@ -290,9 +292,10 @@ export default {
 
       myId,
       idInput,
+      btnHangup,
+      remoteStream,
       cameraEnabled,
       remoteVideoShow,
-      remoteStream,
 
       call,
       pause,
@@ -328,7 +331,7 @@ export default {
   // display: flex;
   // justify-content: center;
   // align-items: center;
-  border: 2px solid pink;
+  border: 1px solid pink;
 }
 .local-video,
 .remote-video {
@@ -340,7 +343,7 @@ export default {
   .local-video-container {
     height: 50vh;
     width: 100vw;
-    border: 2px solid pink;
+    border: 1px solid pink;
   }
   .local-video,
   .remote-video {
@@ -362,7 +365,7 @@ export default {
   .local-video-container {
     width: 50vw;
     height: 100vh;
-    border: 2px solid pink;
+    border: 1px solid pink;
   }
   .local-video,
   .remote-video {
