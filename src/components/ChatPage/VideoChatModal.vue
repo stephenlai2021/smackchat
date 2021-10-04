@@ -2,7 +2,6 @@
   <q-page class="page-chat">
     <div class="row justify-center constraint">
       <video class="remote-video" ref="remoteVideo" id="remoteVideo" autoplay />
-      <!-- <div> -->
       <video
         class="local-video"
         ref="localVideo"
@@ -11,13 +10,13 @@
       />
       <div
         v-if="cameraEnabled"
-        class="q-py-xs bg-pink-3 control-panel"
+        class="row justify-center q-py-xs bg-pink-3 control-panel"
       >
         <q-btn
           round
           dense
           flat
-          class="q-mx-md"
+          class="q-mx-"
           icon="eva-close-outline"
           style="cursor: pointer"
           @click="closeVideoModal"
@@ -27,7 +26,7 @@
           round
           dense
           flat
-          class="q-mx-md"
+          class="q-mx-"
           style="opacity: 0.7; cursor: pointer"
           icon="eva-play-circle-outline"
           @click="resumeVideo"
@@ -37,7 +36,7 @@
           dense
           round
           flat
-          class="q-mx-md"
+          class="q-mx-"
           style="cursor: pointer"
           icon="eva-pause-circle-outline"
           @click="pauseVideo"
@@ -47,7 +46,7 @@
           dense
           round
           flat
-          class="q-mx-md"
+          class="q-mx-"
           style="cursor: pointer"
           icon="eva-volume-up-outline"
           @click="toggleAudio"
@@ -57,7 +56,7 @@
           dense
           round
           flat
-          class="q-mx-md"
+          class="q-mx-"
           icon="eva-volume-off-outline"
           style="cursor: pointer; z-index: 500"
           @click="toggleAudio"
@@ -66,23 +65,22 @@
           v-if="!remoteVideoShow"
           rounded
           flat
-          class="q-mx-md"
+          class="q-mx-"
           style="cursor: pointer; z-index: 500"
+          icon="eva-phone-outline"
           @click="call"
-          label="Connect"
         />
         <q-btn
           v-if="remoteVideoShow"
           rounded
           flat
-          class="q-mx-md"
+          class="q-mx-"
           style="cursor: pointer; z-index: 500"
-          label="Disconnet"
+          icon="eva-phone-off-outline"
           @click="hangUp"
         />
       </div>
     </div>
-    <!-- </div> -->
   </q-page>
 </template>
 
@@ -105,7 +103,7 @@ export default {
     const localVideo = ref(null);
     const remoteVideo = ref(null);
     const localStream = ref(null);
-    // const remoteStream = ref(null);
+    const remoteStream = ref(null);
     const videoOn = ref(false);
     const audioOn = ref(false);
     const pause = ref(false);
@@ -291,6 +289,7 @@ export default {
       idInput,
       cameraEnabled,
       remoteVideoShow,
+      remoteStream,
 
       call,
       pause,
@@ -321,35 +320,40 @@ export default {
   z-index: 600;
   background: black;
 }
-.local-video {
-  height: 50vh;
-}
-.remote-video {
-  height: 50vh;
-  border: 2px solid pink;
-}
-.control-panel {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 500;
-  min-width: 360px;
-  opacity: 0.7;
-  border-radius: 30px;
+@media screen and (orientation: portrait) {
+  .local-video {
+    height: 50vh;
+  }
+  .remote-video {
+    height: 50vh;
+    border: 2px solid pink;
+  }
+  .control-panel {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 500;
+    min-width: 360px;
+    opacity: 0.7;
+    border-radius: 30px;
+  }
 }
 @media screen and (orientation: landscape) {
   .local-video,
   .remote-video {
     width: 50vw;
+    // height: 100vh;
   }
   .control-panel {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     align-items: center;
     position: fixed;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     z-index: 500;
-    // min-width: 360px;
     opacity: 0.7;
     border-radius: 30px;
   }
