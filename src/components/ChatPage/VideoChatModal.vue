@@ -14,13 +14,13 @@
         class="row justify-center q-py-xs bg-pink-3"
         style="
           position: fixed;
-          left: 0;
-          bottom: 0;
+          top: 50%;
+          transform: translateY(-50%);
           z-index: 500;
-          width: 100%;
+          min-width: 360px;
           opacity: 0.7;
-          border-top-left-radius: 30px;
-          border-top-right-radius: 30px;
+          border-radius: 30px;
+
         "
       >
         <q-btn
@@ -152,8 +152,8 @@ export default {
             // const vw = remoteVideo.value.width;
             // const vh = remoteVideo.value.height;
 
-            const vw = document.getElementById("remoteVideo").width;
-            const vh = document.getElementById("remoteVideo").height;
+            const vw = document.getElementById("remoteVideo").videoWidth;
+            const vh = document.getElementById("remoteVideo").videoHeight;
 
             console.log("video width: ", vw);
             console.log("video height: ", vh);
@@ -181,8 +181,8 @@ export default {
         // const vw = remoteVideo.value.width;
         // const vh = remoteVideo.value.height;
 
-        const vw = document.getElementById("remoteVideo").width;
-        const vh = document.getElementById("remoteVideo").height;
+        const vw = document.getElementById("remoteVideo").videoWidth;
+        const vh = document.getElementById("remoteVideo").videoHeight;
 
         console.log("video width: ", vw);
         console.log("video height: ", vh);
@@ -332,15 +332,17 @@ export default {
   background: black;
 }
 .local-video {
-  position: fixed;
-  top: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30%;
-  border-radius: 10px;
+  // position: fixed;
+  // top: 5%;
+  // left: 50%;
+  // transform: translateX(-50%);
+  // width: 30%;
+  // border-radius: 10px;
+  height: 50vh;
 }
 .remote-video {
-  height: 100vh;
-  width: 100vw;
+  // height: 100vh;
+  // width: 100vw;
+  height: 50vh;
 }
 </style>
