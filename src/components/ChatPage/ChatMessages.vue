@@ -2,7 +2,7 @@
   <div
     ref="chats"
     :class="{ invisible: !showMessages }"
-    class="q-mx-md q-my-md column col justify-end messages"
+    class="q-mx-md q-mt-sm column col justify-end messages"
   >
       <!-- :avatar="
         message.from === 'me'
@@ -16,7 +16,7 @@
       :sent="message.from === 'me'"
       :stamp="message.createdAt"
       :bg-color="message.from === 'me' ? 'amber-2' : 'light-green-2'"
-      class="q-my-md"
+      class="q-mb-md"
     />
   </div>
 </template>

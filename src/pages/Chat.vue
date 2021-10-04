@@ -74,7 +74,7 @@
 
         <div
           :class="inputFocus ? 'q-pl-md' : ''"
-          class="q-pr-md"
+          class="q-pr-md q-py-sm"
           style="width: 50%; display: flex; align-items: center"
           :style="{ width: inputFocus ? '100%' : '50%' }"
         >
