@@ -35,6 +35,8 @@ const state = reactive({
   isChatPage: false,
   videochat: false,
   from: null,
+  // sendingVideochat: false,
+  // receivingVideochat: false,
 });
 
 const methods = {
@@ -326,6 +328,7 @@ const methods = {
         from: "me",
         videochat: false,
       });
+    // state.sendingVideochat = true
 
     db.collection("chat-messages")
       .doc(data.to)

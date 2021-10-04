@@ -50,9 +50,9 @@
           dense
           icon="eva-video-outline"
           class="q-mr-sm text-"
-          @click="sendVideochatNotification"
+          @click="showVideoModal"
         />
-        <!-- @click="showVideoModal" -->
+        <!-- @click="sendVideochatNotification" -->
       </div>
     </q-toolbar>
   </q-header>
@@ -70,8 +70,8 @@ export default {
     const router = useRouter();
 
     const sendVideochatNotification = () => {
-      console.log('notification | page header')
-      context.emit('notification')
+      console.log("notification | page header");
+      context.emit("notification");
     };
 
     const showMapModal = () => {

@@ -13,22 +13,25 @@
 
     <sending-notification
       v-if="sendingNotification"
-      @close-notification="sendingNotification = false, showVideoModal = true"
+      @close-notification="
+        (sendingNotification = false), (showVideoModal = true)
+      "
     />
     <receiving-notification
       v-if="receivingNotification"
-      @close-notification="receivingNotification = false, showVideoModal = true"
+      @close-notification="closeReceivingNotification"
     />
-
-    <image-modal :file="file" v-if="file" @close-imageModal="file = null" />
-
-    <map-modal v-if="showMapModal" @close-mapModal="showMapModal = false" />
+    <!-- @close-notification="receivingNotification = false, showVideoModal = true" -->
 
     <video-modal
       v-if="showVideoModal"
       @close-videoModal="showVideoModal = false"
       @open-videoModal="showVideoModal = true"
     />
+
+    <image-modal :file="file" v-if="file" @close-imageModal="file = null" />
+
+    <map-modal v-if="showMapModal" @close-mapModal="showMapModal = false" />
 
     <camera-modal
       v-if="showCameraModal"
@@ -216,9 +219,12 @@ export default {
     /**************************/
     /* Videochat Notification */
     /**************************/
-    const sendVideochatNotification = () => {
-      // notification.value = true;
+    const closeReceivingNotification = () => {
+      receivingNotification.value = false;
+      showVideoModal.value = true;
+    };
 
+    const sendVideochatNotification = () => {
       store.methods.sendVideochatNotification({
         from: "me",
         to: route.params.to,
@@ -230,6 +236,7 @@ export default {
         route.params.from,
         route.params.to
       );
+
     };
 
     // watch(
@@ -242,14 +249,19 @@ export default {
     //   }
     // );
 
+    // watch(() => receivingNotification.value, () => {
+    //   if (!receivingNotification.value) {
+
+    //   }
+    // })
+
     watch(
       () => [store.state.videochat],
       (newVal, oldVal) => {
         console.log("videochat | watch: ", newVal);
         if (store.state.videochat) {
           receivingNotification.value = true;
-        }
-        // notification.value = false
+        } 
       }
     );
 
@@ -373,6 +385,7 @@ export default {
       sendTypingIndicator,
       formatDistanceToNow,
       sendVideochatNotification,
+      closeReceivingNotification,
     };
   },
 };
@@ -439,97 +452,97 @@ export default {
   text-align: center;
   padding-left: -300px;
 }
-.page-chat {
-  overflow: hidden;
-  &:after {
-    content: "";
-    display: block;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 0;
-    opacity: 0.1;
-    background-image: radial-gradient(
-        circle at 100% 150%,
-        silver 24%,
-        white 24%,
-        white 28%,
-        silver 28%,
-        silver 36%,
-        white 36%,
-        white 40%,
-        transparent 40%,
-        transparent
-      ),
-      radial-gradient(
-        circle at 0 150%,
-        silver 24%,
-        white 24%,
-        white 28%,
-        silver 28%,
-        silver 36%,
-        white 36%,
-        white 40%,
-        transparent 40%,
-        transparent
-      ),
-      radial-gradient(
-        circle at 50% 100%,
-        white 10%,
-        silver 10%,
-        silver 23%,
-        white 23%,
-        white 30%,
-        silver 30%,
-        silver 43%,
-        white 43%,
-        white 50%,
-        silver 50%,
-        silver 63%,
-        white 63%,
-        white 71%,
-        transparent 71%,
-        transparent
-      ),
-      radial-gradient(
-        circle at 100% 50%,
-        white 5%,
-        silver 5%,
-        silver 15%,
-        white 15%,
-        white 20%,
-        silver 20%,
-        silver 29%,
-        white 29%,
-        white 34%,
-        silver 34%,
-        silver 44%,
-        white 44%,
-        white 49%,
-        transparent 49%,
-        transparent
-      ),
-      radial-gradient(
-        circle at 0 50%,
-        white 5%,
-        silver 5%,
-        silver 15%,
-        white 15%,
-        white 20%,
-        silver 20%,
-        silver 29%,
-        white 29%,
-        white 34%,
-        silver 34%,
-        silver 44%,
-        white 44%,
-        white 49%,
-        transparent 49%,
-        transparent
-      );
-    background-size: 100px 50px;
-  }
-}
+// .page-chat {
+//   overflow: hidden;
+//   &:after {
+//     content: "";
+//     display: block;
+//     position: fixed;
+//     left: 0;
+//     right: 0;
+//     top: 0;
+//     bottom: 0;
+//     z-index: 0;
+//     opacity: 0.1;
+//     background-image: radial-gradient(
+//         circle at 100% 150%,
+//         silver 24%,
+//         white 24%,
+//         white 28%,
+//         silver 28%,
+//         silver 36%,
+//         white 36%,
+//         white 40%,
+//         transparent 40%,
+//         transparent
+//       ),
+//       radial-gradient(
+//         circle at 0 150%,
+//         silver 24%,
+//         white 24%,
+//         white 28%,
+//         silver 28%,
+//         silver 36%,
+//         white 36%,
+//         white 40%,
+//         transparent 40%,
+//         transparent
+//       ),
+//       radial-gradient(
+//         circle at 50% 100%,
+//         white 10%,
+//         silver 10%,
+//         silver 23%,
+//         white 23%,
+//         white 30%,
+//         silver 30%,
+//         silver 43%,
+//         white 43%,
+//         white 50%,
+//         silver 50%,
+//         silver 63%,
+//         white 63%,
+//         white 71%,
+//         transparent 71%,
+//         transparent
+//       ),
+//       radial-gradient(
+//         circle at 100% 50%,
+//         white 5%,
+//         silver 5%,
+//         silver 15%,
+//         white 15%,
+//         white 20%,
+//         silver 20%,
+//         silver 29%,
+//         white 29%,
+//         white 34%,
+//         silver 34%,
+//         silver 44%,
+//         white 44%,
+//         white 49%,
+//         transparent 49%,
+//         transparent
+//       ),
+//       radial-gradient(
+//         circle at 0 50%,
+//         white 5%,
+//         silver 5%,
+//         silver 15%,
+//         white 15%,
+//         white 20%,
+//         silver 20%,
+//         silver 29%,
+//         white 29%,
+//         white 34%,
+//         silver 34%,
+//         silver 44%,
+//         white 44%,
+//         white 49%,
+//         transparent 49%,
+//         transparent
+//       );
+//     background-size: 100px 50px;
+//   }
+// }
 </style>
