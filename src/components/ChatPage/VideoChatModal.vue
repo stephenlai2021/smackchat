@@ -1,16 +1,25 @@
 <template>
   <q-page class="page-chat">
     <div class="row justify-center constraint">
-      <video class="remote-video" ref="remoteVideo" id="remoteVideo" autoplay />
-      <video
-        class="local-video"
-        ref="localVideo"
-        :style="{ border: cameraEnabled ? '2px solid pink' : 'none' }"
-        autoplay
-      />
+      <div style="display: flex; justify-content: center; align-items: center;">
+        <video
+          class="remote-video"
+          ref="remoteVideo"
+          id="remoteVideo"
+          autoplay
+        />
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center;">
+        <video
+          class="local-video"
+          ref="localVideo"
+          autoplay
+        />
+        <!-- :style="{ border: cameraEnabled ? '2px solid pink' : 'none' }" -->
+      </div>
       <div
         v-if="cameraEnabled"
-        class="row justify-center q-py-xs bg-pink-3 control-panel"
+        class="row justify-around q-py-xs bg-pink-3 control-panel"
       >
         <q-btn
           round
@@ -64,6 +73,7 @@
         <q-btn
           v-if="!remoteVideoShow"
           rounded
+          dense
           flat
           class="q-mx-"
           style="cursor: pointer; z-index: 500"
@@ -73,6 +83,7 @@
         <q-btn
           v-if="remoteVideoShow"
           rounded
+          dense
           flat
           class="q-mx-"
           style="cursor: pointer; z-index: 500"
@@ -326,7 +337,7 @@ export default {
   }
   .remote-video {
     height: 50vh;
-    border: 2px solid pink;
+    // border: 2px solid pink;
   }
   .control-panel {
     position: fixed;
@@ -334,7 +345,7 @@ export default {
     transform: translateY(-50%);
     z-index: 500;
     min-width: 360px;
-    opacity: 0.7;
+    opacity: 0.8;
     border-radius: 30px;
   }
 }
@@ -355,6 +366,7 @@ export default {
     transform: translate(-50%, -50%);
     z-index: 500;
     opacity: 0.7;
+    min-height: 360px;
     border-radius: 30px;
   }
 }
