@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <q-header reveal style="z-index: 600">
+    <q-header reveal style="z-index: 600" class="bg-transparent">
       <q-toolbar class="constraint">
         <span class="text-bold q-ml-sm" style="font-size: 20px; width: 100%">
           {{ t("chatRoom") }}
@@ -164,7 +164,7 @@
       "
       @click="router.push('/finduser')"
     /> -->
-    <q-footer style="z-index: 500" reveal>
+    <q-footer style="z-index: 500" reveal class="bg-transparent">
       <div class="constraint">
         <q-tabs
           v-model="store.state.tab"
@@ -188,13 +188,13 @@
             style="width: 40%"
             @click="router.push('/users')"
           />
-          <q-btn
-          flat
+          <!-- <q-btn
+            flat
             class="text-"
             icon="eva-settings-2-outline"
             style="width: 20%"
             @click="toggleLeftDrawer"
-          />
+          /> -->
         </q-tabs>
       </div>
     </q-footer>
@@ -320,6 +320,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
+  // background: white;
 }
 </style>

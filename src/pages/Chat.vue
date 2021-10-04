@@ -40,7 +40,7 @@
     />
 
     <!-- <q-footer class="bg-transparent footer" style="backdrop-filter: blur(20px)"> -->
-    <q-footer style="z-index: 300" reveal class="q-py-xs">
+    <q-footer style="z-index: 300; backdrop-filter: blur(8px)" reveal class="q-py-xs bg-transparent">
       <q-form class="flex constraint" :class="{ 'q-mx-sm': inputFocus }">
         <div
           v-if="!inputFocus"
@@ -81,7 +81,7 @@
           <q-input
             ref="input"
             v-model="newMessage"
-            class="q-mr-md full-width"
+            class="q-mr-md full-width bg-transparent text-white"
             outlined
             rounded
             color="white"
@@ -93,11 +93,13 @@
             @focus="onFocus"
             @blur="onBlur"
             :style="{ width: inputFocus ? '100%' : '50%' }"
+            style="border: 20px;"
           >
             <template v-slot:prepend v-if="inputFocus">
               <q-btn
                 icon="navigate_next"
                 size="md"
+                class="text-white"
                 dense
                 flat
                 @click="inputFocus = false"
@@ -108,6 +110,7 @@
               <q-btn
                 icon="eva-navigation-2-outline"
                 size="md"
+                class="text-white"
                 dense
                 flat
                 @click="sendMessage"

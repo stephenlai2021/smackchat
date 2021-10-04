@@ -4,14 +4,14 @@
     :class="{ invisible: !showMessages }"
     class="q-mx-md q-my-md column col justify-end messages"
   >
-    <q-chat-message
-      v-for="(message, index) in store.getters.formattedMessages()"
-      :key="index"
-      :avatar="
+      <!-- :avatar="
         message.from === 'me'
           ? store.state.userDetails.avatar
           : store.state.otherUser.avatar
-      "
+      " -->
+    <q-chat-message
+      v-for="(message, index) in store.getters.formattedMessages()"
+      :key="index"
       :text="[message.text]"
       :sent="message.from === 'me'"
       :stamp="message.createdAt"

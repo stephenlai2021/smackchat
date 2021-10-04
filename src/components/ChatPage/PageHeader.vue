@@ -3,7 +3,7 @@
     class="bg-transparent"
     style="backdrop-filter: blur(20px); z-index: 500"
   > -->
-  <q-header style="z-index: 500">
+  <q-header style="z-index: 500" class="bg-transparent">
     <q-toolbar
       class="constraint"
       style="padding: 0; backdrop-filter: blur(8px)"

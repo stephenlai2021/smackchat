@@ -336,10 +336,10 @@ export default {
 }
 .local-video,
 .remote-video {
-  width: 50vw;
-  height: 100vh;
+  width: 100%;
+  height: 50vh;
 }
-@media screen and (orientation: portrait) {
+@media (orientation: portrait) {
   .remote-video-container,
   .local-video-container {
     height: 50vh;
@@ -358,7 +358,7 @@ export default {
     border-radius: 30px;
   }
 }
-@media screen and (orientation: landscape) {
+@media (orientation: landscape) {
   .local-video,
   .remote-video {
     width: 50vw;

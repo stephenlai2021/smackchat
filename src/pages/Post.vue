@@ -1,6 +1,6 @@
 <template>
   <q-page class="constraint">
-    <q-header reveal>
+    <q-header reveal class="bg-transparent">
       <q-toolbar class="constraint">
         <q-avatar>
           <img
@@ -31,7 +31,7 @@
         </div>
       </q-toolbar>
     </q-header>
-    <div class="q-pa-md">
+    <div class="q-px-md q-py-sm">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi
       eligendi aspernatur a ullam! Illo quod excepturi cumque debitis esse odio
       inventore unde doloremque tempore. Repudiandae velit, sint nobis corrupti
@@ -49,7 +49,7 @@
       ducimus soluta modi, nemo tenetur nostrum vitae. Debitis est vero
       asperiores architecto. Consequuntur consectetur similique quod?
     </div>
-    <q-footer>
+    <q-footer class="bg-transparent">
       <div class="constraint">
         <q-tabs
           v-model="store.state.tab"
@@ -71,14 +71,14 @@
             style="width: 40%"
             @click="router.push('/users')"
           />
-          <q-btn
+          <!-- <q-btn
             flat
             name="setting"
             class="text-"
             icon="eva-settings-2-outline"
             style="width: 20%"
             @click="toggleLeftDrawer"
-          />
+          /> -->
         </q-tabs>
       </div>
     </q-footer>
