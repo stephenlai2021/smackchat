@@ -61,14 +61,14 @@
             name="home"
             :label="t('posts')"
             icon="eva-home-outline"
-            style="width: 33.3%"
+            style="width: 40%"
             @click="router.push('/')"
           />
           <q-tab
             name="chat"
             :label="t('chat')"
             icon="eva-message-circle-outline"
-            style="width: 33.3%"
+            style="width: 40%"
             @click="router.push('/users')"
           />
           <q-btn
@@ -76,7 +76,7 @@
             name="setting"
             class="text-"
             icon="eva-settings-2-outline"
-            style="width: 33.3%"
+            style="width: 20%"
             @click="toggleLeftDrawer"
           />
         </q-tabs>
