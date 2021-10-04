@@ -344,5 +344,6 @@ export default {
   // height: 100vh;
   // width: 100vw;
   height: 50vh;
+  border: 2px solid pink;
 }
 </style>

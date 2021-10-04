@@ -1,7 +1,7 @@
 <template>
   <q-page>
-    <q-header reveal style="z-index: 600;">
-    <!-- <q-header class="bg-transparent" style="z-index: 500; backdrop-filter: blur(20px);"> -->
+    <q-header reveal style="z-index: 600">
+      <!-- <q-header class="bg-transparent" style="z-index: 500; backdrop-filter: blur(20px);"> -->
       <q-toolbar class="constraint">
         <span class="text-bold q-ml-sm" style="font-size: 20px; width: 100%">
           {{ t("chatRoom") }}
@@ -31,10 +31,7 @@
       v-if="showUsersMapModal"
       @close-usersMapModal="showUsersMapModal = false"
     />
-
-    <!-- <q-page-sticky expand position="top" style="z-index: 500" class="q-my-sm"> -->
-    <!-- <q-toolbar class="constraint"> -->
-    <div class="full-width q-pa-sm" style="display: inline-block;">
+    <div class="full-width q-pa-sm" style="display: inline-block">
       <q-input
         v-model="search"
         standout
@@ -52,52 +49,6 @@
         </template>
       </q-input>
     </div>
-    <!-- </q-toolbar> -->
-    <!-- </q-page-sticky> -->
-
-    <!-- <div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap;">
-      <div
-        @click="goChat(user)"
-        v-for="(user, index) in matchingUsers"
-        :key="index"
-        style="display: inline-block;"
-        class="flex row q-ml-md q-my-sm"
-      >
-        <q-avatar size="45px" style="position: relative; cursor: pointer;">
-          <img
-            :src="user.avatar"
-            alt="user avatar"
-            :style="{
-              border: user.online ? '2px solid #e6ee9c' : '2px solid #e0e0e0',
-            }"
-          />
-          <q-badge
-            rounded
-            class="float-right"
-            style="position: absolute; left: 32px; top: 32px"
-            :style="{ background: user.online ? '#dcedc8' : '#e0e0e0' }"
-          />
-        </q-avatar>
-        <div class="flex">
-          <span
-            style="
-              white-space: break-spaces;
-              word-wrap: break-word;
-              height: 21px;
-              width: 50px;
-              text-align: center;
-            "
-          >
-            {{
-              user.name.split(" ")[0].length > 6
-                ? user.name.split(" ")[0].substring(6, 0) + "."
-                : user.name.split(" ")[0]
-            }}
-          </span>
-        </div>
-      </div>
-    </div> -->
-
     <div class="spinner" v-if="!store.state.users.length && !noUserMessages">
       <q-spinner-ios color="primary" size="3em" />
     </div>
@@ -159,22 +110,16 @@
       round
       color="orange"
       icon="eva-person-add-outline"
-      style="position: fixed; right: 16px; bottom: 65px; z-index: 500; backdrop-filter: blur(20px);"
+      style="
+        position: fixed;
+        right: 16px;
+        bottom: 65px;
+        z-index: 500;
+        backdrop-filter: blur(20px);
+      "
       @click="router.push('/finduser')"
     />
-    <!-- icon="eva-arrow-circle-up-outline" -->
-
-    <!-- <q-page-sticky class="constraint" position="bottom-right" :offset="[18, 18]">
-      <q-btn
-        round
-        size="15px"
-        icon="eva-arrow-ios-upward-outline"
-        style="background: #69f0ae"
-      />
-    </q-page-sticky> -->
-
-    <!-- <q-footer style="z-index: 500; backdrop-filter: blur(20px);" class="bg-transparent" > -->
-    <q-footer style="z-index: 500;" reveal>
+    <q-footer style="z-index: 500" reveal>
       <div class="constraint">
         <q-tabs
           v-model="store.state.tab"
@@ -197,6 +142,15 @@
             icon="eva-message-circle-outline"
             style="width: 50%"
             @click="router.push('/users')"
+          />
+          <q-btn
+            flat
+            name="setting"
+            class="text-"
+            :label="t('settings')"
+            icon="eva-settings-2-outline"
+            style="width: 50%"
+            @click="toggleLeftDrawer"
           />
         </q-tabs>
       </div>
@@ -233,6 +187,10 @@ export default {
     const showUsersMapModal = ref(false);
 
     // methods
+    const toggleLeftDrawer = () => {
+      store.state.leftDrawerOpen = !store.state.leftDrawerOpen;
+    };
+
     const findUser = () => {
       console.log("search: ", search.value);
       store.getters.filteredUsers().filter((user) => {
@@ -301,6 +259,7 @@ export default {
       // methods
       goChat,
       findUser,
+      toggleLeftDrawer,
     };
   },
 };

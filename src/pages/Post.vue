@@ -25,17 +25,8 @@
             color=""
             size="md"
             icon="post_add"
-            class="q-mr-sm"
+            class="q-mr-"
             @click="router.push('/addpost')"
-          />
-          <q-btn
-            round
-            dense
-            flat
-            color=""
-            size="md"
-            icon="eva-settings-2-outline"
-            @click="toggleLeftDrawer"
           />
         </div>
       </q-toolbar>
@@ -79,6 +70,15 @@
             icon="eva-message-circle-outline"
             style="width: 50%"
             @click="router.push('/users')"
+          />
+          <q-btn
+            flat
+            name="setting"
+            class="text-"
+            :label="t('settings')"
+            icon="eva-settings-2-outline"
+            style="width: 50%"
+            @click="toggleLeftDrawer"
           />
         </q-tabs>
       </div>
