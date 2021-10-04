@@ -18,7 +18,6 @@
         <q-btn
           round
           dense
-          
           color="pink-3"
           class=""
           icon="eva-close-outline"
@@ -29,7 +28,6 @@
           v-if="pause && cameraEnabled"
           round
           dense
-          
           color="pink-3"
           class=""
           style="opacity: 0.7; cursor: pointer"
@@ -40,7 +38,6 @@
           v-if="!pause && cameraEnabled"
           dense
           round
-          
           color="pink-3"
           class=""
           style="cursor: pointer"
@@ -326,27 +323,29 @@ export default {
   z-index: 600;
   background: black;
 }
-// .remote-video-container,
-// .local-video-container {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// }
+.remote-video-container,
+.local-video-container {
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  border: 2px solid pink;
+}
 .local-video,
 .remote-video {
   width: 100vw;
   height: 50vh;
 }
 @media (orientation: portrait) {
-  // .remote-video-container,
-  // .local-video-container {
-  //   height: 50vh;
-  //   width: 100%;
-  // }
+  .remote-video-container,
+  .local-video-container {
+    height: 50vh;
+    width: 100%;
+    border: 2px solid pink;
+  }
   .local-video,
   .remote-video {
-    height: 50vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
   }
   .control-panel {
     position: fixed;
@@ -359,10 +358,16 @@ export default {
   }
 }
 @media (orientation: landscape) {
-  .local-video,
-  .remote-video {
+  .remote-video-container,
+  .local-video-container {
     width: 50vw;
     height: 100vh;
+    border: 2px solid pink;
+  }
+  .local-video,
+  .remote-video {
+    width: 100%;
+    height: 100%;
   }
   .control-panel {
     display: flex;
