@@ -1,20 +1,11 @@
 <template>
   <q-page>
     <q-header reveal style="z-index: 600">
-      <!-- <q-header class="bg-transparent" style="z-index: 500; backdrop-filter: blur(20px);"> -->
       <q-toolbar class="constraint">
         <span class="text-bold q-ml-sm" style="font-size: 20px; width: 100%">
           {{ t("chatRoom") }}
         </span>
         <div class="flex row justify-end full-width">
-          <!-- <q-btn
-            round
-            dense
-            flat
-            size="md"
-            icon="eva-person-add-outline"
-            @click="router.push('/finduser')"
-          /> -->
           <q-btn
             round
             dense
@@ -31,6 +22,7 @@
       v-if="showUsersMapModal"
       @close-usersMapModal="showUsersMapModal = false"
     />
+
     <div class="full-width q-pa-sm" style="display: inline-block">
       <q-input
         v-model="search"
@@ -49,6 +41,59 @@
         </template>
       </q-input>
     </div>
+
+    <div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap">
+      <q-btn
+        round
+        color="grey"
+        class="q-ml-md text-red"
+        size="15px"
+        icon="eva-plus-outline"
+       
+        @click="router.push('/finduser')"
+      />
+      <div
+        @click="goChat(user)"
+        v-for="(user, index) in matchingUsers"
+        :key="index"
+        style="display: inline-block"
+        class="flex row q-ml-md q-my-sm"
+      >
+        <q-avatar size="45px" style="position: relative; cursor: pointer">
+          <img
+            :src="user.avatar"
+            alt="user avatar"
+            :style="{
+              border: user.online ? '2px solid #e6ee9c' : '2px solid #e0e0e0',
+            }"
+          />
+          <q-badge
+            rounded
+            class="float-right"
+            style="position: absolute; left: 32px; top: 32px"
+            :style="{ background: user.online ? '#dcedc8' : '#e0e0e0' }"
+          />
+        </q-avatar>
+        <!-- <div class="flex">
+          <span
+            style="
+              white-space: break-spaces;
+              word-wrap: break-word;
+              height: 21px;
+              width: 50px;
+              text-align: center;
+            "
+          >
+            {{
+              user.name.split(" ")[0].length > 6
+                ? user.name.split(" ")[0].substring(6, 0) + "."
+                : user.name.split(" ")[0]
+            }}
+          </span>
+        </div> -->
+      </div>
+    </div>
+
     <div class="spinner" v-if="!store.state.users.length && !noUserMessages">
       <q-spinner-ios color="primary" size="3em" />
     </div>
@@ -106,7 +151,7 @@
       </q-item>
     </q-list>
 
-    <q-btn
+    <!-- <q-btn
       round
       color="orange"
       icon="eva-person-add-outline"
@@ -118,7 +163,7 @@
         backdrop-filter: blur(20px);
       "
       @click="router.push('/finduser')"
-    />
+    /> -->
     <q-footer style="z-index: 500" reveal>
       <div class="constraint">
         <q-tabs
@@ -132,7 +177,7 @@
             :label="t('posts')"
             class="text-"
             icon="eva-home-outline"
-            style="width: 50%"
+            style="width: 33.3%"
             @click="router.push('/')"
           />
           <q-tab
@@ -140,16 +185,14 @@
             class="text-"
             :label="t('chat')"
             icon="eva-message-circle-outline"
-            style="width: 50%"
+            style="width: 33.3%"
             @click="router.push('/users')"
           />
           <q-btn
-            flat
-            name="setting"
+          flat
             class="text-"
-            :label="t('settings')"
             icon="eva-settings-2-outline"
-            style="width: 50%"
+            style="width: 33.3%"
             @click="toggleLeftDrawer"
           />
         </q-tabs>
