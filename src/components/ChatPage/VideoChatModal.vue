@@ -18,9 +18,9 @@
         <q-btn
           round
           dense
-          flat
-          color=""
-          class="text-pink"
+          
+          color="pink-3"
+          class=""
           icon="eva-close-outline"
           style="cursor: pointer"
           @click="closeVideoModal"
@@ -29,9 +29,9 @@
           v-if="pause && cameraEnabled"
           round
           dense
-          flat
-          color=""
-          class="text-pink"
+          
+          color="pink-3"
+          class=""
           style="opacity: 0.7; cursor: pointer"
           icon="eva-play-circle-outline"
           @click="resumeVideo"
@@ -40,9 +40,9 @@
           v-if="!pause && cameraEnabled"
           dense
           round
-          flat
-          color=""
-          class="text-pink"
+          
+          color="pink-3"
+          class=""
           style="cursor: pointer"
           icon="eva-pause-circle-outline"
           @click="pauseVideo"
@@ -51,8 +51,8 @@
           v-if="audioOn && cameraEnabled"
           dense
           round
-          flat
-          class="text-pink"
+          
+          class=""
           style="cursor: pointer"
           icon="eva-volume-up-outline"
           @click="toggleAudio"
@@ -61,8 +61,8 @@
           v-if="!audioOn && cameraEnabled"
           dense
           round
-          flat
-          class="text-pink"
+          
+          class=""
           icon="eva-volume-off-outline"
           style="cursor: pointer; z-index: 500"
           @click="toggleAudio"
@@ -71,8 +71,8 @@
           v-if="!remoteVideoShow"
           rounded
           dense
-          flat
-          class="text-pink"
+          
+          class=""
           style="cursor: pointer; z-index: 500"
           icon="eva-phone-outline"
           @click="call"
@@ -81,8 +81,8 @@
           v-if="remoteVideoShow"
           rounded
           dense
-          flat
-          class="text-pink"
+          
+          class=""
           style="cursor: pointer; z-index: 500"
           icon="eva-phone-off-outline"
           @click="hangUp"
@@ -342,6 +342,10 @@ export default {
   height: 100vh;
 }
 @media screen and (orientation: portrait) {
+  .remote-video-container,
+  .local-video-container {
+    height: 50vh;
+  }
   .local-video,
   .remote-video {
     height: 100%;
