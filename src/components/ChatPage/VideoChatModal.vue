@@ -71,8 +71,7 @@
           v-if="!remoteVideoShow"
           rounded
           dense
-          
-          class=""
+          color="pink-3"
           style="cursor: pointer; z-index: 500"
           icon="eva-phone-outline"
           @click="call"
@@ -81,8 +80,7 @@
           v-if="remoteVideoShow"
           rounded
           dense
-          
-          class=""
+          color="pink-3"
           style="cursor: pointer; z-index: 500"
           icon="eva-phone-off-outline"
           @click="hangUp"
