@@ -1,7 +1,7 @@
 <template>
   <q-page class="page-chat">
-    <div class="row justify-center constraint">
-      <div style="display: flex; justify-content: center; align-items: center;">
+    <div class="row justify-center">
+      <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
         <video
           class="remote-video"
           ref="remoteVideo"
@@ -9,23 +9,18 @@
           autoplay
         />
       </div>
-      <div style="display: flex; justify-content: center; align-items: center;">
-        <video
-          class="local-video"
-          ref="localVideo"
-          autoplay
-        />
+      <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+        <video class="local-video" ref="localVideo" autoplay />
         <!-- :style="{ border: cameraEnabled ? '2px solid pink' : 'none' }" -->
       </div>
-      <div
-        v-if="cameraEnabled"
-        class="row justify-around q-py-xs bg-pink-3 control-panel"
-      >
+      <!-- class="row justify-around q-py-xs bg-pink-3 control-panel" -->
+      <div v-if="cameraEnabled" class="row justify-around control-panel">
         <q-btn
           round
           dense
           flat
-          class="q-mx-"
+          color=""
+          class="text-pink-3"
           icon="eva-close-outline"
           style="cursor: pointer"
           @click="closeVideoModal"
@@ -35,7 +30,8 @@
           round
           dense
           flat
-          class="q-mx-"
+          color=""
+          class="text-pink-3"
           style="opacity: 0.7; cursor: pointer"
           icon="eva-play-circle-outline"
           @click="resumeVideo"
@@ -45,7 +41,8 @@
           dense
           round
           flat
-          class="q-mx-"
+          color=""
+          class="text-pink-3"
           style="cursor: pointer"
           icon="eva-pause-circle-outline"
           @click="pauseVideo"
@@ -55,7 +52,7 @@
           dense
           round
           flat
-          class="q-mx-"
+          class="text-pink-3"
           style="cursor: pointer"
           icon="eva-volume-up-outline"
           @click="toggleAudio"
@@ -65,7 +62,7 @@
           dense
           round
           flat
-          class="q-mx-"
+          class="text-pink-3"
           icon="eva-volume-off-outline"
           style="cursor: pointer; z-index: 500"
           @click="toggleAudio"
@@ -75,7 +72,7 @@
           rounded
           dense
           flat
-          class="q-mx-"
+          class="text-pink-3"
           style="cursor: pointer; z-index: 500"
           icon="eva-phone-outline"
           @click="call"
@@ -85,7 +82,7 @@
           rounded
           dense
           flat
-          class="q-mx-"
+          class="text-pink-3"
           style="cursor: pointer; z-index: 500"
           icon="eva-phone-off-outline"
           @click="hangUp"
@@ -331,6 +328,11 @@ export default {
   z-index: 600;
   background: black;
 }
+.local-video,
+.remote-video {
+  width: 50vw;
+  height: 100vh;
+}
 @media screen and (orientation: portrait) {
   .local-video {
     height: 50vh;
@@ -353,7 +355,7 @@ export default {
   .local-video,
   .remote-video {
     width: 50vw;
-    // height: 100vh;
+    height: 100vh;
   }
   .control-panel {
     display: flex;
