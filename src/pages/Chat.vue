@@ -100,14 +100,13 @@
                 size="md"
                 dense
                 flat
-                color="primary"
                 @click="inputFocus = false"
               />
             </template>
             <template v-slot:append>
+              <!-- :color="inputFocus ? 'primary' : 'grey-6'" -->
               <q-btn
                 icon="eva-navigation-2-outline"
-                :color="inputFocus ? 'primary' : 'grey-6'"
                 size="md"
                 dense
                 flat

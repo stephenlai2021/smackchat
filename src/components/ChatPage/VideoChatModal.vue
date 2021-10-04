@@ -1,97 +1,97 @@
 <template>
   <q-page class="page-chat">
     <div class="row justify-center constraint">
+      <video class="remote-video" ref="remoteVideo" autoplay />
+      <!-- <div> -->
       <video
-        class="remote-video"
-        ref="remoteVideo"
-        :style="{ border: remoteVideoShow ? '2px solid pink' : 'none' }"
+        class="local-video"
+        ref="localVideo"
+        :style="{ border: cameraEnabled ? '2px solid pink' : 'none' }"
         autoplay
       />
-      <!-- <div> -->
-        <video class="local-video" ref="localVideo" autoplay />
-        <div
-          v-if="cameraEnabled"
-          class="row justify-center q-py-xs bg-pink-3"
-          style="
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            z-index: 500;
-            width: 100%;
-            opacity: 0.7;
-            border-top-left-radius: 30px;
-            border-top-right-radius: 30px;
-          "
-        >
-          <q-btn
-            round
-            dense
-            flat
-            class="q-mx-md"
-            icon="eva-close-outline"
-            style="cursor: pointer"
-            @click="closeVideoModal"
-          />
-          <q-btn
-            v-if="pause && cameraEnabled"
-            round
-            dense
-            flat
-            class="q-mx-md"
-            style="opacity: 0.7; cursor: pointer"
-            icon="eva-play-circle-outline"
-            @click="resumeVideo"
-          />
-          <q-btn
-            v-if="!pause && cameraEnabled"
-            dense
-            round
-            flat
-            class="q-mx-md"
-            style="cursor: pointer"
-            icon="eva-pause-circle-outline"
-            @click="pauseVideo"
-          />
-          <q-btn
-            v-if="audioOn && cameraEnabled"
-            dense
-            round
-            flat
-            class="q-mx-md"
-            style="cursor: pointer"
-            icon="eva-volume-up-outline"
-            @click="toggleAudio"
-          />
-          <q-btn
-            v-if="!audioOn && cameraEnabled"
-            dense
-            round
-            flat
-            class="q-mx-md"
-            icon="eva-volume-off-outline"
-            style="cursor: pointer; z-index: 500"
-            @click="toggleAudio"
-          />
-          <q-btn
-            v-if="!remoteVideoShow"
-            rounded
-            flat
-            class="q-mx-md"
-            style="cursor: pointer; z-index: 500"
-            @click="call"
-            label="Connect"
-          />
-          <q-btn
-            v-if="remoteVideoShow"
-            rounded
-            flat
-            class="q-mx-md"
-            style="cursor: pointer; z-index: 500"
-            label="Disconnet"
-            @click="hangUp"
-          />
-        </div>
+      <div
+        v-if="cameraEnabled"
+        class="row justify-center q-py-xs bg-pink-3"
+        style="
+          position: fixed;
+          left: 0;
+          bottom: 0;
+          z-index: 500;
+          width: 100%;
+          opacity: 0.7;
+          border-top-left-radius: 30px;
+          border-top-right-radius: 30px;
+        "
+      >
+        <q-btn
+          round
+          dense
+          flat
+          class="q-mx-md"
+          icon="eva-close-outline"
+          style="cursor: pointer"
+          @click="closeVideoModal"
+        />
+        <q-btn
+          v-if="pause && cameraEnabled"
+          round
+          dense
+          flat
+          class="q-mx-md"
+          style="opacity: 0.7; cursor: pointer"
+          icon="eva-play-circle-outline"
+          @click="resumeVideo"
+        />
+        <q-btn
+          v-if="!pause && cameraEnabled"
+          dense
+          round
+          flat
+          class="q-mx-md"
+          style="cursor: pointer"
+          icon="eva-pause-circle-outline"
+          @click="pauseVideo"
+        />
+        <q-btn
+          v-if="audioOn && cameraEnabled"
+          dense
+          round
+          flat
+          class="q-mx-md"
+          style="cursor: pointer"
+          icon="eva-volume-up-outline"
+          @click="toggleAudio"
+        />
+        <q-btn
+          v-if="!audioOn && cameraEnabled"
+          dense
+          round
+          flat
+          class="q-mx-md"
+          icon="eva-volume-off-outline"
+          style="cursor: pointer; z-index: 500"
+          @click="toggleAudio"
+        />
+        <q-btn
+          v-if="!remoteVideoShow"
+          rounded
+          flat
+          class="q-mx-md"
+          style="cursor: pointer; z-index: 500"
+          @click="call"
+          label="Connect"
+        />
+        <q-btn
+          v-if="remoteVideoShow"
+          rounded
+          flat
+          class="q-mx-md"
+          style="cursor: pointer; z-index: 500"
+          label="Disconnet"
+          @click="hangUp"
+        />
       </div>
+    </div>
     <!-- </div> -->
   </q-page>
 </template>
@@ -148,6 +148,12 @@ export default {
           call.on("stream", (remoteStream) => {
             remoteVideo.value.srcObject = remoteStream;
             remoteVideoShow.value = true;
+
+            const vw = remoteVideo.value.width;
+            const vh = remoteVideo.value.height;
+
+            console.log("video width: ", vw);
+            console.log("video height: ", vh);
           });
         })
         .onCancel(() => {
@@ -168,6 +174,12 @@ export default {
       call.on("stream", (remoteStream) => {
         remoteVideo.value.srcObject = remoteStream;
         remoteVideoShow.value = true;
+
+        const vw = remoteVideo.value.width;
+        const vh = remoteVideo.value.height;
+
+        console.log("video width: ", vw);
+        console.log("video height: ", vh);
       });
     };
 
@@ -259,18 +271,18 @@ export default {
       closeCamera();
     });
 
-    watch(
-      () => localStream.value,
-      () => {
-        // if (localStream.value) {
-        const vw = localVideo.value.videoWidth;
-        const vh = localVideo.value.videoHeight;
+    // watch(
+    //   () => cameraEnabled.value,
+    //   () => {
+    //     if (cameraEnabled.value) {
+    //       const vw = localVideo.value.width;
+    //       const vh = localVideo.value.height;
 
-        console.log("video width: ", vw);
-        console.log("video height: ", vh);
-        // }
-      }
-    );
+    //       console.log("video width: ", vw);
+    //       console.log("video height: ", vh);
+    //     }
+    //   }
+    // );
 
     onMounted(() => {
       openCamera();
@@ -314,7 +326,6 @@ export default {
   background: black;
 }
 .local-video {
-  // height: calc(50vh - 22px);
   position: fixed;
   top: 5%;
   right: 5%;
@@ -322,10 +333,6 @@ export default {
   border-radius: 10px;
 }
 .remote-video {
-  // width: 100%;
-  // height: calc(50vh - 22px);
-  // position: fixed;
-  // bottom: 44px;
   height: 100vh;
 }
 </style>
