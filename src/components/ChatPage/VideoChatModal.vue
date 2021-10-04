@@ -1,7 +1,7 @@
 <template>
   <q-page class="page-chat">
     <div class="row justify-center constraint">
-      <video class="remote-video" ref="remoteVideo" autoplay />
+      <video class="remote-video" ref="remoteVideo" id="remoteVideo" autoplay />
       <!-- <div> -->
       <video
         class="local-video"
@@ -149,8 +149,11 @@ export default {
             remoteVideo.value.srcObject = remoteStream;
             remoteVideoShow.value = true;
 
-            const vw = remoteVideo.value.width;
-            const vh = remoteVideo.value.height;
+            // const vw = remoteVideo.value.width;
+            // const vh = remoteVideo.value.height;
+
+            const vw = document.getElementById("remoteVideo").width;
+            const vh = document.getElementById("remoteVideo").height;
 
             console.log("video width: ", vw);
             console.log("video height: ", vh);
@@ -175,8 +178,11 @@ export default {
         remoteVideo.value.srcObject = remoteStream;
         remoteVideoShow.value = true;
 
-        const vw = remoteVideo.value.width;
-        const vh = remoteVideo.value.height;
+        // const vw = remoteVideo.value.width;
+        // const vh = remoteVideo.value.height;
+
+        const vw = document.getElementById("remoteVideo").width;
+        const vh = document.getElementById("remoteVideo").height;
 
         console.log("video width: ", vw);
         console.log("video height: ", vh);
@@ -328,11 +334,13 @@ export default {
 .local-video {
   position: fixed;
   top: 5%;
-  right: 5%;
+  left: 50%;
+  transform: translateX(-50%);
   width: 30%;
   border-radius: 10px;
 }
 .remote-video {
   height: 100vh;
+  width: 100vw;
 }
 </style>
