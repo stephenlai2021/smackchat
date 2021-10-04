@@ -11,17 +11,7 @@
       />
       <div
         v-if="cameraEnabled"
-        class="row justify-center q-py-xs bg-pink-3"
-        style="
-          position: fixed;
-          top: 50%;
-          transform: translateY(-50%);
-          z-index: 500;
-          min-width: 360px;
-          opacity: 0.7;
-          border-radius: 30px;
-
-        "
+        class="q-py-xs bg-pink-3 control-panel"
       >
         <q-btn
           round
@@ -332,18 +322,36 @@ export default {
   background: black;
 }
 .local-video {
-  // position: fixed;
-  // top: 5%;
-  // left: 50%;
-  // transform: translateX(-50%);
-  // width: 30%;
-  // border-radius: 10px;
   height: 50vh;
 }
 .remote-video {
-  // height: 100vh;
-  // width: 100vw;
   height: 50vh;
   border: 2px solid pink;
+}
+.control-panel {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 500;
+  min-width: 360px;
+  opacity: 0.7;
+  border-radius: 30px;
+}
+@media screen and (orientation: landscape) {
+  .local-video,
+  .remote-video {
+    width: 50vw;
+  }
+  .control-panel {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 500;
+    // min-width: 360px;
+    opacity: 0.7;
+    border-radius: 30px;
+  }
 }
 </style>
