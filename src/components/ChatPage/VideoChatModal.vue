@@ -326,27 +326,27 @@ export default {
   z-index: 600;
   background: black;
 }
-.remote-video-container,
-.local-video-container {
-  display: flex;
-  // flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  // height: 50vh;
-}
+// .remote-video-container,
+// .local-video-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
 .local-video,
 .remote-video {
-  width: 100%;
+  width: 100vw;
   height: 50vh;
 }
 @media (orientation: portrait) {
-  .remote-video-container,
-  .local-video-container {
-    height: 50vh;
-  }
+  // .remote-video-container,
+  // .local-video-container {
+  //   height: 50vh;
+  //   width: 100%;
+  // }
   .local-video,
   .remote-video {
-    height: 100%;
+    height: 50vh;
+    width: 100vw;
   }
   .control-panel {
     position: fixed;
