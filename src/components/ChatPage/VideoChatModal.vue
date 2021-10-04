@@ -339,7 +339,7 @@ export default {
   .remote-video-container,
   .local-video-container {
     height: 50vh;
-    width: 100%;
+    width: 100vw;
     border: 2px solid pink;
   }
   .local-video,
