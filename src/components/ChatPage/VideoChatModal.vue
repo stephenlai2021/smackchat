@@ -1,7 +1,7 @@
 <template>
   <q-page class="page-chat">
     <div class="row justify-center">
-      <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+      <div class="remote-video-container">
         <video
           class="remote-video"
           ref="remoteVideo"
@@ -9,7 +9,7 @@
           autoplay
         />
       </div>
-      <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+      <div class="local-video-container">
         <video class="local-video" ref="localVideo" autoplay />
         <!-- :style="{ border: cameraEnabled ? '2px solid pink' : 'none' }" -->
       </div>
@@ -20,7 +20,7 @@
           dense
           flat
           color=""
-          class="text-pink-3"
+          class="text-pink"
           icon="eva-close-outline"
           style="cursor: pointer"
           @click="closeVideoModal"
@@ -31,7 +31,7 @@
           dense
           flat
           color=""
-          class="text-pink-3"
+          class="text-pink"
           style="opacity: 0.7; cursor: pointer"
           icon="eva-play-circle-outline"
           @click="resumeVideo"
@@ -42,7 +42,7 @@
           round
           flat
           color=""
-          class="text-pink-3"
+          class="text-pink"
           style="cursor: pointer"
           icon="eva-pause-circle-outline"
           @click="pauseVideo"
@@ -52,7 +52,7 @@
           dense
           round
           flat
-          class="text-pink-3"
+          class="text-pink"
           style="cursor: pointer"
           icon="eva-volume-up-outline"
           @click="toggleAudio"
@@ -62,7 +62,7 @@
           dense
           round
           flat
-          class="text-pink-3"
+          class="text-pink"
           icon="eva-volume-off-outline"
           style="cursor: pointer; z-index: 500"
           @click="toggleAudio"
@@ -72,7 +72,7 @@
           rounded
           dense
           flat
-          class="text-pink-3"
+          class="text-pink"
           style="cursor: pointer; z-index: 500"
           icon="eva-phone-outline"
           @click="call"
@@ -82,7 +82,7 @@
           rounded
           dense
           flat
-          class="text-pink-3"
+          class="text-pink"
           style="cursor: pointer; z-index: 500"
           icon="eva-phone-off-outline"
           @click="hangUp"
@@ -328,18 +328,23 @@ export default {
   z-index: 600;
   background: black;
 }
+.remote-video-container,
+.local-video-container {
+  display: flex;
+  // flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  // height: 50vh;
+}
 .local-video,
 .remote-video {
   width: 50vw;
   height: 100vh;
 }
 @media screen and (orientation: portrait) {
-  .local-video {
-    height: 50vh;
-  }
+  .local-video,
   .remote-video {
-    height: 50vh;
-    // border: 2px solid pink;
+    height: 100%;
   }
   .control-panel {
     position: fixed;
