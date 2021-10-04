@@ -51,7 +51,7 @@
           v-if="audioOn && cameraEnabled"
           dense
           round
-          
+          color="pink-3"
           class=""
           style="cursor: pointer"
           icon="eva-volume-up-outline"
@@ -61,7 +61,7 @@
           v-if="!audioOn && cameraEnabled"
           dense
           round
-          
+          color="pink-3"
           class=""
           icon="eva-volume-off-outline"
           style="cursor: pointer; z-index: 500"
