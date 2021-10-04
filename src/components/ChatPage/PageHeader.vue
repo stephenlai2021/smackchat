@@ -41,7 +41,7 @@
           round
           dense
           icon="eva-pin-outline"
-          class="q-mr-xs text-"
+          class="q-mr-sm text-"
           @click="showMapModal"
         />
         <q-btn

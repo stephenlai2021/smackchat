@@ -128,9 +128,11 @@ export default {
     peer.on("call", (call) => {
       $q.dialog({
         title: "Confirm",
-        message: "Incoming call from " + store.state.otherUser.name,
-        cancel: true,
+        message: `Incoming call from <strong>${store.state.otherUser.name}</strong>`,
+        dark: true,
+        cancel: true,     
         persistent: true,
+        html: true,
       })
         .onOk(() => {
           context.emit("open-videoModal");
@@ -324,7 +326,12 @@ export default {
   width: 100%;
   height: 100vh;
   z-index: 600;
-  background: black;
+  // background: black;
+   background-image: url('/bg/bg-1.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 .remote-video-container,
 .local-video-container {
