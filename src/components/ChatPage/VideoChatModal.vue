@@ -1,5 +1,5 @@
 <template>
-  <q-page class="page-chat">
+  <q-page class="page-chat bg-dark">
     <div class="row justify-center">
       <div class="remote-video-container">
         <video
@@ -326,12 +326,11 @@ export default {
   width: 100%;
   height: 100vh;
   z-index: 600;
-  // background: black;
-   background-image: url('/bg/bg-1.jpg');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  // background-image: url('/bg/bg-1.jpg');
+  // background-position: center;
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  // background-attachment: fixed;
 }
 .remote-video-container,
 .local-video-container {
