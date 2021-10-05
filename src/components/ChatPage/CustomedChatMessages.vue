@@ -106,9 +106,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.text-box, .img-box {
+  margin: 0;
+  padding: 0;
+  line-height: 0.9;
+  box-sizing: border-box;
+}
 .time-stamp {
-  text-align: center;
+  // text-align: center;
   font-size: 12px;
+  // border: 1px solid;
+  // margin-top: 0;
 }
 .user-image {
   width: 100%;
