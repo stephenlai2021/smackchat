@@ -23,7 +23,7 @@
             <div class="content">
               {{ message.text }}
             </div>
-            <p class="time-stamp">{{ message.createdAt }}</p>
+            <span class="time-stamp">{{ message.createdAt }}</span>
           </div>
 
           <div v-if="message.url">
@@ -43,7 +43,7 @@
               @click="showPicModal"
               @load="loadImage"
             />
-            <p class="time-stamp">{{ message.createdAt }}</p>
+            <span class="time-stamp">{{ message.createdAt }}</span>
           </div>
           <pic-modal
             v-if="picModal"
