@@ -20,16 +20,20 @@
       >
         <div class="message-inner">
           <div v-if="!message.image" class="text-box">
-            <div  class="content">
+            <div class="content">
               {{ message.text }}
             </div>
             <p class="time-stamp">{{ message.createdAt }}</p>
           </div>
 
-          <div v-if="message.image" class="img-box" :class="{ invisible: !imageLoaded }">
+          <div
+            v-if="message.image"
+            class="img-box"
+            :class="{ invisible: !imageLoaded }"
+          >
             <img
               ref="imageRef"
-              class="user-image"              
+              class="user-image"
               :src="message.text"
               alt="user image"
               @click="showPicModal"
@@ -59,9 +63,9 @@ export default {
     const store = inject("store");
 
     const chats = ref(null);
-    const imageRef = ref(null)
+    const imageRef = ref(null);
     const picModal = ref(false);
-    const imageLoaded = ref(false)
+    const imageLoaded = ref(false);
     const showMessages = ref(false);
 
     const showPicModal = () => {
@@ -69,8 +73,9 @@ export default {
     };
 
     const loadImage = () => {
-      imageLoaded.value = imageRef.value.complete && imageRef.value.naturalHeight !== 0
-    }
+      imageLoaded.value =
+        imageRef.value.complete && imageRef.value.naturalHeight !== 0;
+    };
 
     watch(
       () => store.state.messages,
@@ -78,7 +83,7 @@ export default {
         setTimeout(() => {
           window.scrollTo(0, chats.value.scrollHeight);
           showMessages.value = true;
-        }, 300);
+        }, 1000);
       }
     );
 

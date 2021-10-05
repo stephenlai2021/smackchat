@@ -6,7 +6,7 @@
   <q-header style="z-index: 500" class="bg-transparent">
     <q-toolbar
       class="constraint"
-      style="padding: 0; backdrop-filter: blur(8px)"
+      style="padding: 0; backdrop-filter: blur(20px)"
     >
       <q-btn
         round
