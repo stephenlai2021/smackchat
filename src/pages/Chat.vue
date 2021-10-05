@@ -14,14 +14,14 @@
         enter-active-class="animated slideInUp"
         leave-active-class="animated slideOutDown"
       >
-        <div class="menu-modal bg-dark q-pa-md full-width" key="item1">
-          <label class="q-mr-md text-white" style="cursor: pointer">
+        <div class="menu-modal bg-dark q-pa-sm full-width" key="item1">
+          <label class="q-ml-sm q-mr-md text-white" style="cursor: pointer">
             <input class="file-input" type="file" @change="handleChange" />
-            <q-icon size="sm" class="text-green" name="eva-image-outline" />
+            <q-icon size="md" class="text-green" name="eva-image-outline" />
           </label>
           <q-icon
             round
-            size="sm"
+            size="md"
             class="q-mr-sm text-blue"
             style="cursor: pointer;"
             name="eva-camera-outline"
@@ -29,7 +29,7 @@
           />
           <q-btn
             round
-            size=""
+            size="18PX"
             flat
             ref="btnEmoji"
             style="color: #69f0ae;"
@@ -164,7 +164,6 @@ export default {
     "video-modal": require("components/ChatPage/VideoChatModal.vue").default,
     "image-modal": require("components/ChatPage/ImageModal.vue").default,
     "camera-modal": require("components/ChatPage/CameraModal.vue").default,
-    "menu-modal": require("components/ChatPage/MenuModal.vue").default,
     "chat-messages": require("components/ChatPage/CustomedChatMessages.vue")
       .default,
     "sending-notification":
