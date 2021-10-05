@@ -68,7 +68,7 @@
               height="240"
             />
             <div v-if="imageCaptured" class="constraint text-center q-pa-md">
-              <div>Uploading... {{ store.state.progress }}%</div>
+              <div class="text-white">Uploading... {{ store.state.progress }}%</div>
               <div
                 class="progress-bar"
                 :style="{ width: store.state.progress + '%' }"

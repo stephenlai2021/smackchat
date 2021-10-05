@@ -23,10 +23,10 @@
             <div  class="content">
               {{ message.text }}
             </div>
-            <p v-if="imageLoaded" class="time-stamp">{{ message.createdAt }}</p>
+            <p class="time-stamp">{{ message.createdAt }}</p>
           </div>
 
-          <div v-if="message.image" class="img-box">
+          <div v-if="message.image" class="img-box" :class="{ invisible: !imageLoaded }">
             <img
               ref="imageRef"
               class="user-image"              
@@ -35,7 +35,7 @@
               @click="showPicModal"
               @load="loadImage"
             />
-            <p v-if="imageLoaded" class="time-stamp">{{ message.createdAt }}</p>
+            <p class="time-stamp">{{ message.createdAt }}</p>
           </div>
         </div>
         <pic-modal
@@ -70,9 +70,6 @@ export default {
 
     const loadImage = () => {
       imageLoaded.value = imageRef.value.complete && imageRef.value.naturalHeight !== 0
-      console.log('image fully loaded !')
-
-
     }
 
     watch(
@@ -90,9 +87,8 @@ export default {
       store,
       imageRef,
       picModal,
-      imageLoaded,
-
       loadImage,
+      imageLoaded,
       showMessages,
       showPicModal,
     };
@@ -122,7 +118,7 @@ export default {
 
         color: #333;
         word-wrap: break-word;
-        text-align: left;
+        text-align: center;
       }
     }
 
@@ -137,7 +133,7 @@ export default {
           color: #fff;
           word-wrap: break-word;
           background-color: #ea526f;
-          text-align: right;
+          text-align: center;
         }
       }
     }

@@ -41,6 +41,7 @@ export default {
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
+  opacity: 0.7;
 }
 .image {
   width: 100%;
@@ -50,7 +51,7 @@ export default {
   position: fixed;
   left: 0;
   top: 0;
-  width: 100%;
+  width: 100vw;
   height: 100vh;  
   z-index: 500;
   display: flex;
