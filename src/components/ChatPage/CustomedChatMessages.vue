@@ -45,12 +45,12 @@
             />
             <p class="time-stamp">{{ message.createdAt }}</p>
           </div>
+          <pic-modal
+            v-if="picModal"
+            :url="message.text"
+            @close-picmodal="picModal = false"
+          />
         </div>
-        <pic-modal
-          v-if="picModal"
-          :url="message.text"
-          @close-picmodal="picModal = false"
-        />
       </div>
     </section>
   </div>

@@ -39,6 +39,7 @@ export default {
         });
         if (store.state.uploadCompleted) {
           context.emit('close-imageModal')
+          context.emit('close-menuModal')
         }
       }
     );

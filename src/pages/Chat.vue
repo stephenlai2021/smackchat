@@ -17,13 +17,13 @@
         <div class="menu-modal bg-dark q-pa-md full-width" key="item1">
           <label class="q-mr-md text-white" style="cursor: pointer">
             <input class="file-input" type="file" @change="handleChange" />
-            <q-icon class="text-" size="sm" name="eva-image-outline" />
+            <q-icon size="sm" class="text-green" name="eva-image-outline" />
           </label>
           <q-icon
             round
             size="sm"
-            class="text-white q-mr-sm"
-            style="cursor: pointer"
+            class="q-mr-sm text-blue"
+            style="cursor: pointer;"
             name="eva-camera-outline"
             @click="showCameraModal = true"
           />
@@ -32,7 +32,8 @@
             size=""
             flat
             ref="btnEmoji"
-            class="text-white q-mr-md"
+            style="color: #69f0ae;"
+            class="q-mr-md text-yellow"
             icon="eva-smiling-face-outline"
             @click="showEmojiPicker"
           />
@@ -61,7 +62,7 @@
       @open-videoModal="showVideoModal = true"
     />
 
-    <image-modal :file="file" v-if="file" @close-imageModal="file = null" />
+    <image-modal :file="file" v-if="file" @close-imageModal="file = null" @close-menuModal="showMenuModal = false" />
 
     <map-modal v-if="showMapModal" @close-mapModal="showMapModal = false" />
 
@@ -69,6 +70,7 @@
       v-if="showCameraModal"
       @open-cameraModal="showCameraModal = true"
       @close-cameraModal="showCameraModal = false"
+      @close-menuModal="showMenuModal = false"
     />
 
     <!-- <q-footer class="bg-transparent footer" style="backdrop-filter: blur(20px)"> -->

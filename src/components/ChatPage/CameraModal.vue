@@ -1,10 +1,10 @@
 <template>
-  <!-- <transition-group
+  <transition-group
     appear
     enter-active-class="animated slideInRight"
     leave-active-class="animated slideOutLeft"
-  > -->
-    <div class="camera-modal">
+  >
+    <div class="camera-modal" key="item1">
       <div class="constraint" style="height: 100vh">
         <div class="full-width camera-panel">
           <div style="width: 100%; position: relative">
@@ -78,7 +78,7 @@
         </div>
       </div>
     </div>
-  <!-- </transition-group> -->
+  </transition-group>
 </template>
 
 <script>
@@ -170,6 +170,8 @@ export default {
         if (store.state.uploadCompleted) {
           hideCameraBtn.value = false;
           imageCaptured.value = false;
+
+          context.emit('close-menuModal')
 
           closeCameraModal();
         }

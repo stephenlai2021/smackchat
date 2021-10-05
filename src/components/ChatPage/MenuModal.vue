@@ -18,5 +18,7 @@ export default {};
 .menu-modal {
   position: fixed;
   bottom: 56px;
+  opacity: 0.7;
+  backdrop-filter: blur(20px);
 }
 </style>
