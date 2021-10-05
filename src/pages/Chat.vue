@@ -348,6 +348,8 @@ export default {
 
       newMessage.value = "";
 
+      showMenuModal.value = false
+
       inputFocus.value = false;
     };
 
