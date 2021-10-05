@@ -20,6 +20,7 @@ export default {
     console.log('image url: ', props.url)
 
     const closePicModal = () => {
+      props.url = null
       context.emit('close-picmodal')
     }
 
@@ -43,6 +44,7 @@ export default {
 }
 .image {
   width: 100%;
+  height: auto;
 }
 .pic-modal {
   position: fixed;

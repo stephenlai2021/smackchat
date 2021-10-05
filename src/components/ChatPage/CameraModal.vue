@@ -163,6 +163,7 @@ export default {
         store.methods.sendMessage({
           text: store.state.url,
           from: "me",
+          image: true,
           to: route.params.to,
           createdAt: timestamp(),
         });
