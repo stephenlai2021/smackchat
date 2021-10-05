@@ -50,7 +50,6 @@ export default {
 }
 .image {
   width: 100%;
-  height: auto;
 }
 .pic-modal {
   position: fixed;
@@ -60,6 +59,7 @@ export default {
   height: 100vh;
   z-index: 500;
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 </style>
