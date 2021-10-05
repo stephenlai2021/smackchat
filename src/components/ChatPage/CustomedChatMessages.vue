@@ -23,11 +23,18 @@
       >
         <div class="message-inner">
           <!-- <div class="username">{{ message }}</div> -->
-          <div class="content">
+          <div v-if="!message.image" class="content">
             {{ message.text }}
           </div>
-          <!-- <img :src="message.text" alt="" style="max-width: 360px" /> -->
+          <img
+            class="user-image"
+            v-if="message.image"
+            :src="message.text"
+            alt="user image"
+            @click="showPicModal"
+          />
         </div>
+        <pic-modal v-if="picModal" :url="message.text" @close-picmodal="picModal = false" />
       </div>
     </section>
   </div>
@@ -37,11 +44,19 @@
 import { inject, ref, watch } from "vue";
 
 export default {
+  components: {
+    "pic-modal": require("components/ChatPage/PicModal.vue").default,
+  },
   setup() {
     const store = inject("store");
 
     const chats = ref(null);
     const showMessages = ref(false);
+    const picModal = ref(false);
+
+    const showPicModal = () => {
+      picModal.value = true;
+    };
 
     watch(
       () => store.state.messages,
@@ -56,13 +71,18 @@ export default {
     return {
       chats,
       store,
+      picModal,
       showMessages,
+      showPicModal,
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.user-image {
+  max-width: 80%;
+}
 .chat-box {
   .message {
     display: flex;
@@ -72,7 +92,6 @@ export default {
       max-width: 80%;
       .content {
         padding: 10px 20px;
-        margin-right: 20px;
         background-color: #f3f3f3;
         border-radius: 20px;
 

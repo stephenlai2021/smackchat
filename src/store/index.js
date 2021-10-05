@@ -260,12 +260,14 @@ const methods = {
     db.collection("chat-messages").doc(from).collection(data.to).add({
       from: "me",
       text: data.text,
+      image: data.image,
       createdAt: data.createdAt,
     });
 
     db.collection("chat-messages").doc(data.to).collection(from).add({
       from: "them",
       text: data.text,
+      image: data.image,
       createdAt: data.createdAt,
     });
   },

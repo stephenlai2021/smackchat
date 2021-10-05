@@ -34,6 +34,7 @@ export default {
           text: store.state.url,
           from: "me",
           to: route.params.to,
+          image: true,
           createdAt: timestamp(),
         });
         if (store.state.uploadCompleted) {
