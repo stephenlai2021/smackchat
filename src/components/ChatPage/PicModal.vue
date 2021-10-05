@@ -1,10 +1,10 @@
 <template>
-    <div class="pic-modal bg-dark" key="item1">
   <transition-group
     appear
     enter-active-class="animated zoomIn"
     leave-active-class="animated zoomOut"
   >
+    <div class="pic-modal bg-dark" key="item1">
       <img :src="url" alt="user pic" class="image" key="item2" />
       <q-btn
         key="item3"
@@ -14,8 +14,8 @@
         icon="eva-close-outline"
         @click="closePicModal"
       />
-  </transition-group>
     </div>
+  </transition-group>
 </template>
 
 <script>
@@ -24,7 +24,7 @@ import { onMounted } from "vue";
 export default {
   props: ["url"],
   setup(props, context) {
-    // console.log("image url: ", props.url);
+    console.log("image url: ", props.url);
 
     const closePicModal = () => {
       // props.url = null;
