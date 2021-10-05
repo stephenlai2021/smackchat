@@ -1,38 +1,43 @@
 <template>
-  <div class="pic-modal bg-dark">
-    <img :src="url" alt="user pic" class="image">
-    <q-btn 
-      round
-      class="btn-close"
-      color="pink-3"
-      icon="eva-close-outline"
-      @click="closePicModal"
-    />
-  </div>
+    <div class="pic-modal bg-dark" key="item1">
+  <transition-group
+    appear
+    enter-active-class="animated zoomIn"
+    leave-active-class="animated zoomOut"
+  >
+      <img :src="url" alt="user pic" class="image" key="item2" />
+      <q-btn
+        key="item3"
+        round
+        class="btn-close"
+        color="pink-3"
+        icon="eva-close-outline"
+        @click="closePicModal"
+      />
+  </transition-group>
+    </div>
 </template>
 
 <script>
-import { onMounted } from 'vue'
+import { onMounted } from "vue";
 
 export default {
-  props: ['url'],
+  props: ["url"],
   setup(props, context) {
-    console.log('image url: ', props.url)
+    // console.log("image url: ", props.url);
 
     const closePicModal = () => {
-      props.url = null
-      context.emit('close-picmodal')
-    }
+      // props.url = null;
+      context.emit("close-picmodal");
+    };
 
-    onMounted(() => {
-
-    })
+    onMounted(() => {});
 
     return {
-      closePicModal
-    }
-  }
-}
+      closePicModal,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -52,7 +57,7 @@ export default {
   left: 0;
   top: 0;
   width: 100vw;
-  height: 100vh;  
+  height: 100vh;
   z-index: 500;
   display: flex;
   align-items: center;

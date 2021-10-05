@@ -8,6 +8,38 @@
 
     <chat-messages />
 
+    <div v-if="showMenuModal">
+      <transition-group
+        appear
+        enter-active-class="animated slideInUp"
+        leave-active-class="animated slideOutDown"
+      >
+        <div class="menu-modal bg-dark q-pa-md full-width" key="item1">
+          <label class="q-mr-md text-white" style="cursor: pointer">
+            <input class="file-input" type="file" @change="handleChange" />
+            <q-icon class="text-" size="sm" name="eva-image-outline" />
+          </label>
+          <q-icon
+            round
+            size="sm"
+            class="text-white q-mr-sm"
+            style="cursor: pointer"
+            name="eva-camera-outline"
+            @click="showCameraModal = true"
+          />
+          <q-btn
+            round
+            size=""
+            flat
+            ref="btnEmoji"
+            class="text-white q-mr-md"
+            icon="eva-smiling-face-outline"
+            @click="showEmojiPicker"
+          />
+        </div>
+      </transition-group>
+    </div>
+
     <!-- <sending-notification v-if="sendingNotification" @close-notification="sendingNotification = false, showVideoModal = true" />
     <receiving-notification v-if="receivingNotification" @close-notification="receivingNotification = false, showVideoModal = true" /> -->
 
@@ -40,43 +72,34 @@
     />
 
     <!-- <q-footer class="bg-transparent footer" style="backdrop-filter: blur(20px)"> -->
-    <q-footer style="z-index: 300; backdrop-filter: blur(20px)" class="q-py-xs bg-transparent">
+    <q-footer
+      style="z-index: 300; backdrop-filter: blur(20px)"
+      class="q-py-xs bg-transparent"
+    >
       <q-form class="flex constraint" :class="{ 'q-mx-sm': inputFocus }">
         <div
           v-if="!inputFocus"
           flat
           round
           class="flex row justify-evenly"
-          style="width: 50%; display: flex; align-items: center"
+          style="width: 20%; display: flex; align-items: center"
         >
-          <label class="q-mr-sm" style="cursor: pointer">
-            <input class="file-input" type="file" @change="handleChange" />
-            <q-icon class="text-" size="sm" name="eva-image-outline" />
-          </label>
-          <q-icon
-            round
-            size="sm"
-            class="text-"
-            style="cursor: pointer"
-            name="eva-camera-outline"
-            @click="showCameraModal = true"
-          />
           <q-btn
             round
             size=""
             flat
             ref="btnEmoji"
             class="text-"
-            icon="eva-smiling-face-outline"
-            @click="showEmojiPicker"
+            icon="eva-menu-outline"
+            @click="toggleMenuModal"
           />
         </div>
 
         <div
           :class="inputFocus ? 'q-pl-md' : ''"
           class="q-pr-md q-py-sm"
-          style="width: 50%; display: flex; align-items: center"
-          :style="{ width: inputFocus ? '100%' : '50%' }"
+          style="width: 80%; display: flex; align-items: center"
+          :style="{ width: inputFocus ? '100%' : '80%' }"
         >
           <q-input
             ref="input"
@@ -93,7 +116,7 @@
             @focus="onFocus"
             @blur="onBlur"
             :style="{ width: inputFocus ? '100%' : '50%' }"
-            style="border: 20px;"
+            style="border: 20px"
           >
             <template v-slot:prepend v-if="inputFocus">
               <q-btn
@@ -139,8 +162,9 @@ export default {
     "video-modal": require("components/ChatPage/VideoChatModal.vue").default,
     "image-modal": require("components/ChatPage/ImageModal.vue").default,
     "camera-modal": require("components/ChatPage/CameraModal.vue").default,
-    // "chat-messages": require("components/ChatPage/ChatMessages.vue").default,
-    "chat-messages": require("components/ChatPage/CustomedChatMessages.vue").default,
+    "menu-modal": require("components/ChatPage/MenuModal.vue").default,
+    "chat-messages": require("components/ChatPage/CustomedChatMessages.vue")
+      .default,
     "sending-notification":
       require("src/components/ChatPage/SendingNotification.vue").default,
     "receiving-notification":
@@ -163,6 +187,7 @@ export default {
     const newMessage = ref("");
     const indicator = ref(false);
     const inputFocus = ref(false);
+    const showMenuModal = ref(false);
     const showMessages = ref(false);
     const showMapModal = ref(false);
     const showVideoModal = ref(false);
@@ -239,7 +264,13 @@ export default {
         route.params.from,
         route.params.to
       );
+    };
 
+    /**************/
+    /* Menu Modal */
+    /**************/
+    const toggleMenuModal = () => {
+      showMenuModal.value = !showMenuModal.value;
     };
 
     // watch(
@@ -264,7 +295,7 @@ export default {
         console.log("videochat | watch: ", newVal);
         if (store.state.videochat) {
           receivingNotification.value = true;
-        } 
+        }
       }
     );
 
@@ -364,11 +395,12 @@ export default {
       chats,
       input,
       desktop,
-      notification,
       btnEmoji,
       indicator,
       fileError,
       inputFocus,
+      notification,
+      showMenuModal,
       showCameraModal,
       sendingNotification,
       receivingNotification,
@@ -385,6 +417,7 @@ export default {
       sendMessage,
       showMessages,
       handleChange,
+      toggleMenuModal,
       showEmojiPicker,
       sendTypingIndicator,
       formatDistanceToNow,
@@ -396,6 +429,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.menu-modal {
+  position: fixed;
+  bottom: 56px;
+}
 .btn-mapBack {
   position: fixed;
   left: 50%;

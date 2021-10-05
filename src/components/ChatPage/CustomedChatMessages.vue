@@ -19,11 +19,15 @@
         :class="message.from == 'me' ? 'message current-user' : 'message'"
       >
         <div class="message-inner">
-          <div v-if="!message.image" class="text-box">
+          <div v-if="!message.image && !message.url" class="text-box">
             <div class="content">
               {{ message.text }}
             </div>
             <p class="time-stamp">{{ message.createdAt }}</p>
+          </div>
+
+          <div v-if="message.url">
+            <a :href="message.url">{{ message.url }}</a>
           </div>
 
           <div
