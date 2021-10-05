@@ -139,7 +139,8 @@ export default {
     "video-modal": require("components/ChatPage/VideoChatModal.vue").default,
     "image-modal": require("components/ChatPage/ImageModal.vue").default,
     "camera-modal": require("components/ChatPage/CameraModal.vue").default,
-    "chat-messages": require("components/ChatPage/ChatMessages.vue").default,
+    // "chat-messages": require("components/ChatPage/ChatMessages.vue").default,
+    "chat-messages": require("components/ChatPage/CustomedChatMessages.vue").default,
     "sending-notification":
       require("src/components/ChatPage/SendingNotification.vue").default,
     "receiving-notification":
