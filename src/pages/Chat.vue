@@ -6,7 +6,12 @@
       @notification="sendVideochatNotification"
     />
 
-    <chat-messages />
+    <chat-messages @user-message="openPicModal" />
+    <pic-modal
+      v-if="picModal"
+      :message="userMessage"
+      @close-picmodal="picModal = false"
+    />
 
     <div v-if="showMenuModal">
       <transition-group
@@ -23,7 +28,7 @@
             round
             size="md"
             class="q-mr-sm text-blue"
-            style="cursor: pointer;"
+            style="cursor: pointer"
             name="eva-camera-outline"
             @click="showCameraModal = true"
           />
@@ -32,7 +37,7 @@
             size="18PX"
             flat
             ref="btnEmoji"
-            style="color: #69f0ae;"
+            style="color: #69f0ae"
             class="q-mr-md text-yellow"
             icon="eva-smiling-face-outline"
             @click="showEmojiPicker"
@@ -62,7 +67,12 @@
       @open-videoModal="showVideoModal = true"
     />
 
-    <image-modal :file="file" v-if="file" @close-imageModal="file = null" @close-menuModal="showMenuModal = false" />
+    <image-modal
+      :file="file"
+      v-if="file"
+      @close-imageModal="file = null"
+      @close-menuModal="showMenuModal = false"
+    />
 
     <map-modal v-if="showMapModal" @close-mapModal="showMapModal = false" />
 
@@ -164,6 +174,7 @@ export default {
     "video-modal": require("components/ChatPage/VideoChatModal.vue").default,
     "image-modal": require("components/ChatPage/ImageModal.vue").default,
     "camera-modal": require("components/ChatPage/CameraModal.vue").default,
+    "pic-modal": require("components/ChatPage/PicModal.vue").default,
     "chat-messages": require("components/ChatPage/CustomedChatMessages.vue")
       .default,
     "sending-notification":
@@ -184,8 +195,10 @@ export default {
     const to = ref({});
     const chats = ref(null);
     const input = ref(null);
+    const picModal = ref(false)
     const desktop = ref(false);
     const newMessage = ref("");
+    const userMessage = ref({})
     const indicator = ref(false);
     const inputFocus = ref(false);
     const showMenuModal = ref(false);
@@ -335,6 +348,13 @@ export default {
       }
     );
 
+    const openPicModal = message => {
+      console.log('user message: ', message)
+      userMessage.value = message
+      picModal.value = true
+      console.log('picModal: ', picModal.value)
+    }
+
     const sendMessage = () => {
       if (newMessage.value === "") return;
 
@@ -348,7 +368,7 @@ export default {
 
       newMessage.value = "";
 
-      showMenuModal.value = false
+      showMenuModal.value = false;
 
       inputFocus.value = false;
     };
@@ -398,11 +418,13 @@ export default {
       chats,
       input,
       desktop,
+      picModal,
       btnEmoji,
       indicator,
       fileError,
       inputFocus,
       notification,
+      userMessage,
       showMenuModal,
       showCameraModal,
       sendingNotification,
@@ -420,6 +442,7 @@ export default {
       sendMessage,
       showMessages,
       handleChange,
+      openPicModal,
       toggleMenuModal,
       showEmojiPicker,
       sendTypingIndicator,

@@ -5,7 +5,7 @@
     leave-active-class="animated zoomOut"
   >
     <div class="pic-modal bg-dark" key="item1">
-      <img :src="url" alt="user pic" class="image" key="item2" />
+      <img :src="message.text" alt="user pic" class="image" key="item2" />
       <q-btn
         key="item3"
         round
@@ -22,9 +22,9 @@
 import { onMounted } from "vue";
 
 export default {
-  props: ["url"],
+  props: ["message"],
   setup(props, context) {
-    console.log("image url: ", props.url);
+    console.log("image url: ", props.message.text);
 
     const closePicModal = () => {
       // props.url = null;

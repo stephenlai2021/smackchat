@@ -1,15 +1,5 @@
 <template>
-  <!-- class="q-mx-md q-mt-sm column col justify-end messages" -->
   <div ref="chats" :class="{ invisible: !showMessages }">
-    <!-- <q-chat-message
-      v-for="(message, index) in store.getters.formattedMessages()"
-      :key="index"
-      :text="[message.text]"
-      :sent="message.from === 'me'"
-      :stamp="message.createdAt"
-      :bg-color="message.from === 'me' ? 'amber-2' : 'light-green-2'"
-      class="q-mb-md"
-    /> -->
     <section class="chat-box q-mt-md">
       <div
         v-for="(message, index) in store.getters.formattedMessages()"
@@ -19,7 +9,7 @@
         :class="message.from == 'me' ? 'message current-user' : 'message'"
       >
         <div class="message-inner">
-          <div v-if="!message.image && !message.url" class="text-box">
+          <div v-if="!message.image" class="text-box">
             <div class="content">
               {{ message.text }}
             </div>
@@ -40,16 +30,12 @@
               class="user-image"
               :src="message.text"
               alt="user image"
-              @click="showPicModal"
               @load="loadImage"
+              @click="getMessage(index, message)"
             />
+              <!-- @click="showPicModal" -->
             <span class="time-stamp">{{ message.createdAt }}</span>
-          </div>
-          <pic-modal
-            v-if="picModal"
-            :url="message.text"
-            @close-picmodal="picModal = false"
-          />
+          </div>         
         </div>
       </div>
     </section>
@@ -61,9 +47,9 @@ import { inject, ref, watch } from "vue";
 
 export default {
   components: {
-    "pic-modal": require("components/ChatPage/PicModal.vue").default,
+    
   },
-  setup() {
+  setup(props, context) {
     const store = inject("store");
 
     const chats = ref(null);
@@ -75,6 +61,11 @@ export default {
     const showPicModal = () => {
       picModal.value = true;
     };
+
+    const getMessage = (index, message) => {
+      console.log('message-index: ', index)
+      context.emit('user-message', message)
+    }
 
     const loadImage = () => {
       imageLoaded.value =
@@ -97,6 +88,7 @@ export default {
       imageRef,
       picModal,
       loadImage,
+      getMessage,
       imageLoaded,
       showMessages,
       showPicModal,
