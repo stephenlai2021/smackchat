@@ -1,8 +1,8 @@
 <template>
   <transition-group
     appear
-    enter-active-class="animated slideInRight"
-    leave-active-class="animated slideOutLeft"
+    enter-active-class="animated zoomIn"
+    leave-active-class="animated zoomOut"
   >
     <div class="camera-modal" key="item1">
       <div class="constraint" style="height: 100vh">

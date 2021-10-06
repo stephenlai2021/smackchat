@@ -9,22 +9,36 @@
         :class="message.from == 'me' ? 'message current-user' : 'message'"
       >
         <div class="message-inner">
-          <div v-if="!message.image" class="text-box">
-            <div class="content">
+          <div v-if="!message.image && !message.url" class="text-box">
+            <div v-if="!message.image && !message.url" class="content">
               {{ message.text }}
             </div>
+            <div v-if="!message.image && message.url" class="content">
+              <a :href="message.url">{{ message.url }}</a>
+            </div>
             <span class="time-stamp">{{ message.createdAt }}</span>
-          </div>
-
-          <div v-if="message.url">
-            <a :href="message.url">{{ message.url }}</a>
           </div>
 
           <div
             v-if="message.image"
             class="img-box"
             :class="{ invisible: !imageLoaded }"
+            style="position: relative"
           >
+            <!-- <q-icon
+              name="eva-expand-outline"
+              class="text-white"
+              size="20px"
+              style="position: absolute; top: -8px; left: 50%; transform: translateX(-50%);"
+              @click="getMessage(index, message)"
+            />
+            <q-icon
+              name="eva-close-outline"
+              class="text-white"
+              size="20px"
+              style="position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);"
+              @click="getMessage(index, message)"
+            /> -->
             <img
               ref="imageRef"
               class="user-image"
@@ -33,9 +47,8 @@
               @load="loadImage"
               @click="getMessage(index, message)"
             />
-              <!-- @click="showPicModal" -->
             <span class="time-stamp">{{ message.createdAt }}</span>
-          </div>         
+          </div>
         </div>
       </div>
     </section>
@@ -46,9 +59,7 @@
 import { inject, ref, watch } from "vue";
 
 export default {
-  components: {
-    
-  },
+  components: {},
   setup(props, context) {
     const store = inject("store");
 
@@ -63,9 +74,9 @@ export default {
     };
 
     const getMessage = (index, message) => {
-      console.log('message-index: ', index)
-      context.emit('user-message', message)
-    }
+      console.log("message-index: ", index);
+      context.emit("user-message", message);
+    };
 
     const loadImage = () => {
       imageLoaded.value =
@@ -98,7 +109,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.text-box, .img-box {
+.text-box,
+.img-box {
   margin: 0;
   padding: 0;
   line-height: 0.9;

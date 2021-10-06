@@ -13,38 +13,50 @@
       @close-picmodal="picModal = false"
     />
 
+    <!-- <menu-modal v-if="showMenuModal" @close-menuModal="showMenuModal = false" /> -->
     <div v-if="showMenuModal">
       <transition-group
         appear
         enter-active-class="animated slideInUp"
         leave-active-class="animated slideOutDown"
       >
-        <div class="menu-modal bg-dark q-pa-sm full-width" key="item1">
-          <label class="q-ml-sm q-mr-md text-white" style="cursor: pointer">
-            <input class="file-input" type="file" @change="handleChange" />
-            <q-icon size="md" class="text-green" name="eva-image-outline" />
-          </label>
-          <q-icon
-            round
-            size="md"
-            class="q-mr-sm text-blue"
-            style="cursor: pointer"
-            name="eva-camera-outline"
-            @click="showCameraModal = true"
-          />
-          <q-btn
-            round
-            size="18PX"
-            flat
-            ref="btnEmoji"
-            style="color: #69f0ae"
-            class="q-mr-md text-yellow"
-            icon="eva-smiling-face-outline"
-            @click="showEmojiPicker"
-          />
+        <div
+          class="menu-modal bg-dark q-pa-sm full-width q-py-md constraint"
+          key="item1"
+        >
+          <div class="icons">
+            <label class="q-ml-sm q-mr-md text-white" style="cursor: pointer">
+              <input class="file-input" type="file" @change="handleChange" />
+              <q-icon size="md" class="text-green" name="eva-image-outline" />
+            </label>
+            <q-icon
+              round
+              size="md"
+              class="q-mr-md text-blue"
+              style="cursor: pointer"
+              name="eva-camera-outline"
+              @click="showCameraModal = true"
+            />
+            <q-icon
+              round
+              size="md"
+              class="q-mr-sm text-pink-3"
+              style="cursor: pointer"
+              name="eva-link-outline"
+              @click="showLinkModal = true"
+            />
+            <q-icon
+              round
+              size="md"
+              class="q-mr-sm text-pink-3 btn-close"
+              name="eva-close-outline"
+              @click="showMenuModal = false"
+            />
+          </div>
         </div>
       </transition-group>
     </div>
+    <link-modal v-if="showLinkModal" />
 
     <!-- <sending-notification v-if="sendingNotification" @close-notification="sendingNotification = false, showVideoModal = true" />
     <receiving-notification v-if="receivingNotification" @close-notification="receivingNotification = false, showVideoModal = true" /> -->
@@ -94,7 +106,7 @@
           flat
           round
           class="flex row justify-evenly"
-          style="width: 20%; display: flex; align-items: center"
+          style="width: 10%; display: flex; align-items: center"
         >
           <q-btn
             round
@@ -110,8 +122,8 @@
         <div
           :class="inputFocus ? 'q-pl-md' : ''"
           class="q-pr-md q-py-sm"
-          style="width: 80%; display: flex; align-items: center"
-          :style="{ width: inputFocus ? '100%' : '80%' }"
+          style="width: 90%; display: flex; align-items: center"
+          :style="{ width: inputFocus ? '100%' : '90%' }"
         >
           <q-input
             ref="input"
@@ -141,17 +153,28 @@
               />
             </template>
             <template v-slot:append>
-              <!-- :color="inputFocus ? 'primary' : 'grey-6'" -->
-              <q-btn
-                icon="eva-navigation-2-outline"
+              <q-icon
+                round
                 size="md"
-                class="text-white"
-                dense
-                flat
-                @click="sendMessage"
+                ref="btnEmoji"
+                style="color: #69f0ae"
+                class="q-mr- text-white"
+                name="eva-smiling-face-outline"
+                @click="showEmojiPicker"
               />
             </template>
           </q-input>
+          <div style="width: 10%">
+            <q-btn
+              icon="eva-navigation-2-outline"
+              size="md"
+              class="text-white q-ml-sm"
+              dense
+              flat
+              :color="inputFocus ? 'white' : 'white'"
+              @click="sendMessage"
+            />
+          </div>
         </div>
       </q-form>
     </q-footer>
@@ -173,8 +196,10 @@ export default {
     "map-modal": require("components/ChatPage/MapModal.vue").default,
     "video-modal": require("components/ChatPage/VideoChatModal.vue").default,
     "image-modal": require("components/ChatPage/ImageModal.vue").default,
+    "menu-modal": require("components/ChatPage/MenuModal.vue").default,
     "camera-modal": require("components/ChatPage/CameraModal.vue").default,
     "pic-modal": require("components/ChatPage/PicModal.vue").default,
+    "link-modal": require("components/ChatPage/LinkModal.vue").default,
     "chat-messages": require("components/ChatPage/CustomedChatMessages.vue")
       .default,
     "sending-notification":
@@ -195,12 +220,13 @@ export default {
     const to = ref({});
     const chats = ref(null);
     const input = ref(null);
-    const picModal = ref(false)
+    const picModal = ref(false);
     const desktop = ref(false);
     const newMessage = ref("");
-    const userMessage = ref({})
+    const userMessage = ref({});
     const indicator = ref(false);
     const inputFocus = ref(false);
+    const showLinkModal = ref(false);
     const showMenuModal = ref(false);
     const showMessages = ref(false);
     const showMapModal = ref(false);
@@ -209,6 +235,27 @@ export default {
     const notification = ref(false);
     const sendingNotification = ref(false);
     const receivingNotification = ref(false);
+
+    /****************/
+    /* Emoji Button */
+    /****************/
+    const btnEmoji = ref(null);
+    const picker = ref(null);
+
+    picker.value = new EmojiButton({
+      position: {
+        bottom: "56px",
+        left: "40%",
+      },
+    });
+
+    picker.value.on("emoji", (selection) => {
+      newMessage.value += selection.emoji;
+    });
+
+    const showEmojiPicker = () => {
+      picker.value.togglePicker(btnEmoji.value);
+    };
 
     /***************/
     /* Image Button */
@@ -240,22 +287,6 @@ export default {
           timeout: 2000,
         });
       }
-    };
-
-    /***************/
-    /* Emoji Modal */
-    /***************/
-    const btnEmoji = ref(null);
-    const picker = ref(null);
-
-    picker.value = new EmojiButton();
-
-    picker.value.on("emoji", (selection) => {
-      newMessage.value += selection.emoji;
-    });
-
-    const showEmojiPicker = () => {
-      picker.value.togglePicker(btnEmoji.value);
     };
 
     /**************************/
@@ -348,12 +379,12 @@ export default {
       }
     );
 
-    const openPicModal = message => {
-      console.log('user message: ', message)
-      userMessage.value = message
-      picModal.value = true
-      console.log('picModal: ', picModal.value)
-    }
+    const openPicModal = (message) => {
+      console.log("user message: ", message);
+      userMessage.value = message;
+      picModal.value = true;
+      console.log("picModal: ", picModal.value);
+    };
 
     const sendMessage = () => {
       if (newMessage.value === "") return;
@@ -424,6 +455,7 @@ export default {
       fileError,
       inputFocus,
       notification,
+      showLinkModal,
       userMessage,
       showMenuModal,
       showCameraModal,
@@ -455,9 +487,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.icons {
+  display: flex;
+  align-items: center;
+}
+.btn-close {
+  cursor: pointer;
+  margin-left: auto;
+  // position: absolute;
+}
 .menu-modal {
   position: fixed;
-  bottom: 56px;
+  // bottom: 56px;
+  bottom: 0;
+  z-index: 500;
 }
 .btn-mapBack {
   position: fixed;
@@ -519,97 +562,4 @@ export default {
   text-align: center;
   padding-left: -300px;
 }
-// .page-chat {
-//   overflow: hidden;
-//   &:after {
-//     content: "";
-//     display: block;
-//     position: fixed;
-//     left: 0;
-//     right: 0;
-//     top: 0;
-//     bottom: 0;
-//     z-index: 0;
-//     opacity: 0.1;
-//     background-image: radial-gradient(
-//         circle at 100% 150%,
-//         silver 24%,
-//         white 24%,
-//         white 28%,
-//         silver 28%,
-//         silver 36%,
-//         white 36%,
-//         white 40%,
-//         transparent 40%,
-//         transparent
-//       ),
-//       radial-gradient(
-//         circle at 0 150%,
-//         silver 24%,
-//         white 24%,
-//         white 28%,
-//         silver 28%,
-//         silver 36%,
-//         white 36%,
-//         white 40%,
-//         transparent 40%,
-//         transparent
-//       ),
-//       radial-gradient(
-//         circle at 50% 100%,
-//         white 10%,
-//         silver 10%,
-//         silver 23%,
-//         white 23%,
-//         white 30%,
-//         silver 30%,
-//         silver 43%,
-//         white 43%,
-//         white 50%,
-//         silver 50%,
-//         silver 63%,
-//         white 63%,
-//         white 71%,
-//         transparent 71%,
-//         transparent
-//       ),
-//       radial-gradient(
-//         circle at 100% 50%,
-//         white 5%,
-//         silver 5%,
-//         silver 15%,
-//         white 15%,
-//         white 20%,
-//         silver 20%,
-//         silver 29%,
-//         white 29%,
-//         white 34%,
-//         silver 34%,
-//         silver 44%,
-//         white 44%,
-//         white 49%,
-//         transparent 49%,
-//         transparent
-//       ),
-//       radial-gradient(
-//         circle at 0 50%,
-//         white 5%,
-//         silver 5%,
-//         silver 15%,
-//         white 15%,
-//         white 20%,
-//         silver 20%,
-//         silver 29%,
-//         white 29%,
-//         white 34%,
-//         silver 34%,
-//         silver 44%,
-//         white 44%,
-//         white 49%,
-//         transparent 49%,
-//         transparent
-//       );
-//     background-size: 100px 50px;
-//   }
-// }
 </style>

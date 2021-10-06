@@ -4,8 +4,8 @@
     enter-active-class="animated zoomIn"
     leave-active-class="animated zoomOut"
   >
-    <div class="pic-modal bg-dark" key="item1">
-      <img :src="message.text" alt="user pic" class="image" key="item2" />
+    <div class="pic-modal bg-dark constraint" key="item1">
+      <img @load="loadFullImage" :src="message.text" ref="image" alt="user pic" class="image" key="item2" />
       <q-btn
         key="item3"
         round
@@ -19,19 +19,59 @@
 </template>
 
 <script>
-import { onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 
 export default {
   props: ["picModal", "message"],
   setup(props, context) {
     // console.log("image url: ", props.message.text);
+    const image = ref(null)
+    const imageWidth = ref(null)
+    const imageHeight = ref(null)
+    const isImageFullyLoaded = ref(false)
 
     const closePicModal = () => {
       context.emit("close-picmodal");
     };
 
+    const loadFullImage = () => {
+      if (image.value.complete && image.value.naturalHeight !==0) {
+        isImageFullyLoaded.value = true
+        console.log('image is fully loaded')
+      }
+    }
+
+    watch(() => isImageFullyLoaded.value, () => {
+      if (isImageFullyLoaded.value = true) {
+        imageWidth.value = image.value.clientWidth
+        imageHeight.value = image.value.clientHeight
+        
+        console.log('image width: ', imageWidth.value)
+        console.log('image height: ', imageHeight.value)
+
+        if (imageWidth.value > imageHeight.value) {
+          image.value.style.width = '100%'
+        }        
+        if (imageWidth.value < imageHeight.value) {
+          image.value.style.height = '100vh'
+        }
+        if (imageWidth.value == imageHeight.value) {
+          image.value.style.width = '100%'
+          image.value.style.height = '100vh'
+        }
+
+
+      }
+    })
+
+    onMounted(() => {
+
+    })
+
     return {
+      image,
       context,
+      loadFullImage,
       closePicModal,
     };
   },
@@ -46,12 +86,10 @@ export default {
   transform: translateX(-50%);
   opacity: 0.7;
 }
-.image {
-  width: 100%;
-}
 .pic-modal {
   position: fixed;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   top: 0;
   width: 100vw;
   height: 100vh;
