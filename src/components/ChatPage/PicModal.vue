@@ -47,13 +47,13 @@ export default {
   opacity: 0.7;
 }
 .image {
-  min-width: 100%;
+  width: 100%;
 }
 .pic-modal {
   position: fixed;
   left: 0;
   top: 0;
-  min-width: 100vw;
+  width: 100vw;
   height: 100vh;
   z-index: 500;
   display: flex;
