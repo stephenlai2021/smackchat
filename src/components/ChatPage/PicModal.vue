@@ -22,18 +22,16 @@
 import { onMounted } from "vue";
 
 export default {
-  props: ["message"],
+  props: ["picModal", "message"],
   setup(props, context) {
-    console.log("image url: ", props.message.text);
+    // console.log("image url: ", props.message.text);
 
     const closePicModal = () => {
-      // props.url = null;
       context.emit("close-picmodal");
     };
 
-    onMounted(() => {});
-
     return {
+      context,
       closePicModal,
     };
   },
@@ -49,13 +47,13 @@ export default {
   opacity: 0.7;
 }
 .image {
-  width: 100%;
+  min-width: 100%;
 }
 .pic-modal {
   position: fixed;
   left: 0;
   top: 0;
-  width: 100vw;
+  min-width: 100vw;
   height: 100vh;
   z-index: 500;
   display: flex;
