@@ -1,10 +1,6 @@
 <template>
   <q-page class="page-chat">
-    <page-header
-      @open-mapModal="showMapModal = true"
-      @open-videoModal="showVideoModal = true"
-      @notification="sendVideochatNotification"
-    />
+    <page-header />
 
     <chat-messages @user-message="openPicModal" />
 
@@ -13,91 +9,33 @@
       :message="userMessage"
       @close-picmodal="picModal = false"
     />
-    
-    <link-modal v-if="showLinkModal" />
-
-    <video-modal
-      v-if="showVideoModal"
-      @close-videoModal="showVideoModal = false"
-      @open-videoModal="showVideoModal = true"
-    />
-
-    <image-modal
-      :file="file"
-      v-if="file"
-      @close-imageModal="file = null"
-      @close-menuModal="showMenuModal = false"
-    />
-
-    <map-modal v-if="showMapModal" @close-mapModal="showMapModal = false" />
 
     <camera-modal
       v-if="showCameraModal"
-      @open-cameraModal="showCameraModal = true"
       @close-cameraModal="showCameraModal = false"
       @close-menuModal="showMenuModal = false"
     />
 
-    <div v-if="showMenuModal">
-      <transition-group
-        appear
-        enter-active-class="animated slideInUp"
-        leave-active-class="animated slideOutDown"
-      >
-        <div
-          style="height: 64px;"
-          class="menu-modal bg-dark q-pa-sm full-width q-py-md constraint"
-          
-          key="item1"
-        >
-          <div class="icons">
-            <label class="q-ml-sm q-mr-md text-white" style="cursor: pointer">
-              <input class="file-input" type="file" @change="handleChange" />
-              <q-icon size="sm" class="text-" name="eva-image-outline" />
-            </label>
-            <q-icon
-              round
-              size="sm"
-              class="q-mr-md text-"
-              style="cursor: pointer"
-              name="eva-camera-outline"
-              @click="showCameraModal = true"
-            />
-            <q-icon
-              round
-              size="sm"
-              class="q-mr-md text-"
-              style="cursor: pointer"
-              name="eva-link-outline"
-              @click="showLinkModal = true"
-            />
-            <q-icon
-              round
-              size="sm"
-              class="q-mr-md text-"
-              style="cursor: pointer"
-              name="eva-video-outline"
-              @click="showVideoModal = true"
-            />
-            <q-icon
-              round
-              size="sm"
-              class="q-mr-sm text-"
-              style="cursor: pointer"
-              name="eva-pin-outline"
-              @click="showMapModal = true"
-            />
-            <q-icon
-              round
-              size="sm"
-              class="q-mr-sm text- btn-close"
-              name="eva-close-outline"
-              @click="showMenuModal = false"
-            />
-          </div>
-        </div>
-      </transition-group>
-    </div>
+    <link-modal v-if="showLinkModal" @close-LinkModal="showLinkModal = false" />
+
+    <video-modal
+      v-if="showVideoModal"
+      @close-videoModal="showVideoModal = false"
+    />
+
+    <map-modal
+      v-if="showMapModal"      
+      @close-mapModal="showMapModal = false"
+    />
+
+    <menu-modal
+      v-if="showMenuModal"
+      @open-cameraModal="showCameraModal = true"
+      @open-videoModal="showVideoModal = true"
+      @open-linkModal="showLinkModal = true"
+      @open-mapModal="showMapModal = true"
+      @close-menuModal="showMenuModal = false"
+    />
 
     <q-footer
       style="z-index: 300; backdrop-filter: blur(20px)"
@@ -118,7 +56,7 @@
             ref="btnEmoji"
             class="text-"
             icon="eva-menu-outline"
-            @click="toggleMenuModal"
+            @click="showMenuModal = true"
           />
         </div>
 
@@ -128,7 +66,6 @@
           style="width: 80%; display: flex; align-items: center"
           :style="{ width: inputFocus ? '100%' : '80%' }"
         >
-            <!-- :label="t('message')" -->
           <q-input
             ref="input"
             v-model="newMessage"
@@ -161,7 +98,7 @@
                 round
                 size="sm"
                 ref="btnEmoji"
-                style="cursor: pointer;"
+                style="cursor: pointer"
                 class="q-mr- text-white"
                 name="eva-smiling-face-outline"
                 @click="showEmojiPicker"
@@ -198,8 +135,8 @@ export default {
   components: {
     "page-header": require("components/ChatPage/PageHeader.vue").default,
     "map-modal": require("components/ChatPage/MapModal.vue").default,
+    "menu-modal": require("components/ChatPage/MenuModal.vue").default,
     "video-modal": require("components/ChatPage/VideoChatModal.vue").default,
-    "image-modal": require("components/ChatPage/ImageModal.vue").default,
     "camera-modal": require("components/ChatPage/CameraModal.vue").default,
     "pic-modal": require("components/ChatPage/PicModal.vue").default,
     "link-modal": require("components/ChatPage/LinkModal.vue").default,
@@ -255,93 +192,6 @@ export default {
     const showEmojiPicker = () => {
       picker.value.togglePicker(btnEmoji.value);
     };
-
-    /***************/
-    /* Image Button */
-    /***************/
-    const file = ref(null);
-    const fileError = ref(null);
-
-    const types = ["image/png", "image/jpeg", "image/jpg"];
-
-    const handleChange = (e) => {
-      let selected = e.target.files[0];
-      console.log("You have selected: ", selected);
-
-      if (selected && types.includes(selected.type)) {
-        file.value = selected;
-        fileError.value = null;
-
-        store.methods.useStorage2(file.value, "smackchat");
-
-        store.state.progress = null;
-      } else {
-        file.value = null;
-        fileError.value = "Please select an image file (png or jpeg/jpg)";
-
-        $q.notify({
-          message: fileError.value,
-          color: "purple",
-          position: "bottom",
-          timeout: 2000,
-        });
-      }
-    };
-
-    /**************************/
-    /* Videochat Notification */
-    /**************************/
-    const closeReceivingNotification = () => {
-      receivingNotification.value = false;
-      showVideoModal.value = true;
-    };
-
-    const sendVideochatNotification = () => {
-      store.methods.sendVideochatNotification({
-        from: "me",
-        to: route.params.to,
-      });
-
-      sendingNotification.value = true;
-
-      store.methods.getVideochatNotification(
-        route.params.from,
-        route.params.to
-      );
-    };
-
-    /**************/
-    /* Menu Modal */
-    /**************/
-    const toggleMenuModal = () => {
-      showMenuModal.value = !showMenuModal.value;
-    };
-
-    // watch(
-    //   () => notification.value,
-    //   () => {
-    //     store.methods.getVideochatNotification(
-    //       route.params.from,
-    //       route.params.to
-    //     );
-    //   }
-    // );
-
-    // watch(() => receivingNotification.value, () => {
-    //   if (!receivingNotification.value) {
-
-    //   }
-    // })
-
-    watch(
-      () => [store.state.videochat],
-      (newVal, oldVal) => {
-        console.log("videochat | watch: ", newVal);
-        if (store.state.videochat) {
-          receivingNotification.value = true;
-        }
-      }
-    );
 
     /********************/
     /* Typing Indicator */
@@ -444,22 +294,18 @@ export default {
       router,
 
       to,
-      file,
       chats,
       input,
       desktop,
       picModal,
       btnEmoji,
       indicator,
-      fileError,
       inputFocus,
       notification,
       showLinkModal,
       userMessage,
       showMenuModal,
       showCameraModal,
-      sendingNotification,
-      receivingNotification,
 
       /* map */
       showMapModal,
@@ -472,14 +318,10 @@ export default {
       newMessage,
       sendMessage,
       showMessages,
-      handleChange,
       openPicModal,
-      toggleMenuModal,
       showEmojiPicker,
       sendTypingIndicator,
       formatDistanceToNow,
-      sendVideochatNotification,
-      closeReceivingNotification,
     };
   },
 };

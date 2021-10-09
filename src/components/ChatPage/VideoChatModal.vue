@@ -25,7 +25,6 @@
           icon="leak_add"
           @click="call"
         />
-          <!-- icon="eva-phone-outline" -->
       </div>
       <div class="local-video-container">
         <video class="local-video" ref="localVideo" autoplay />
@@ -54,16 +53,6 @@
             @click="pauseVideo"
           />
           <q-btn
-            v-if="remoteVideoShow && !btnHangup"
-            rounded
-            dense
-            color="pink-3"
-            style="cursor: pointer; z-index: 500"
-            icon="leak_remove"
-            @click="hangUp"
-          />
-            <!-- icon="eva-phone-off-outline" -->
-          <q-btn
             v-if="audioOn && cameraEnabled"
             dense
             round
@@ -82,6 +71,15 @@
             icon="eva-volume-off-outline"
             style="cursor: pointer; z-index: 500"
             @click="toggleAudio"
+          />
+          <q-btn
+            v-if="remoteVideoShow && !btnHangup"
+            rounded
+            dense
+            color="pink-3"
+            style="cursor: pointer; z-index: 500"
+            icon="leak_remove"
+            @click="hangUp"
           />
         </div>
       </div>

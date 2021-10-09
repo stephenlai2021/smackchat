@@ -60,6 +60,7 @@ export default {
   width: 100%;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(8px);
+  z-index: 600;
   // border: 1px solid green;
 }
 .progress-bar {

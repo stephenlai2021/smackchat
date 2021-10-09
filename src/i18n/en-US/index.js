@@ -26,4 +26,5 @@ export default {
   chat: "Chat",
   location: " is here",
   singleLocation: "Your location",
+  url: "Please enter URL",
 };
