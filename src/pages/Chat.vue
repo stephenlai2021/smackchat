@@ -7,71 +7,14 @@
     />
 
     <chat-messages @user-message="openPicModal" />
+
     <pic-modal
       v-if="picModal"
       :message="userMessage"
       @close-picmodal="picModal = false"
     />
-
-    <!-- <menu-modal v-if="showMenuModal" @close-menuModal="showMenuModal = false" /> -->
-    <div v-if="showMenuModal">
-      <transition-group
-        appear
-        enter-active-class="animated slideInUp"
-        leave-active-class="animated slideOutDown"
-      >
-        <div
-          class="menu-modal bg-dark q-pa-sm full-width q-py-md constraint"
-          key="item1"
-        >
-          <div class="icons">
-            <label class="q-ml-sm q-mr-md text-white" style="cursor: pointer">
-              <input class="file-input" type="file" @change="handleChange" />
-              <q-icon size="md" class="text-green" name="eva-image-outline" />
-            </label>
-            <q-icon
-              round
-              size="md"
-              class="q-mr-md text-blue"
-              style="cursor: pointer"
-              name="eva-camera-outline"
-              @click="showCameraModal = true"
-            />
-            <q-icon
-              round
-              size="md"
-              class="q-mr-sm text-pink-3"
-              style="cursor: pointer"
-              name="eva-link-outline"
-              @click="showLinkModal = true"
-            />
-            <q-icon
-              round
-              size="md"
-              class="q-mr-sm text-pink-3 btn-close"
-              name="eva-close-outline"
-              @click="showMenuModal = false"
-            />
-          </div>
-        </div>
-      </transition-group>
-    </div>
+    
     <link-modal v-if="showLinkModal" />
-
-    <!-- <sending-notification v-if="sendingNotification" @close-notification="sendingNotification = false, showVideoModal = true" />
-    <receiving-notification v-if="receivingNotification" @close-notification="receivingNotification = false, showVideoModal = true" /> -->
-
-    <sending-notification
-      v-if="sendingNotification"
-      @close-notification="
-        (sendingNotification = false), (showVideoModal = true)
-      "
-    />
-    <receiving-notification
-      v-if="receivingNotification"
-      @close-notification="closeReceivingNotification"
-    />
-    <!-- @close-notification="receivingNotification = false, showVideoModal = true" -->
 
     <video-modal
       v-if="showVideoModal"
@@ -95,7 +38,67 @@
       @close-menuModal="showMenuModal = false"
     />
 
-    <!-- <q-footer class="bg-transparent footer" style="backdrop-filter: blur(20px)"> -->
+    <div v-if="showMenuModal">
+      <transition-group
+        appear
+        enter-active-class="animated slideInUp"
+        leave-active-class="animated slideOutDown"
+      >
+        <div
+          style="height: 64px;"
+          class="menu-modal bg-dark q-pa-sm full-width q-py-md constraint"
+          
+          key="item1"
+        >
+          <div class="icons">
+            <label class="q-ml-sm q-mr-md text-white" style="cursor: pointer">
+              <input class="file-input" type="file" @change="handleChange" />
+              <q-icon size="sm" class="text-" name="eva-image-outline" />
+            </label>
+            <q-icon
+              round
+              size="sm"
+              class="q-mr-md text-"
+              style="cursor: pointer"
+              name="eva-camera-outline"
+              @click="showCameraModal = true"
+            />
+            <q-icon
+              round
+              size="sm"
+              class="q-mr-md text-"
+              style="cursor: pointer"
+              name="eva-link-outline"
+              @click="showLinkModal = true"
+            />
+            <q-icon
+              round
+              size="sm"
+              class="q-mr-md text-"
+              style="cursor: pointer"
+              name="eva-video-outline"
+              @click="showVideoModal = true"
+            />
+            <q-icon
+              round
+              size="sm"
+              class="q-mr-sm text-"
+              style="cursor: pointer"
+              name="eva-pin-outline"
+              @click="showMapModal = true"
+            />
+            <q-icon
+              round
+              size="sm"
+              class="q-mr-sm text- btn-close"
+              name="eva-close-outline"
+              @click="showMenuModal = false"
+            />
+          </div>
+        </div>
+      </transition-group>
+    </div>
+
     <q-footer
       style="z-index: 300; backdrop-filter: blur(20px)"
       class="q-py-xs bg-transparent"
@@ -106,7 +109,7 @@
           flat
           round
           class="flex row justify-evenly"
-          style="width: 10%; display: flex; align-items: center"
+          style="width: 15%; display: flex; align-items: center"
         >
           <q-btn
             round
@@ -122,9 +125,10 @@
         <div
           :class="inputFocus ? 'q-pl-md' : ''"
           class="q-pr-md q-py-sm"
-          style="width: 90%; display: flex; align-items: center"
-          :style="{ width: inputFocus ? '100%' : '90%' }"
+          style="width: 80%; display: flex; align-items: center"
+          :style="{ width: inputFocus ? '100%' : '80%' }"
         >
+            <!-- :label="t('message')" -->
           <q-input
             ref="input"
             v-model="newMessage"
@@ -132,7 +136,7 @@
             outlined
             rounded
             color="white"
-            :label="t('message')"
+            :placeholder="t('message')"
             dense
             focus="false"
             @keydown.enter="sendMessage"
@@ -155,20 +159,20 @@
             <template v-slot:append>
               <q-icon
                 round
-                size="md"
+                size="sm"
                 ref="btnEmoji"
-                style="color: #69f0ae"
+                style="cursor: pointer;"
                 class="q-mr- text-white"
                 name="eva-smiling-face-outline"
                 @click="showEmojiPicker"
               />
             </template>
           </q-input>
-          <div style="width: 10%">
+          <div style="width: 7%">
             <q-btn
               icon="eva-navigation-2-outline"
               size="md"
-              class="text-white q-ml-sm"
+              class="text-white q-mx-sm"
               dense
               flat
               :color="inputFocus ? 'white' : 'white'"
@@ -196,16 +200,11 @@ export default {
     "map-modal": require("components/ChatPage/MapModal.vue").default,
     "video-modal": require("components/ChatPage/VideoChatModal.vue").default,
     "image-modal": require("components/ChatPage/ImageModal.vue").default,
-    "menu-modal": require("components/ChatPage/MenuModal.vue").default,
     "camera-modal": require("components/ChatPage/CameraModal.vue").default,
     "pic-modal": require("components/ChatPage/PicModal.vue").default,
     "link-modal": require("components/ChatPage/LinkModal.vue").default,
     "chat-messages": require("components/ChatPage/CustomedChatMessages.vue")
       .default,
-    "sending-notification":
-      require("src/components/ChatPage/SendingNotification.vue").default,
-    "receiving-notification":
-      require("src/components/ChatPage/ReceivingNotification.vue").default,
   },
   setup() {
     const $q = useQuasar();
@@ -244,7 +243,7 @@ export default {
 
     picker.value = new EmojiButton({
       position: {
-        bottom: "56px",
+        bottom: "64px",
         left: "40%",
       },
     });

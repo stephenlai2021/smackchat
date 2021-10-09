@@ -22,9 +22,10 @@
             left: 50%;
             transform: translate(-50%, -50%);
           "
-          icon="eva-phone-outline"
+          icon="leak_add"
           @click="call"
         />
+          <!-- icon="eva-phone-outline" -->
       </div>
       <div class="local-video-container">
         <video class="local-video" ref="localVideo" autoplay />
@@ -58,9 +59,10 @@
             dense
             color="pink-3"
             style="cursor: pointer; z-index: 500"
-            icon="eva-phone-off-outline"
+            icon="leak_remove"
             @click="hangUp"
           />
+            <!-- icon="eva-phone-off-outline" -->
           <q-btn
             v-if="audioOn && cameraEnabled"
             dense
@@ -137,27 +139,35 @@ export default {
     };
 
     peer.on("call", (call) => {
-      $q.dialog({
-        title: "Confirm",
-        message: `Incoming call from <strong>${store.state.otherUser.name}</strong>`,
-        dark: true,
-        cancel: true,
-        persistent: true,
-        html: true,
-      })
-        .onOk(() => {
-          context.emit("open-videoModal");
+      // $q.dialog({
+      //   title: "Confirm",
+      //   message: `Incoming call from <strong>${store.state.otherUser.name}</strong>`,
+      //   dark: true,
+      //   cancel: true,
+      //   persistent: true,
+      //   html: true,
+      // })
+      //   .onOk(() => {
+      //     context.emit("open-videoModal");
 
-          call.answer(localStream.value);
+      //     call.answer(localStream.value);
 
-          call.on("stream", (remoteStream) => {
-            remoteVideo.value.srcObject = remoteStream;
-            remoteVideoShow.value = true;
-          });
-        })
-        .onCancel(() => {
-          console.log(">>>> Cancel");
-        });
+      //     call.on("stream", (remoteStream) => {
+      //       remoteVideo.value.srcObject = remoteStream;
+      //       remoteVideoShow.value = true;
+      //     });
+      //   })
+      //   .onCancel(() => {
+      //     console.log(">>>> Cancel");
+      //   });
+      context.emit("open-videoModal");
+
+      call.answer(localStream.value);
+
+      call.on("stream", (remoteStream) => {
+        remoteVideo.value.srcObject = remoteStream;
+        remoteVideoShow.value = true;
+      });
     });
 
     const hangUp = () => {
@@ -307,7 +317,7 @@ export default {
   height: 100vh;
   z-index: 600;
 }
-.remote-video-container,
+// .remote-video-container,
 .local-video-container {
   border: 1px solid pink;
 }
@@ -322,7 +332,7 @@ export default {
     position: relative;
     height: 50vh;
     width: 100vw;
-    border: 1px solid pink;
+    // border: 1px solid pink;
   }
   .local-video,
   .remote-video {

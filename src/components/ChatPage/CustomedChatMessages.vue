@@ -9,12 +9,9 @@
         :class="message.from == 'me' ? 'message current-user' : 'message'"
       >
         <div class="message-inner">
-          <div v-if="!message.image && !message.url" class="text-box">
-            <div v-if="!message.image && !message.url" class="content">
+          <div v-if="!message.image" class="text-box">
+            <div class="content">
               {{ message.text }}
-            </div>
-            <div v-if="!message.image && message.url" class="content">
-              <a :href="message.url">{{ message.url }}</a>
             </div>
             <span class="time-stamp">{{ message.createdAt }}</span>
           </div>
@@ -25,20 +22,6 @@
             :class="{ invisible: !imageLoaded }"
             style="position: relative"
           >
-            <!-- <q-icon
-              name="eva-expand-outline"
-              class="text-white"
-              size="20px"
-              style="position: absolute; top: -8px; left: 50%; transform: translateX(-50%);"
-              @click="getMessage(index, message)"
-            />
-            <q-icon
-              name="eva-close-outline"
-              class="text-white"
-              size="20px"
-              style="position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);"
-              @click="getMessage(index, message)"
-            /> -->
             <img
               ref="imageRef"
               class="user-image"
