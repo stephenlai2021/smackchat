@@ -22,6 +22,7 @@ import { timestamp } from "src/boot/firebase";
 
 export default {
   props: ["file"],
+  emits: ["close-imageModal", "close-menuModal"],
   setup(props, context) {
     const store = inject("store");
 

@@ -12,7 +12,7 @@
               v-show="!imageCaptured"
               ref="video"
               autoplay
-              style="width: 100%;"
+              style="width: 100%"
             />
             <q-btn
               v-if="videoLoaded"
@@ -68,7 +68,9 @@
               height="240"
             />
             <div v-if="imageCaptured" class="constraint text-center q-pa-md">
-              <div class="text-white">Uploading... {{ store.state.progress }}%</div>
+              <div class="text-white">
+                Uploading... {{ store.state.progress }}%
+              </div>
               <div
                 class="progress-bar"
                 :style="{ width: store.state.progress + '%' }"
@@ -96,12 +98,14 @@ import {
 
 export default {
   props: ["file"],
+  emits: ["open-cameraModal", "close-cameraModal", "close-menuModal"],
   setup(props, context) {
     const store = inject("store");
 
     const route = useRoute();
 
     const video = ref(null);
+    const fileNo = ref(0)
     const canvas = ref(null);
     const btnSwap = ref(true);
     const stream = ref(null);
@@ -171,9 +175,9 @@ export default {
           hideCameraBtn.value = false;
           imageCaptured.value = false;
 
-          context.emit('close-menuModal')
-
           closeCameraModal();
+          context.emit("close-menuModal");
+
         }
       }
     );
@@ -272,12 +276,18 @@ export default {
       imageCaptured.value = true;
       hideCameraBtn.value = true;
 
-      post.value.photo = dataURItoBlob(canvas.value.toDataURL());
+      // post.value.photo = dataURItoBlob(canvas.value.toDataURL());
+      post.value.photo = dataURItoFile(canvas.value.toDataURL(), `cameraPic${fileNo.value}.jpg`);
       console.log("photo info: ", post.value.photo);
+      fileNo.value ++
 
       store.methods.useStorage2(post.value.photo, "smackchat");
       store.state.progress = null;
     };
+
+    const dataURItoFile = (dataURI, filename) => {
+
+    }
 
     const dataURItoBlob = (dataURI) => {
       const byteString = atob(dataURI.split(",")[1]);

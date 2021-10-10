@@ -3,11 +3,12 @@
     <q-header class="" reveal style="border-bottom: 1px solid #eeeeee">
       <q-toolbar class="constraint">
         <q-avatar>
+                <!-- ? 'https://www.clipartmax.com/png/full/98-984206_profile-photo-facebook-profile-picture-icon.png' -->
           <img
             style="width: 30px; height: 30px"
             :src="
               !store.state.userDetails.avatar
-                ? 'https://www.clipartmax.com/png/full/98-984206_profile-photo-facebook-profile-picture-icon.png'
+                ? '/avatar.png'
                 : store.state.userDetails.avatar
             "
             alt="user avatar"
