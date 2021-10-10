@@ -7,7 +7,7 @@ const routes = [
     children: [
       {
         path: "/",
-        component: () => import("src/pages/Post.vue"),
+        component: () => import("src/pages/post.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -22,7 +22,7 @@ const routes = [
       },
       {
         path: "/users",
-        component: () => import("src/pages/Users.vue"),
+        component: () => import("src/pages/users.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -37,7 +37,7 @@ const routes = [
       },
       {
         path: "/finduser",
-        component: () => import("src/pages/FindUser.vue"),
+        component: () => import("src/pages/findUser.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -52,7 +52,7 @@ const routes = [
       },
       {
         path: "/addpost",
-        component: () => import("src/pages/AddPost.vue"),
+        component: () => import("src/pages/addPost.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -67,7 +67,7 @@ const routes = [
       },
       {
         path: "/auth",
-        component: () => import("src/pages/Auth.vue"),
+        component: () => import("src/pages/auth.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -76,30 +76,14 @@ const routes = [
             } else {
               console.log("user logged out | route guard");
               next();
-            }
-          });
-        },
-      },
-      { path: "/map", component: () => import("src/pages/Map.vue") },
-      {
-        path: "/chat/:from/:to",
-        name: "chat",
-        component: () => import("src/pages/Chat.vue"),
-        beforeEnter: (to, from, next) => {
-          auth.onAuthStateChanged((user) => {
-            if (user) {
-              console.log("user is logged in | route guard");
-              next();
-            } else {
-              console.log("user logged out | route guard");
-              next("/auth");
             }
           });
         },
       },
       {
-        path: "/camera",
-        component: () => import("src/pages/Camera.vue"),
+        path: "/chat/:from/:to",
+        name: "chat",
+        component: () => import("src/pages/chat.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -119,7 +103,7 @@ const routes = [
   // but you can also remove it
   {
     path: "/:catchAll(.*)*",
-    component: () => import("pages/Error404.vue"),
+    component: () => import("pages/error404.vue"),
   },
 ];
 

@@ -4,7 +4,7 @@
       enter-active-class="animated slideInUp"
       leave-active-class="animated slideOutDown"
     >
-      <div class="image-modal constraint text-center q-pa-md">
+      <div class="image-modal bg-dark constraint text-center q-pa-md">
         <div class="text-white">{{ file.name }}</div>
         <div class="text-white">Uploading... {{ store.state.progress }}%</div>
         <div
@@ -55,14 +55,15 @@ export default {
 <style lang="scss" scoped>
 .image-modal {
   position: fixed;
-  bottom: 64px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(8px);
+  // background: rgba(0, 0, 0, 0.8);
+  // backdrop-filter: blur(8px);
   z-index: 600;
-  // border: 1px solid green;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .progress-bar {
   display: block;

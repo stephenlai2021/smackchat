@@ -4,8 +4,14 @@
     enter-active-class="animated zoomIn"
     leave-active-class="animated zoomOut"
   >
-    <div class="camera-modal" key="item1">
+    <div class="camera-modal bg-dark" key="item1">
       <div class="constraint" style="height: 100vh">
+        <div
+          v-if="!videoLoaded"
+          class="icon-camera row justify-center items-center full-height"         
+        >
+          <q-icon name="eva-camera-outline" size="50px" color="green-3" />
+        </div>
         <div class="full-width camera-panel">
           <div style="width: 100%; position: relative">
             <video
@@ -39,17 +45,6 @@
               "
               @click="captureImage"
             />
-            <!-- <q-btn
-              v-if="videoLoaded"
-              :disable="hideCameraBtn"
-              class="text-warning"
-              icon="eva-bulb-outline"
-              size="md"
-              flat
-              round
-              style="position: absolute; bottom: 30px; left: 20px"
-              @click="flashLight = !flashLight"
-            /> -->
             <q-btn
               v-if="videoLoaded && btnSwap"
               :disable="hideCameraBtn"
@@ -105,7 +100,7 @@ export default {
     const route = useRoute();
 
     const video = ref(null);
-    const fileNo = ref(0)
+    const fileNo = ref(0);
     const canvas = ref(null);
     const btnSwap = ref(true);
     const stream = ref(null);
@@ -177,7 +172,6 @@ export default {
 
           closeCameraModal();
           context.emit("close-menuModal");
-
         }
       }
     );
@@ -277,17 +271,18 @@ export default {
       hideCameraBtn.value = true;
 
       // post.value.photo = dataURItoBlob(canvas.value.toDataURL());
-      post.value.photo = dataURItoFile(canvas.value.toDataURL(), `cameraPic${fileNo.value}.jpg`);
+      post.value.photo = dataURItoFile(
+        canvas.value.toDataURL(),
+        `${uid()}.jpg`
+      );
       console.log("photo info: ", post.value.photo);
-      fileNo.value ++
+      fileNo.value++;
 
       store.methods.useStorage2(post.value.photo, "smackchat");
       store.state.progress = null;
     };
 
-    const dataURItoFile = (dataURI, filename) => {
-
-    }
+    const dataURItoFile = (dataURI, filename) => {};
 
     const dataURItoBlob = (dataURI) => {
       const byteString = atob(dataURI.split(",")[1]);
@@ -363,8 +358,7 @@ export default {
   width: 100%;
   height: 100vh;
   z-index: 600;
-  // background: black;
-  background: rgba(0, 0, 0, 0.9);
-  backdrop-filter: blur(8px);
+  // background: rgba(0, 0, 0, 0.9);
+  // backdrop-filter: blur(8px);
 }
 </style>

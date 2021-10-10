@@ -16,7 +16,7 @@
       @close-menuModal="showMenuModal = false"
     />
 
-    <link-modal v-if="showLinkModal" @close-LinkModal="showLinkModal = false" />
+    <link-modal v-if="showLinkModal" @close-LinkModal="showLinkModal = false, showMenuModal = false" />
 
     <video-modal
       v-if="showVideoModal"
@@ -37,9 +37,13 @@
       @close-menuModal="showMenuModal = false"
     />
 
-    <q-footer
+    <!-- <q-footer
       style="z-index: 300; backdrop-filter: blur(20px)"
       class="q-py-xs bg-transparent"
+    > -->
+    <q-footer
+      style="z-index: 300;"
+      class="q-py-xs bg-dark"
     >
       <q-form class="flex constraint" :class="{ 'q-mx-sm': inputFocus }">
         <div
@@ -72,7 +76,9 @@
             class="q-mr-md full-width bg-transparent text-white"
             outlined
             rounded
+            standout
             color="white"
+            bg-color="pink-2"
             :placeholder="t('message')"
             dense
             focus="false"

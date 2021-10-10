@@ -15,6 +15,7 @@
           <q-icon size="sm" class="text-" name="eva-image-outline" key="item5" />
         </label>
         <q-icon
+          v-if="store.state.desktop"
           round
           size="sm"
           key="item7"
