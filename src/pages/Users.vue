@@ -164,7 +164,7 @@
       "
       @click="router.push('/finduser')"
     /> -->
-    <q-footer style="z-index: 500" reveal class="bg-transparent">
+    <q-footer style="z-index: 500" reveal class="bg-dark">
       <div class="constraint">
         <q-tabs
           v-model="store.state.tab"

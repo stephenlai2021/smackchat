@@ -9,15 +9,22 @@
         :class="message.from == 'me' ? 'message current-user' : 'message'"
       >
         <div class="message-inner">
-          <div v-if="!message.image" class="text-box">
-            <div class="content">
+          <div v-if="!message.url && !message.image" class="text-box">
+            <div class="content text-dark">
               {{ message.text }}
             </div>
             <span class="time-stamp">{{ message.createdAt }}</span>
           </div>
 
+          <div v-if="message.url && !message.image" class="content">
+            <a :href="message.text" target="_blank" class="block text-dark">
+              {{ message.text }}
+            </a>
+          </div>
+          <span v-if="message.url" class="time-stamp">{{ message.createdAt }}</span>
+
           <div
-            v-if="message.image"
+            v-if="message.image && !message.url"
             class="img-box"
             :class="{ invisible: !imageLoaded }"
             style="position: relative"
@@ -92,15 +99,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.text-box,
 .img-box {
   margin: 0;
   padding: 0;
   line-height: 0.9;
   box-sizing: border-box;
 }
+.video-box {
+  width: 50%;
+}
 .time-stamp {
-  // text-align: center;
+  text-align: center;
   font-size: 12px;
   // border: 1px solid;
   // margin-top: 0;
@@ -115,29 +124,37 @@ export default {
 
     .message-inner {
       max-width: 50%;
+      text-align: center;
       .content {
-        padding: 10px 20px;
-        background-color: #f3f3f3;
-        border-radius: 10px;
+        padding: 10px;
+        background-color: #ffe0b2;
+        // background-color: #f3f3f3;
+        border-radius: 15px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 15px;
+        // overflow: scroll;
+        height: auto;
 
         color: #333;
         word-wrap: break-word;
-        text-align: center;
+        // overflow-wrap: break-word;
       }
     }
 
     &.current-user {
       margin-top: 30px;
       justify-content: flex-end;
-      text-align: right;
 
       .message-inner {
         max-width: 50%;
+        text-align: center;
         .content {
           color: #fff;
           word-wrap: break-word;
-          background-color: #ea526f;
-          text-align: center;
+          // background-color: #ea526f;
+          background-color: #c8e6c9;
+          border-bottom-left-radius: 15px;
+          border-bottom-right-radius: 0px;
         }
       }
     }

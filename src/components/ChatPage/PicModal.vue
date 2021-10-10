@@ -22,7 +22,8 @@
 import { ref, onMounted, watch } from "vue";
 
 export default {
-  props: ["picModal", "message"],
+  props: ["message"],
+  emits: ['close-picmodal'],
   setup(props, context) {
     // console.log("image url: ", props.message.text);
     const image = ref(null)
@@ -93,7 +94,7 @@ export default {
   top: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 500;
+  z-index: 600;
   display: flex;
   justify-content: center;
   align-items: center;

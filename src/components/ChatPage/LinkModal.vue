@@ -1,8 +1,8 @@
 <template>
   <transition-group
     appear
-    enter-active-class="animated slideInUp"
-    leave-active-class="animated slideOutDown"
+    enter-active-class="animated fadeIn"
+    leave-active-class="animated fadeOut"
   >
     <div
       class="
@@ -23,10 +23,12 @@
         borderless
         standout
         color="grey"
-        bg-color="pink-2"
-        :placeholder="t('url')"
+        bg-color="lime-1"
+        label-color="dark"
+        :label="t('url')"
         style="width: 80%"
         class="q-ml- bg- text-dark"
+        v-model="url"
       >
         <template v-slot:append>
           <q-icon
@@ -34,7 +36,7 @@
             size="sm"
             ref="btnEmoji"
             style="cursor: pointer"
-            class="q-mr- text-white"
+            class="q-mr- text-dark"
             name="eva-navigation-2-outline"
             @click="sendURL"
           />
@@ -57,22 +59,45 @@
 
 <script>
 import { useI18n } from "vue-i18n";
+import { ref, inject } from 'vue'
+import { useRoute } from 'vue-router'
+import { timestamp } from "src/boot/firebase";
 
 export default {
-  emits: ['close-linkModal'],
-  setup(props, context) {
+  emits: ["close-linkModal"],
+  setup(props, { emit }) {
     const { t, locale } = useI18n();
 
+    const store = inject('store')
+
+    const route = useRoute()
+
+    const url = ref(null)
+
     const closeLinkModal = () => {
-      context.emit("close-linkModal");
+      emit("close-linkModal");
     };
 
     const sendURL = () => {
-      console.log('send url to firestore')
-    }
+      if (url.value === "") return;
+
+      store.methods.sendMessage({
+        from: "me",
+        text: url.value,
+        url: true,
+        image: false,
+        to: route.params.to,
+        createdAt: timestamp(),
+      });
+
+      url.value = "";
+
+      emit('close-linkModal')
+    };
 
     return {
       t,
+      url,
       locale,
       sendURL,
       closeLinkModal,

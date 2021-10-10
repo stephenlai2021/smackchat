@@ -270,11 +270,11 @@ export default {
       imageCaptured.value = true;
       hideCameraBtn.value = true;
 
-      // post.value.photo = dataURItoBlob(canvas.value.toDataURL());
-      post.value.photo = dataURItoFile(
-        canvas.value.toDataURL(),
-        `${uid()}.jpg`
-      );
+      post.value.photo = dataURItoBlob(canvas.value.toDataURL());
+      // post.value.photo = dataURItoFile(
+      //   canvas.value.toDataURL(),
+      //   `${uid()}.jpg`
+      // );
       console.log("photo info: ", post.value.photo);
       fileNo.value++;
 

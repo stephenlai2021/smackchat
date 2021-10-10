@@ -2,7 +2,7 @@
   <q-page class="page-chat">
     <page-header />
 
-    <chat-messages @user-message="openPicModal" />
+    <chat-messages @click="showMenuModal = false" @user-message="openPicModal" />
 
     <pic-modal
       v-if="picModal"
@@ -16,7 +16,7 @@
       @close-menuModal="showMenuModal = false"
     />
 
-    <link-modal v-if="showLinkModal" @close-LinkModal="showLinkModal = false, showMenuModal = false" />
+    <link-modal v-if="showLinkModal" @close-LinkModal="showLinkModal = false" />
 
     <video-modal
       v-if="showVideoModal"
@@ -33,6 +33,7 @@
       @open-cameraModal="showCameraModal = true"
       @open-videoModal="showVideoModal = true"
       @open-linkModal="showLinkModal = true"
+      @open-videoLinkModal="showVideoLinkModal = true"
       @open-mapModal="showMapModal = true"
       @close-menuModal="showMenuModal = false"
     />
@@ -42,7 +43,7 @@
       class="q-py-xs bg-transparent"
     > -->
     <q-footer
-      style="z-index: 300;"
+      style="z-index: 300; border-top-left-radius: 10px; border-top-right-radius: 10px;"
       class="q-py-xs bg-dark"
     >
       <q-form class="flex constraint" :class="{ 'q-mx-sm': inputFocus }">
@@ -73,13 +74,14 @@
           <q-input
             ref="input"
             v-model="newMessage"
-            class="q-mr-md full-width bg-transparent text-white"
+            class="q-mr-md full-width text-dark"
             outlined
             rounded
             standout
-            color="white"
-            bg-color="pink-2"
-            :placeholder="t('message')"
+            color="dark"
+            bg-color="lime-1"
+            label-color="dark"
+            :label="t('message')"
             dense
             focus="false"
             @keydown.enter="sendMessage"
@@ -93,7 +95,7 @@
               <q-btn
                 icon="navigate_next"
                 size="md"
-                class="text-white"
+                class="text-dark"
                 dense
                 flat
                 @click="inputFocus = false"
@@ -105,7 +107,7 @@
                 size="sm"
                 ref="btnEmoji"
                 style="cursor: pointer"
-                class="q-mr- text-white"
+                class="q-mr- text-dark"
                 name="eva-smiling-face-outline"
                 @click="showEmojiPicker"
               />
@@ -145,7 +147,7 @@ export default {
     "video-modal": require("components/ChatPage/VideoChatModal.vue").default,
     "camera-modal": require("components/ChatPage/CameraModal.vue").default,
     "pic-modal": require("components/ChatPage/PicModal.vue").default,
-    "link-modal": require("components/ChatPage/LinkModal.vue").default,
+    "link-modal": require("src/components/ChatPage/LinkModal.vue").default,
     "chat-messages": require("components/ChatPage/CustomedChatMessages.vue")
       .default,
   },
@@ -175,8 +177,6 @@ export default {
     const showVideoModal = ref(false);
     const showCameraModal = ref(false);
     const notification = ref(false);
-    const sendingNotification = ref(false);
-    const receivingNotification = ref(false);
 
     /****************/
     /* Emoji Button */
@@ -245,8 +245,9 @@ export default {
       if (newMessage.value === "") return;
 
       store.methods.sendMessage({
-        text: newMessage.value,
         from: "me",
+        text: newMessage.value,
+        url: false,
         image: false,
         to: route.params.to,
         createdAt: timestamp(),

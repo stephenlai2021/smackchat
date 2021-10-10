@@ -32,10 +32,11 @@ export default {
       () => store.state.url,
       (newVal, oldVal) => {
         store.methods.sendMessage({
-          text: store.state.url,
           from: "me",
-          to: route.params.to,
+          text: store.state.url,
+          url: false,
           image: true,
+          to: route.params.to,
           createdAt: timestamp(),
         });
         if (store.state.uploadCompleted) {

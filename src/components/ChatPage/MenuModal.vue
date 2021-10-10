@@ -10,9 +10,23 @@
       key="item1"
     >
       <div class="icons full-width" key="item2">
-        <label class="q-ml-sm q-mr-md text-white" style="cursor: pointer" key="item3">
-          <input class="file-input" type="file" @change="handleChange" key="item4" />
-          <q-icon size="sm" class="text-" name="eva-image-outline" key="item5" />
+        <label
+          class="q-ml-sm q-mr-md text-white"
+          style="cursor: pointer"
+          key="item3"
+        >
+          <input
+            class="file-input"
+            type="file"
+            @change="handleChange"
+            key="item4"
+          />
+          <q-icon
+            size="sm"
+            class="text-"
+            name="eva-image-outline"
+            key="item5"
+          />
         </label>
         <q-icon
           v-if="store.state.desktop"
@@ -27,20 +41,20 @@
         <q-icon
           round
           size="sm"
-          key="item8"
-          class="q-mr-md text-white"
-          style="cursor: pointer"
-          name="eva-video-outline"
-          @click="showVideoModal"
-        />
-        <q-icon
-          round
-          size="sm"
           key="item9"
           class="q-mr-md text-white"
           style="cursor: pointer"
           name="eva-link-outline"
           @click="showLinkModal"
+        />
+        <q-icon
+          round
+          size="sm"
+          key="item8"
+          class="q-mr-md text-white"
+          style="cursor: pointer"
+          name="eva-video-outline"
+          @click="showVideoModal"
         />
         <q-icon
           round
@@ -138,11 +152,11 @@ export default {
       file,
       store,
       handleChange,
-      showCameraModal,
+      showMapModal,
       showLinkModal,
       showVideoModal,
-      showMapModal,
       closeMenuModal,
+      showCameraModal,
     };
   },
 };
@@ -167,5 +181,7 @@ export default {
   bottom: 0;
   z-index: 500;
   display: flex;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 </style>
