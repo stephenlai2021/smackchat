@@ -3,11 +3,11 @@ import { auth } from 'src/boot/firebase'
 const routes = [
   {
     path: "/",
-    component: () => import("layouts/MainLayout.vue"),
+    component: () => import("layouts/MainLayout"),
     children: [
       {
         path: "/",
-        component: () => import("pages/post.vue"),
+        component: () => import("pages/post"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -22,7 +22,7 @@ const routes = [
       },
       {
         path: "/users",
-        component: () => import("pages/users.vue"),
+        component: () => import("pages/users"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -37,7 +37,7 @@ const routes = [
       },
       {
         path: "/finduser",
-        component: () => import("pages/findUser.vue"),
+        component: () => import("pages/findUser"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -52,7 +52,7 @@ const routes = [
       },
       {
         path: "/addpost",
-        component: () => import("pages/addPost.vue"),
+        component: () => import("pages/addPost"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -67,7 +67,7 @@ const routes = [
       },
       {
         path: "/auth",
-        component: () => import("pages/auth.vue"),
+        component: () => import("pages/auth"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -83,7 +83,7 @@ const routes = [
       {
         path: "/chat/:from/:to",
         name: "chat",
-        component: () => import("pages/chat.vue"),
+        component: () => import("pages/chat"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -103,7 +103,7 @@ const routes = [
   // but you can also remove it
   {
     path: "/:catchAll(.*)*",
-    component: () => import("pages/error404.vue"),
+    component: () => import("pages/error404"),
   },
 ];
 
