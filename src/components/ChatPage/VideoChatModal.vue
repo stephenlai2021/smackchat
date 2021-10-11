@@ -9,6 +9,15 @@
           autoplay
         />
         <q-btn
+          v-if="remoteVideoShow && !btnHangup"
+          rounded
+          dense
+          class="btn-hangup"
+          color="pink-3"
+          icon="leak_remove"
+          @click="hangUp"
+        />
+        <q-btn
           v-if="!remoteVideoShow"
           rounded
           dense
@@ -80,14 +89,6 @@
               icon="eva-volume-off-outline"
               style="opacity: 0.7; cursor: pointer; z-index: 500"
               @click="toggleAudio"
-            />
-            <q-btn
-              v-if="remoteVideoShow && !btnHangup"
-              rounded
-              dense
-              color="pink-3"
-              icon="leak_remove"
-              @click="hangUp"
             />
           </div>
         </div>
@@ -321,6 +322,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn-hangup {
+  cursor: pointer;
+  z-index: 500;
+  position: absolute;
+  left: 30px;
+  bottom: 30px;
+  opacity: 0.7;
+}
 .btn-close {
   cursor: pointer;
   z-index: 500;
