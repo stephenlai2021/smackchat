@@ -1,13 +1,13 @@
-import { auth } from 'src/boot/firebase'
+import { auth } from 'src/boot/fireba.vuese'
 
 const routes = [
   {
     path: "/",
-    component: () => import("layouts/MainLayout"),
+    component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "/",
-        component: () => import("pages/post"),
+        component: () => import("pages/post.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -22,7 +22,7 @@ const routes = [
       },
       {
         path: "/users",
-        component: () => import("pages/users"),
+        component: () => import("pages/users.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -37,7 +37,7 @@ const routes = [
       },
       {
         path: "/finduser",
-        component: () => import("pages/findUser"),
+        component: () => import("pages/findUser.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -52,7 +52,7 @@ const routes = [
       },
       {
         path: "/addpost",
-        component: () => import("pages/addPost"),
+        component: () => import("pages/addPost.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -67,7 +67,7 @@ const routes = [
       },
       {
         path: "/auth",
-        component: () => import("pages/auth"),
+        component: () => import("pages/auth.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -83,7 +83,7 @@ const routes = [
       {
         path: "/chat/:from/:to",
         name: "chat",
-        component: () => import("pages/chat"),
+        component: () => import("pages/chat.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -103,7 +103,7 @@ const routes = [
   // but you can also remove it
   {
     path: "/:catchAll(.*)*",
-    component: () => import("pages/error404"),
+    component: () => import("pages/error404.vue"),
   },
 ];
 
