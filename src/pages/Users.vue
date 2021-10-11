@@ -164,20 +164,20 @@
       "
       @click="router.push('/finduser')"
     /> -->
-    <q-footer style="z-index: 500" reveal class="bg-dark">
-      <div class="constraint">
+    <q-footer style="border: 2px solid white;" reveal class="footer bg-transparent constraint">
+      <div>
         <q-tabs
           v-model="store.state.tab"
           inline-label
           no-caps
-          class="flex row justify-evenly full-width"
+          class="flex row justify-evenly"
         >
           <q-tab
             name="home"
             :label="t('posts')"
             class="text-"
             icon="eva-home-outline"
-            style="width: 40%"
+            style="width: 50%"
             @click="router.push('/')"
           />
           <q-tab
@@ -185,7 +185,7 @@
             class="text-"
             :label="t('chat')"
             icon="eva-message-circle-outline"
-            style="width: 40%"
+            style="width: 50%"
             @click="router.push('/users')"
           />
           <!-- <q-btn
@@ -307,6 +307,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.footer {
+  z-index: 500;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
 .spinner {
   position: fixed;
   left: 0;

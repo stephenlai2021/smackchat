@@ -40,7 +40,7 @@
       @closeMenuModal="showMenuModal = false"
     />
 
-    <q-footer class="footer q-py-xs bg-transparent constraint">
+    <q-footer class="footer q-py-xs bg-transparent constraint" style="border: 2px solid white;">
       <q-form class="flex constraint full-width">
         <div
           v-if="!inputFocus"

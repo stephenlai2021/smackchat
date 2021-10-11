@@ -1,7 +1,7 @@
 <template>
-  <q-page class="constraint">
-    <q-header reveal class="bg-transparent">
-      <q-toolbar class="constraint">
+  <q-page class="post-page">
+    <q-header class="constraint bg-transparent">
+      <q-toolbar>
         <q-avatar>
           <img
             style="width: 30px; height: 30px"
@@ -49,26 +49,26 @@
       ducimus soluta modi, nemo tenetur nostrum vitae. Debitis est vero
       asperiores architecto. Consequuntur consectetur similique quod?
     </div>
-    <q-footer class="bg-transparent">
-      <div class="constraint">
+    <q-footer class="footer bg-transparent constraint" style="border: 2px solid white;">
+      <div>
         <q-tabs
           v-model="store.state.tab"
           no-caps
           inline-label
-          class="flex row justify-evenly full-width"
+          class="row justify-evenly"
         >
           <q-tab
             name="home"
             :label="t('posts')"
             icon="eva-home-outline"
-            style="width: 40%"
+            style="width: 50%"
             @click="router.push('/')"
           />
           <q-tab
             name="chat"
             :label="t('chat')"
             icon="eva-message-circle-outline"
-            style="width: 40%"
+            style="width: 50%"
             @click="router.push('/users')"
           />
           <!-- <q-btn
@@ -136,4 +136,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.footer {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+</style>
