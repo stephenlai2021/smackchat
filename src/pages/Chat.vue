@@ -2,7 +2,10 @@
   <q-page class="page-chat">
     <page-header />
 
-    <chat-messages @click="showMenuModal = false" @user-message="openPicModal" />
+    <chat-messages
+      @click="showMenuModal = false, showLinkModal ? showLinkModal = false : null"
+      @user-message="openPicModal"
+    />
 
     <pic-modal
       v-if="picModal"
@@ -18,34 +21,30 @@
 
     <link-modal v-if="showLinkModal" @close-LinkModal="showLinkModal = false" />
 
-    <video-modal
+    <videochat-modal
       v-if="showVideoModal"
       @close-videoModal="showVideoModal = false"
     />
 
-    <map-modal
-      v-if="showMapModal"      
-      @close-mapModal="showMapModal = false"
-    />
-
+    <map-modal v-if="showMapModal" @close-mapModal="showMapModal = false" />
+    
     <menu-modal
       v-if="showMenuModal"
-      @open-cameraModal="showCameraModal = true"
-      @open-videoModal="showVideoModal = true"
-      @open-linkModal="showLinkModal = true"
-      @open-videoLinkModal="showVideoLinkModal = true"
-      @open-mapModal="showMapModal = true"
-      @close-menuModal="showMenuModal = false"
+      @openCameraModal="showCameraModal = true"
+      @openVideoModal="showVideoModal = true"
+      @openLinkModal="showLinkModal = true"
+      @openMapModal="showMapModal = true"
+      @closeMenuModal="showMenuModal = false"
     />
 
-    <!-- <q-footer
+    <q-footer
       style="z-index: 300; backdrop-filter: blur(20px)"
       class="q-py-xs bg-transparent"
-    > -->
-    <q-footer
+    >
+      <!-- <q-footer
       style="z-index: 300; border-top-left-radius: 10px; border-top-right-radius: 10px;"
       class="q-py-xs bg-dark"
-    >
+    > -->
       <q-form class="flex constraint" :class="{ 'q-mx-sm': inputFocus }">
         <div
           v-if="!inputFocus"
@@ -74,9 +73,7 @@
           <q-input
             ref="input"
             v-model="newMessage"
-            class="q-mr-md full-width text-dark"
-            outlined
-            rounded
+            class="q-mr-md full-width text-dark"           
             standout
             color="dark"
             bg-color="lime-1"
@@ -139,17 +136,26 @@ import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted, inject, watch, watchEffect } from "vue";
 import { EmojiButton } from "@joeattardi/emoji-button";
 
+// Import components
+import PageHeader from "../components/ChatPage/PageHeader.vue";
+import MapModal from "../components/ChatPage/MapModal.vue";
+import MenuModal from "../components/ChatPage/MenuModal.vue";
+import VideochatModal from "../components/ChatPage/VideoChatModal.vue";
+import CameraModal from "../components/ChatPage/CameraModal.vue";
+import PicModal from "../components/ChatPage/PicModal.vue";
+import LinkModal from "../components/ChatPage/LinkModal.vue";
+import ChatMessages from "../components/ChatPage/ChatMessages.vue";
+
 export default {
   components: {
-    "page-header": require("components/ChatPage/PageHeader.vue").default,
-    "map-modal": require("components/ChatPage/MapModal.vue").default,
-    "menu-modal": require("components/ChatPage/MenuModal.vue").default,
-    "video-modal": require("components/ChatPage/VideoChatModal.vue").default,
-    "camera-modal": require("components/ChatPage/CameraModal.vue").default,
-    "pic-modal": require("components/ChatPage/PicModal.vue").default,
-    "link-modal": require("src/components/ChatPage/LinkModal.vue").default,
-    "chat-messages": require("components/ChatPage/CustomedChatMessages.vue")
-      .default,
+    PageHeader,
+    MapModal,
+    MenuModal,
+    VideochatModal,
+    CameraModal,
+    PicModal,
+    LinkModal,
+    ChatMessages,
   },
   setup() {
     const $q = useQuasar();

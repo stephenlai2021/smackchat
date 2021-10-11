@@ -1,11 +1,20 @@
 <template>
-  <transition-group
+  <!-- <transition-group
     appear
     enter-active-class="animated slideInUp"
     leave-active-class="animated slideOutDown"
+  > -->
+  <transition-group
+    appear
+    @before-enter="beforeEnter"
+    @enter="enter"
+    @after-enter="afterEnter"
+    @before-leave="beforeLeave"
+    @leave="leave"
+    @after-leave="afterLeave"
   >
     <div
-      style="height: 64px"
+      style="height: 64px;"
       class="menu-modal bg-dark q-pa-sm full-width q-py-md constraint"
       key="item1"
     >
@@ -88,17 +97,18 @@
 
 <script>
 import { ref, inject } from "vue";
+import ImageModal from './ImageModal.vue'
 
 export default {
   components: {
-    "image-modal": require("components/ChatPage/ImageModal.vue").default,
+    ImageModal,
   },
   emits: [
-    "open-cameraModal",
-    "open-linkModal",
-    "open-videoModal",
-    "open-mapModal",
-    "close-menuModal",
+    "openCameraModal",
+    "openLinkModal",
+    "openVideoModal",
+    "openMapModal",
+    "closeMenuModal",
   ],
   setup(props, { emit }) {
     const store = inject("store");
@@ -107,6 +117,13 @@ export default {
     const fileError = ref(null);
 
     const types = ["image/png", "image/jpeg", "image/jpg"];
+
+    const beforeEnter = (el) => {}
+    const enter = (el) => {}
+    const afterEnter = (el) => {}
+    const beforeLeave = (el) => {}
+    const leave = (el) => {}
+    const afterLeave = (el) => {}
 
     const handleChange = (e) => {
       let selected = e.target.files[0];
@@ -133,19 +150,19 @@ export default {
     };
 
     const showCameraModal = () => {
-      emit("open-cameraModal");
+      emit("openCameraModal");
     };
     const showLinkModal = () => {
-      emit("open-linkModal");
+      emit("openLinkModal");
     };
     const showVideoModal = () => {
-      emit("open-videoModal");
+      emit("openVideoModal");
     };
     const showMapModal = () => {
-      emit("open-mapModal");
+      emit("openMapModal");
     };
     const closeMenuModal = () => {
-      emit("close-menuModal");
+      emit("closeMenuModal");
     };
 
     return {
@@ -157,6 +174,12 @@ export default {
       showVideoModal,
       closeMenuModal,
       showCameraModal,
+      beforeEnter,
+      enter,
+      afterEnter,
+      beforeLeave,
+      leave,
+      afterLeave,
     };
   },
 };

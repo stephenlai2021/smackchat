@@ -10,12 +10,10 @@ import Chat from 'pages/Chat';
 const routes = [
   {
     path: "/",
-    // component: () => import("src/layouts/MainLayout.vue"),
     component: MainLayout,
     children: [
       {
         path: "/",
-        // component: () => import("src/pages/Post.vue"),
         component: Posts,
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
@@ -31,7 +29,6 @@ const routes = [
       },
       {
         path: "/users",
-        // component: () => import("src/pages/Users.vue"),
         component: Users,
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
@@ -47,7 +44,6 @@ const routes = [
       },
       {
         path: "/finduser",
-        // component: () => import("src/pages/FindUser.vue"),
         component: FindUser,
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
@@ -63,7 +59,6 @@ const routes = [
       },
       {
         path: "/addpost",
-        // component: () => import("src/pages/AddPost.vue"),
         component: AddPost,
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
@@ -79,7 +74,6 @@ const routes = [
       },
       {
         path: "/auth",
-        // component: () => import("src/pages/Auth.vue"),
         component: Auth,
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
@@ -95,8 +89,6 @@ const routes = [
       },
       {
         path: "/chat/:from/:to",
-        name: "chat",
-        // component: () => import("src/pages/Chat.vue"),
         component: Chat,
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
