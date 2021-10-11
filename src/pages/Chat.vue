@@ -40,82 +40,7 @@
       @closeMenuModal="showMenuModal = false"
     />
 
-    <q-footer class="footer bg-transparent q-py-xs row justify-center">
-      <q-form class="flex constraint full-width">
-        <div
-          v-if="!inputFocus"
-          flat
-          round
-          class="row justify-center items-center"
-          style="width: 15%;"
-        >
-          <q-btn
-            flat
-            round
-            ref="btnEmoji"
-            icon="eva-menu-outline"
-            @click="showMenuModal = true"
-          />
-        </div>
-        <div
-          :class="inputFocus ? 'q-px-md' : ''"
-          class="q-py-sm"
-          style="width: 70%; display: flex; align-items: center"
-          :style="{ width: inputFocus ? '100%' : '70%' }"
-        >
-          <q-input
-            ref="input"
-            dense
-            standout
-            focus="false"
-            class="full-width"
-            bg-color="lime-1"
-            label-color="dark"
-            :label="t('message')"
-            v-model="newMessage"
-            @keydown.enter="sendMessage"
-            @keyup="sendTypingIndicator"
-            @focus="onFocus"
-            @blur="onBlur"
-            :style="{ width: inputFocus ? '100%' : '50%' }"
-            style="border: 20px"
-          >
-            <template v-slot:prepend v-if="inputFocus">
-              <q-btn
-                icon="navigate_next"
-                size="md"
-                class="text-dark"
-                dense
-                flat
-                @click="inputFocus = false"
-              />
-            </template>
-            <template v-slot:append>
-              <q-icon
-                round
-                size="sm"
-                ref="btnEmoji"
-                style="cursor: pointer"
-                class="q-mr- text-dark"
-                name="eva-smiling-face-outline"
-                @click="showEmojiPicker"
-              />
-            </template>
-          </q-input>
-        </div>
-        <div v-if="!inputFocus" class="row justify-center items-center" style="width: 15%">
-          <q-btn
-            icon="eva-navigation-2-outline"
-            size="md"
-            class="text-white"
-            dense
-            flat
-            :color="inputFocus ? 'white' : 'white'"
-            @click="sendMessage"
-          />
-        </div>
-      </q-form>
-    </q-footer>
+    <page-footer @openMenuModal="showMenuModal = true" />
   </q-page>
 </template>
 
@@ -130,6 +55,7 @@ import { EmojiButton } from "@joeattardi/emoji-button";
 
 // Import components
 import PageHeader from "../components/ChatPage/PageHeader.vue";
+import PageFooter from "../components/ChatPage/PageFooter.vue";
 import MapModal from "../components/ChatPage/MapModal.vue";
 import MenuModal from "../components/ChatPage/MenuModal.vue";
 import VideochatModal from "../components/ChatPage/VideoChatModal.vue";
@@ -141,6 +67,7 @@ import ChatMessages from "../components/ChatPage/ChatMessages.vue";
 export default {
   components: {
     PageHeader,
+    PageFooter,
     MapModal,
     MenuModal,
     VideochatModal,

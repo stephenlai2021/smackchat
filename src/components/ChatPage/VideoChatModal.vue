@@ -28,13 +28,18 @@
       </div>
       <div class="local-video-container" style="position: relative">
         <div v-if="!cameraEnabled" class="icon-localvideo">
-          <img :src="store.state.userDetatils ? store.state.userDetatils.avatar : null" alt="user avatar">
+          <img
+            :src="
+              store.state.userDetatils ? store.state.userDetatils.avatar : null
+            "
+            alt="user avatar"
+          />
         </div>
         <div class="position: relative;">
           <video class="local-video" ref="localVideo" autoplay />
           <div
             class="row justify-center full-width"
-            style="position: absolute; bottom: 20px;"
+            style="position: absolute; bottom: 20px"
           >
             <q-btn
               v-if="pause && cameraEnabled"
@@ -81,24 +86,23 @@
               rounded
               dense
               color="pink-3"
-              style="cursor: pointer; z-index: 500"
               icon="leak_remove"
               @click="hangUp"
             />
           </div>
         </div>
       </div>
-      <div v-if="cameraEnabled" class="row justify-around control-panel">
-        <q-btn
-          round
-          dense
-          color="pink-3"
-          class=""
-          icon="eva-close-outline"
-          style="cursor: pointer"
-          @click="closeVideoModal"
-        />
-      </div>
+      <!-- <div class="row justify-around control-panel"> -->
+      <q-btn
+        round
+        dense
+        color="pink-3"
+        class="btn-close"
+        icon="eva-close-outline"
+        style="cursor: pointer"
+        @click="closeVideoModal"
+      />
+      <!-- </div> -->
     </div>
   </q-page>
 </template>
@@ -283,7 +287,7 @@ export default {
     onMounted(() => {
       openCamera();
 
-      console.log('user avatar: ', store.state.userDetails)
+      console.log("user avatar: ", store.state.userDetails);
     });
 
     return {
@@ -317,6 +321,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn-close {
+  cursor: pointer;
+  z-index: 500;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 .icon-localvideo {
   position: absolute;
   width: 100%;
@@ -333,66 +345,35 @@ export default {
   height: 100vh;
   z-index: 600;
 }
-// .remote-video-container,
+.remote-video-container,
 .local-video-container {
   border: 1px solid pink;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.local-video,
-.remote-video {
-  width: 100vw;
-  height: 50vh;
+@media (orientation: portrait) {
+  .remote-video-container,
+  .local-video-container {
+    width: 100%;
+    height: 50vh;
+  }
+  .local-video,
+  .remote-video {
+    width: 100vw;
+    height: 50vh;
+  }
 }
-// @media (orientation: portrait) {
-//   .remote-video-container,
-//   .local-video-container {
-//     position: relative;
-//     height: 50vh;
-//     width: 100vw;
-//   }
-//   .local-video,
-//   .remote-video {
-//     height: 100%;
-//     width: 100%;
-//   }
-//   .control-panel {
-//     position: fixed;
-//     top: 50%;
-//     transform: translateY(-50%);
-//     z-index: 500;
-//     min-width: 360px;
-//     opacity: 0.8;
-//     border-radius: 30px;
-//   }
-// }
-// @media (orientation: landscape) {
-//   .remote-video-container,
-//   .local-video-container {
-//     position: relative;
-//     width: 50vw;
-//     height: 100vh;
-//     border: 1px solid pink;
-//   }
-//   .local-video,
-//   .remote-video {
-//     width: 100%;
-//     height: 100%;
-//   }
-//   .control-panel {
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     align-items: center;
-//     position: fixed;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//     z-index: 500;
-//     opacity: 0.7;
-//     min-height: 360px;
-//     border-radius: 30px;
-//   }
-// }
+@media (orientation: landscape) {
+  .remote-video-container,
+  .local-video-container {
+    width: 50vw;
+    height: 100vh;
+  }
+  .local-video,
+  .remote-video {
+    width: 50vw;
+    height: 100vh;
+  }
+}
 </style>

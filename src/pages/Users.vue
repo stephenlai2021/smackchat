@@ -150,20 +150,6 @@
         </q-item-section>
       </q-item>
     </q-list>
-
-    <!-- <q-btn
-      round
-      color="orange"
-      icon="eva-person-add-outline"
-      style="
-        position: fixed;
-        right: 16px;
-        bottom: 65px;
-        z-index: 500;
-        backdrop-filter: blur(20px);
-      "
-      @click="router.push('/finduser')"
-    /> -->
     <q-footer reveal class="footer bg-transparent">
       <div class="constraint">
         <q-tabs
@@ -175,15 +161,20 @@
           <q-tab
             name="home"
             :label="t('posts')"
-            class="text-"
+            active-color=""
+            active-bg-color=""
+            indicator-color=""
             icon="eva-home-outline"
-            style="width: 50%"
+            style="width: 50%;"
             @click="router.push('/')"
           />
           <q-tab
             name="chat"
             class="text-"
             :label="t('chat')"
+            active-color=""
+            active-bg-color=""
+            indicator-color=""
             icon="eva-message-circle-outline"
             style="width: 50%"
             @click="router.push('/users')"
