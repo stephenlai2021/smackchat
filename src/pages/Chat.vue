@@ -3,7 +3,7 @@
     <page-header />
 
     <chat-messages
-      @click="showMenuModal = false, showLinkModal ? showLinkModal = false : null"
+      @click="showMenuModal && !showLinkModal ? showMenuModal = false : null, showLinkModal && showMenuModal ? showLinkModal = false : null"
       @user-message="openPicModal"
     />
 
@@ -27,7 +27,7 @@
     />
 
     <map-modal v-if="showMapModal" @close-mapModal="showMapModal = false" />
-    
+
     <menu-modal
       v-if="showMenuModal"
       @openCameraModal="showCameraModal = true"
