@@ -311,6 +311,7 @@ export default {
   z-index: 500;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  border-bottom: none;
 }
 .spinner {
   position: fixed;

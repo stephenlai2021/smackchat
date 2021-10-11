@@ -338,6 +338,7 @@ export default {
   backdrop-filter: blur(20px);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  border-bottom: none;
   backdrop-filter: blur(20px);
 }
 .icons {
