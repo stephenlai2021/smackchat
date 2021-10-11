@@ -3,11 +3,11 @@ import { auth } from 'src/boot/firebase'
 const routes = [
   {
     path: "/",
-    component: () => import("src/layouts/MainLayout.vue"),
+    component: () => import("../layouts/MainLayout.vue"),
     children: [
       {
         path: "/",
-        component: () => import("src/pages/post.vue"),
+        component: () => import("../pages/post.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -22,7 +22,7 @@ const routes = [
       },
       {
         path: "/users",
-        component: () => import("src/pages/users.vue"),
+        component: () => import("../pages/users.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -37,7 +37,7 @@ const routes = [
       },
       {
         path: "/finduser",
-        component: () => import("src/pages/findUser.vue"),
+        component: () => import("../pages/findUser.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -52,7 +52,7 @@ const routes = [
       },
       {
         path: "/addpost",
-        component: () => import("src/pages/addPost.vue"),
+        component: () => import("../pages/addPost.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -67,7 +67,7 @@ const routes = [
       },
       {
         path: "/auth",
-        component: () => import("src/pages/auth.vue"),
+        component: () => import("../pages/auth.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
@@ -83,7 +83,7 @@ const routes = [
       {
         path: "/chat/:from/:to",
         name: "chat",
-        component: () => import("src/pages/chat.vue"),
+        component: () => import("../pages/chat.vue"),
         beforeEnter: (to, from, next) => {
           auth.onAuthStateChanged((user) => {
             if (user) {
