@@ -1,7 +1,7 @@
 <template>
   <q-page class="page-chat bg-dark">
     <div class="row justify-center">
-      <div class="remote-video-container">
+      <div class="remote-video-container constraint" style="position: relative">
         <video
           class="remote-video"
           ref="remoteVideo"
@@ -26,61 +26,66 @@
           @click="call"
         />
       </div>
-      <div class="local-video-container">
-        <video class="local-video" ref="localVideo" autoplay />
-        <div
-          class="row justify-around full-width"
-          style="position: absolute; bottom: 10px"
-        >
-          <q-btn
-            v-if="pause && cameraEnabled"
-            round
-            dense
-            color="pink-3"
-            class=""
-            style="opacity: 0.7; cursor: pointer"
-            icon="eva-play-circle-outline"
-            @click="resumeVideo"
-          />
-          <q-btn
-            v-if="!pause && cameraEnabled"
-            dense
-            round
-            color="pink-3"
-            class=""
-            style="cursor: pointer"
-            icon="eva-pause-circle-outline"
-            @click="pauseVideo"
-          />
-          <q-btn
-            v-if="audioOn && cameraEnabled"
-            dense
-            round
-            color="pink-3"
-            class=""
-            style="cursor: pointer"
-            icon="eva-volume-up-outline"
-            @click="toggleAudio"
-          />
-          <q-btn
-            v-if="!audioOn && cameraEnabled"
-            dense
-            round
-            color="pink-3"
-            class=""
-            icon="eva-volume-off-outline"
-            style="cursor: pointer; z-index: 500"
-            @click="toggleAudio"
-          />
-          <q-btn
-            v-if="remoteVideoShow && !btnHangup"
-            rounded
-            dense
-            color="pink-3"
-            style="cursor: pointer; z-index: 500"
-            icon="leak_remove"
-            @click="hangUp"
-          />
+      <div class="local-video-container" style="position: relative">
+        <div v-if="!cameraEnabled" class="icon-localvideo">
+          <img :src="store.state.userDetatils ? store.state.userDetatils.avatar : null" alt="user avatar">
+        </div>
+        <div class="position: relative;">
+          <video class="local-video" ref="localVideo" autoplay />
+          <div
+            class="row justify-center full-width"
+            style="position: absolute; bottom: 20px;"
+          >
+            <q-btn
+              v-if="pause && cameraEnabled"
+              round
+              dense
+              color="pink-3"
+              class="q-mx-md"
+              style="opacity: 0.7; cursor: pointer"
+              icon="eva-play-circle-outline"
+              @click="resumeVideo"
+            />
+            <q-btn
+              v-if="!pause && cameraEnabled"
+              dense
+              round
+              color="pink-3"
+              class="q-mx-md"
+              style="opacity: 0.7; cursor: pointer"
+              icon="eva-pause-circle-outline"
+              @click="pauseVideo"
+            />
+            <q-btn
+              v-if="audioOn && cameraEnabled"
+              dense
+              round
+              color="pink-3"
+              class="q-mx-md"
+              style="opacity: 0.7; cursor: pointer"
+              icon="eva-volume-up-outline"
+              @click="toggleAudio"
+            />
+            <q-btn
+              v-if="!audioOn && cameraEnabled"
+              dense
+              round
+              color="pink-3"
+              class="q-mx-md"
+              icon="eva-volume-off-outline"
+              style="opacity: 0.7; cursor: pointer; z-index: 500"
+              @click="toggleAudio"
+            />
+            <q-btn
+              v-if="remoteVideoShow && !btnHangup"
+              rounded
+              dense
+              color="pink-3"
+              style="cursor: pointer; z-index: 500"
+              icon="leak_remove"
+              @click="hangUp"
+            />
+          </div>
         </div>
       </div>
       <div v-if="cameraEnabled" class="row justify-around control-panel">
@@ -123,6 +128,7 @@ export default {
     const pause = ref(false);
     const cameraEnabled = ref(false);
     const remoteVideoShow = ref(false);
+    const localVideoShow = ref(false);
     const closeRemoteVideo = ref(false);
     const btnHangup = ref(false);
 
@@ -240,6 +246,7 @@ export default {
         .then((stream) => {
           localVideo.value.srcObject = localStream.value = stream;
 
+          // localVideoShow.value = true;
           cameraEnabled.value = true;
           videoOn.value = true;
           audioOn.value = true;
@@ -275,6 +282,8 @@ export default {
 
     onMounted(() => {
       openCamera();
+
+      console.log('user avatar: ', store.state.userDetails)
     });
 
     return {
@@ -285,6 +294,7 @@ export default {
       btnHangup,
       remoteStream,
       cameraEnabled,
+      localVideoShow,
       remoteVideoShow,
 
       call,
@@ -307,6 +317,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.icon-localvideo {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .page-chat {
   position: fixed;
   top: 0;
@@ -318,61 +336,63 @@ export default {
 // .remote-video-container,
 .local-video-container {
   border: 1px solid pink;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .local-video,
 .remote-video {
   width: 100vw;
   height: 50vh;
 }
-@media (orientation: portrait) {
-  .remote-video-container,
-  .local-video-container {
-    position: relative;
-    height: 50vh;
-    width: 100vw;
-    // border: 1px solid pink;
-  }
-  .local-video,
-  .remote-video {
-    height: 100%;
-    width: 100%;
-  }
-  .control-panel {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 500;
-    min-width: 360px;
-    opacity: 0.8;
-    border-radius: 30px;
-  }
-}
-@media (orientation: landscape) {
-  .remote-video-container,
-  .local-video-container {
-    position: relative;
-    width: 50vw;
-    height: 100vh;
-    border: 1px solid pink;
-  }
-  .local-video,
-  .remote-video {
-    width: 100%;
-    height: 100%;
-  }
-  .control-panel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-items: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 500;
-    opacity: 0.7;
-    min-height: 360px;
-    border-radius: 30px;
-  }
-}
+// @media (orientation: portrait) {
+//   .remote-video-container,
+//   .local-video-container {
+//     position: relative;
+//     height: 50vh;
+//     width: 100vw;
+//   }
+//   .local-video,
+//   .remote-video {
+//     height: 100%;
+//     width: 100%;
+//   }
+//   .control-panel {
+//     position: fixed;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     z-index: 500;
+//     min-width: 360px;
+//     opacity: 0.8;
+//     border-radius: 30px;
+//   }
+// }
+// @media (orientation: landscape) {
+//   .remote-video-container,
+//   .local-video-container {
+//     position: relative;
+//     width: 50vw;
+//     height: 100vh;
+//     border: 1px solid pink;
+//   }
+//   .local-video,
+//   .remote-video {
+//     width: 100%;
+//     height: 100%;
+//   }
+//   .control-panel {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     align-items: center;
+//     position: fixed;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     z-index: 500;
+//     opacity: 0.7;
+//     min-height: 360px;
+//     border-radius: 30px;
+//   }
+// }
 </style>

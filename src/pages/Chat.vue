@@ -40,49 +40,39 @@
       @closeMenuModal="showMenuModal = false"
     />
 
-    <q-footer
-      style="z-index: 300; backdrop-filter: blur(20px)"
-      class="q-py-xs bg-transparent constraint"
-    >
-      <!-- <q-footer
-      style="z-index: 300; border-top-left-radius: 10px; border-top-right-radius: 10px;"
-      class="q-py-xs bg-dark"
-    > -->
-      <q-form class="flex constraint" :class="{ 'q-mx-sm': inputFocus }">
+    <q-footer class="footer q-py-xs bg-transparent constraint">
+      <q-form class="flex constraint full-width">
         <div
           v-if="!inputFocus"
           flat
           round
-          class="flex row justify-evenly"
-          style="width: 10%; display: flex; align-items: center"
+          class="row justify-center items-center"
+          style="width: 15%;"
         >
           <q-btn
-            round
-            size=""
             flat
+            round
             ref="btnEmoji"
-            class="text-"
             icon="eva-menu-outline"
             @click="showMenuModal = true"
           />
         </div>
         <div
-          :class="inputFocus ? 'q-pl-md' : ''"
-          class="q-pr- q-py-sm"
-          style="width: 80%; display: flex; align-items: center"
-          :style="{ width: inputFocus ? '100%' : '80%' }"
+          :class="inputFocus ? 'q-px-md' : ''"
+          class="q-py-sm"
+          style="width: 70%; display: flex; align-items: center"
+          :style="{ width: inputFocus ? '100%' : '70%' }"
         >
           <q-input
             ref="input"
-            v-model="newMessage"
-            class="q-mr- full-width text-dark"
+            dense
             standout
-            color="dark"
+            focus="false"
+            class="full-width"
             bg-color="lime-1"
             label-color="dark"
             :label="t('message')"
-            dense
-            focus="false"
+            v-model="newMessage"
             @keydown.enter="sendMessage"
             @keyup="sendTypingIndicator"
             @focus="onFocus"
@@ -113,7 +103,7 @@
             </template>
           </q-input>
         </div>
-        <div class="row justify-center items-center" style="width: 10%;">
+        <div v-if="!inputFocus" class="row justify-center items-center" style="width: 15%">
           <q-btn
             icon="eva-navigation-2-outline"
             size="md"
@@ -343,9 +333,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.footer {
+  z-index: 300;
+  backdrop-filter: blur(20px);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  backdrop-filter: blur(20px);
+}
 .icons {
   display: flex;
   align-items: center;
+  
 }
 .btn-close {
   cursor: pointer;

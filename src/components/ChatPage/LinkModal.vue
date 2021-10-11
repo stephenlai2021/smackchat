@@ -118,5 +118,7 @@ export default {
   width: 100%;
   height: 64px;
   z-index: 600;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 </style>

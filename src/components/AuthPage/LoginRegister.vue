@@ -1,6 +1,5 @@
 <template>
   <q-form @submit="submitForm">
-      <!-- v-if="tab === 'register'" -->
     <q-input
       class="q-mb-md"
       outlined
@@ -48,7 +47,7 @@
     <p style="color: red">{{ store.state.errorMessage }}</p>
     <div class="row justify-end">
       <q-btn
-        color="secondary"
+        color="brown-3"
         :label="t('reset')"
         class="q-mr-sm"
         @click="resetData"
@@ -60,9 +59,9 @@
       />
     </div>
   </q-form>
-  <p>{{ name }}</p>
+  <!-- <p>{{ name }}</p>
   <p>{{ email }}</p>
-  <p>{{ password }}</p>
+  <p>{{ password }}</p> -->
 </template>
 
 <script>

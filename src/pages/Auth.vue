@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex q-pa-md">
-    <q-header class="" reveal style="border-bottom: 1px solid #eeeeee">
+    <q-header class="bg-transparent">
       <q-toolbar class="constraint">
         <q-avatar>
                 <!-- ? 'https://www.clipartmax.com/png/full/98-984206_profile-photo-facebook-profile-picture-icon.png' -->
@@ -62,10 +62,11 @@
 <script>
 import { ref, inject } from "vue";
 import { useI18n } from "vue-i18n";
+import LoginRegister from '../components/AuthPage/LoginRegister.vue'
 
 export default {
   components: {
-    "login-register": require("src/components/AuthPage/LoginRegister.vue").default,
+    LoginRegister,
   },
   setup() {
     const store = inject("store");
