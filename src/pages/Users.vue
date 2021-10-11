@@ -164,8 +164,8 @@
       "
       @click="router.push('/finduser')"
     /> -->
-    <q-footer reveal class="footer bg-transparent constraint">
-      <div>
+    <q-footer reveal class="footer bg-transparent">
+      <div class="constraint">
         <q-tabs
           v-model="store.state.tab"
           inline-label
@@ -308,11 +308,12 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
+  opacity: 0.7;
   z-index: 500;
-  border: 2px solid white;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom: 0px;
+  border-top: 1px solid white;
+  // border-top-left-radius: 10px;
+  // border-top-right-radius: 10px;
+  // border-bottom: 0px;
 }
 .spinner {
   position: fixed;

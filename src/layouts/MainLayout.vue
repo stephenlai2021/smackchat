@@ -80,10 +80,10 @@
       v-model="store.state.leftDrawerOpen"
       show-if-above
       bordered
-      side="left"
-      style="overflow: hidden"
+      side="left"      
     >
       <div>
+        <!-- <q-virtual-scroll style="height: 100vh"> -->
         <q-toolbar></q-toolbar>
         <div class="flex row justify-center">
           <div style="position: relative">
@@ -185,6 +185,7 @@
           </q-item>
         </q-list>
       </div>
+      <!-- </q-virtual-scroll> -->
     </q-drawer>
 
     <q-page-container>
@@ -264,7 +265,7 @@ export default {
       if (selected && types.includes(selected.type)) {
         file.value = selected;
         fileError.value = null;
-        store.state.register = true
+        store.state.register = true;
 
         store.methods.useStorage(file.value, "smackchat");
       } else {

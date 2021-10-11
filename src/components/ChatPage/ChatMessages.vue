@@ -1,5 +1,5 @@
 <template>
-  <div ref="chats" :class="{ invisible: !showMessages }">
+  <div class="chatbox" ref="chats" :class="{ invisible: !showMessages }">
     <section class="chat-box q-mt-md">
       <div
         v-for="(message, index) in store.getters.formattedMessages()"
@@ -107,6 +107,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// .chatbox {
+//   overflow-y: scroll;
+// }
 .img-box {
   margin: 0;
   padding: 0;

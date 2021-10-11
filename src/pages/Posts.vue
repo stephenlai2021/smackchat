@@ -49,8 +49,8 @@
       ducimus soluta modi, nemo tenetur nostrum vitae. Debitis est vero
       asperiores architecto. Consequuntur consectetur similique quod?
     </div>
-    <q-footer class="footer bg-transparent constraint">
-      <div>
+    <q-footer class="footer bg-transparent">
+      <div class="constraint">
         <q-tabs
           v-model="store.state.tab"
           no-caps
@@ -138,9 +138,9 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
-  border: 2px solid white;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom: 0px;
+  border-top: 1px solid white;
+  // border-top-left-radius: 10px;
+  // border-top-right-radius: 10px;
+  // border-bottom: 0px;
 }
 </style>

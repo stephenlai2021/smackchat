@@ -40,7 +40,7 @@
       @closeMenuModal="showMenuModal = false"
     />
 
-    <q-footer class="footer q-py-xs bg-transparent constraint">
+    <q-footer class="footer bg-transparent q-py-xs row justify-center">
       <q-form class="flex constraint full-width">
         <div
           v-if="!inputFocus"
@@ -333,13 +333,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// .page-chat {
+//   overflow: hidden;
+// }
 .footer {
   z-index: 300;
   backdrop-filter: blur(20px);
-  border: 2px solid white;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom: 0px;
+  border-top: 1px solid white;
   backdrop-filter: blur(20px);
 }
 .icons {
