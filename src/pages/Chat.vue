@@ -40,7 +40,7 @@
       @closeMenuModal="showMenuModal = false"
     />
 
-    <q-footer class="footer q-py-xs bg-transparent constraint" style="border: 2px solid white;">
+    <q-footer class="footer q-py-xs bg-transparent constraint">
       <q-form class="flex constraint full-width">
         <div
           v-if="!inputFocus"
@@ -336,9 +336,10 @@ export default {
 .footer {
   z-index: 300;
   backdrop-filter: blur(20px);
+  border: 2px solid white;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  border-bottom: none;
+  border-bottom: 0px;
   backdrop-filter: blur(20px);
 }
 .icons {
