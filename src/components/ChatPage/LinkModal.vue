@@ -13,6 +13,7 @@
         items-center
         q-pl-
         justify-center
+        constraint
       "
       key="item2"
     >
@@ -48,7 +49,7 @@
           round
           key="item5"
           size="md"
-          class="text-white btn-close q-ml-md"
+          class="text-pink-2 btn-close q-ml-md"
           icon="eva-close-outline"
           @click="closeLinkModal"
         />

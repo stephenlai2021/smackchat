@@ -5,7 +5,14 @@
     leave-active-class="animated zoomOut"
   >
     <div class="pic-modal bg-dark constraint" key="item1">
-      <img @load="loadFullImage" :src="message.text" ref="image" alt="user pic" class="image" key="item2" />
+      <img
+        @load="loadFullImage"
+        :src="message.text"
+        ref="image"
+        alt="user pic"
+        class="image"
+        key="item2"
+      />
       <q-btn
         key="item3"
         round
@@ -23,57 +30,58 @@ import { ref, onMounted, watch } from "vue";
 
 export default {
   props: ["message"],
-  emits: ['close-picmodal'],
+  emits: ["close-picmodal"],
   setup(props, context) {
     // console.log("image url: ", props.message.text);
-    const image = ref(null)
-    const imageWidth = ref(null)
-    const imageHeight = ref(null)
-    const isImageFullyLoaded = ref(false)
+    const image = ref(null);
+    const imageWidth = ref(null);
+    const imageHeight = ref(null);
+    const isImageFullyLoaded = ref(false);
 
     const closePicModal = () => {
       context.emit("close-picmodal");
     };
 
     const loadFullImage = () => {
-      if (image.value.complete && image.value.naturalHeight !==0) {
-        isImageFullyLoaded.value = true
-        console.log('image is fully loaded')
+      if (image.value.complete && image.value.naturalHeight !== 0) {
+        isImageFullyLoaded.value = true;
+        console.log("image is fully loaded");
       }
-    }
+    };
 
-    watch(() => isImageFullyLoaded.value, () => {
-      if (isImageFullyLoaded.value = true) {
-        imageWidth.value = image.value.clientWidth
-        imageHeight.value = image.value.clientHeight
-        
-        console.log('image width: ', imageWidth.value)
-        console.log('image height: ', imageHeight.value)
+    watch(
+      () => isImageFullyLoaded.value,
+      () => {
+        if ((isImageFullyLoaded.value = true)) {
+          imageWidth.value = image.value.clientWidth;
+          imageHeight.value = image.value.clientHeight;
 
-        if (imageWidth.value > imageHeight.value) {
-          image.value.style.width = '100%'
-        }        
-        if (imageWidth.value < imageHeight.value) {
-          image.value.style.height = '100vh'
+          console.log("image width: ", imageWidth.value);
+          console.log("image height: ", imageHeight.value);
+
+          if (imageWidth.value > imageHeight.value) {
+            image.value.style.width = "100%";
+          }
+          if (imageWidth.value < imageHeight.value) {
+            image.value.style.height = "100vh";
+          }
+          if (imageWidth.value == imageHeight.value) {
+            image.value.style.width = "100%";
+            image.value.style.height = "100vh";
+          }
         }
-        if (imageWidth.value == imageHeight.value) {
-          image.value.style.width = '100%'
-          image.value.style.height = '100vh'
-        }
-
-
       }
-    })
+    );
 
     onMounted(() => {
-
-    })
+    });
 
     return {
       image,
       context,
       loadFullImage,
       closePicModal,
+      isImageFullyLoaded,
     };
   },
 };

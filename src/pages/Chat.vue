@@ -3,7 +3,10 @@
     <page-header />
 
     <chat-messages
-      @click="showMenuModal && !showLinkModal ? showMenuModal = false : null, showLinkModal && showMenuModal ? showLinkModal = false : null"
+      @click="
+        showMenuModal && !showLinkModal ? (showMenuModal = false) : null,
+          showLinkModal && showMenuModal ? (showLinkModal = false) : null
+      "
       @user-message="openPicModal"
     />
 
@@ -39,7 +42,7 @@
 
     <q-footer
       style="z-index: 300; backdrop-filter: blur(20px)"
-      class="q-py-xs bg-transparent"
+      class="q-py-xs bg-transparent constraint"
     >
       <!-- <q-footer
       style="z-index: 300; border-top-left-radius: 10px; border-top-right-radius: 10px;"
@@ -51,7 +54,7 @@
           flat
           round
           class="flex row justify-evenly"
-          style="width: 15%; display: flex; align-items: center"
+          style="width: 10%; display: flex; align-items: center"
         >
           <q-btn
             round
@@ -63,17 +66,16 @@
             @click="showMenuModal = true"
           />
         </div>
-
         <div
           :class="inputFocus ? 'q-pl-md' : ''"
-          class="q-pr-md q-py-sm"
+          class="q-pr- q-py-sm"
           style="width: 80%; display: flex; align-items: center"
           :style="{ width: inputFocus ? '100%' : '80%' }"
         >
           <q-input
             ref="input"
             v-model="newMessage"
-            class="q-mr-md full-width text-dark"           
+            class="q-mr- full-width text-dark"
             standout
             color="dark"
             bg-color="lime-1"
@@ -110,17 +112,17 @@
               />
             </template>
           </q-input>
-          <div style="width: 7%">
-            <q-btn
-              icon="eva-navigation-2-outline"
-              size="md"
-              class="text-white q-mx-sm"
-              dense
-              flat
-              :color="inputFocus ? 'white' : 'white'"
-              @click="sendMessage"
-            />
-          </div>
+        </div>
+        <div class="row justify-center items-center" style="width: 10%;">
+          <q-btn
+            icon="eva-navigation-2-outline"
+            size="md"
+            class="text-white"
+            dense
+            flat
+            :color="inputFocus ? 'white' : 'white'"
+            @click="sendMessage"
+          />
         </div>
       </q-form>
     </q-footer>
