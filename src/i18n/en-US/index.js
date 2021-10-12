@@ -12,7 +12,7 @@ export default {
   findUser: "Find User",
   chatRoom: "Chat Room",
   searchUser: "Search",
-  message: "Message",
+  message: "Please enter your Message",
   title: "Smackchat",
   login: "Login",
   register: "Register",

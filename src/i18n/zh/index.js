@@ -12,7 +12,7 @@ export default {
   findUser: "尋找好友",
   chatRoom: "聊天室",
   searchUser: "搜尋好友",
-  message: "輸入信息",
+  message: "請輸入信息",
   login: "登錄",
   register: "註冊",
   email: "電子郵箱",

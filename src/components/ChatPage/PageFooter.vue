@@ -15,13 +15,11 @@
           icon="eva-menu-outline"
           @click="openMenuModal"
         />
-          <!-- @click="showMenuModal = true" -->
       </div>
       <div
-        :class="inputFocus ? 'q-px-md' : ''"
         class="q-py-sm"
-        style="width: 70%; display: flex; align-items: center"
-        :style="{ width: inputFocus ? '100%' : '70%' }"
+        style="width: 100%; display: flex; align-items: center"
+        :style="{ width: inputFocus ? '85%' : '70%' }"
       >
         <q-input
           ref="input"
@@ -29,6 +27,7 @@
           standout
           focus="false"
           class="full-width"
+          :class="inputFocus ? 'q-pl-md' : ''"
           bg-color="lime-1"
           label-color="dark"
           :label="t('message')"
@@ -37,10 +36,10 @@
           @keyup="sendTypingIndicator"
           @focus="onFocus"
           @blur="onBlur"
-          :style="{ width: inputFocus ? '100%' : '50%' }"
           style="border: 20px"
+          :style="{ width: inputFocus ? '85%' : '70%' }"
         >
-          <template v-slot:prepend v-if="inputFocus">
+         <template v-slot:prepend v-if="inputFocus">
             <q-btn
               icon="navigate_next"
               size="md"
@@ -50,7 +49,7 @@
               @click="inputFocus = false"
             />
           </template>
-          <template v-slot:append>
+          <template v-slot:append v-if="inputFocus">
             <q-icon
               round
               size="sm"
@@ -64,7 +63,6 @@
         </q-input>
       </div>
       <div
-        v-if="!inputFocus"
         class="row justify-center items-center"
         style="width: 15%"
       >
@@ -74,7 +72,6 @@
           class="text-white"
           dense
           flat
-          :color="inputFocus ? 'white' : 'white'"
           @click="sendMessage"
         />
       </div>
@@ -84,12 +81,16 @@
 
 <script>
 import { useI18n } from "vue-i18n";
+import { useRoute } from 'vue-router'
 import { ref, inject, watch } from 'vue'
+import { timestamp } from 'src/boot/firebase'
 import { EmojiButton } from "@joeattardi/emoji-button";
 
 export default {
   setup(props, { emit }) {
     const { t, locale } = useI18n();
+
+    const route = useRoute()
 
     const store = inject('store')
 
@@ -114,8 +115,6 @@ export default {
       });
 
       newMessage.value = "";
-
-      showMenuModal.value = false;
 
       inputFocus.value = false;
     };
