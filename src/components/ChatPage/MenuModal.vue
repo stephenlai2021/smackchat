@@ -20,7 +20,7 @@
       <div class="icons full-width" key="item2">
         <label
           class="q-ml-sm q-mr-md text-white"
-          style="cursor: pointer"
+          style="cursor: pointer;"
           key="item3"
         >
           <input
@@ -30,32 +30,25 @@
             key="item4"
           />
           <q-icon
-            size="24px"
-            class="text-"
+            size="23px"
             name="eva-image-outline"
             key="item5"
           />
           <span class="block" >PIC</span>
         </label>
-        <q-icon
+        <q-btn
           v-if="store.state.desktop"
+          flat
+          stack
           round
-          size="sm"
+          size="md"
           key="item7"
+          label="Camera"
           class="q-mr-md text-white"
-          style="cursor: pointer"
-          name="eva-camera-outline"
+          style="cursor: pointer;"
+          icon="eva-camera-outline"
           @click="showCameraModal"
         />
-        <!-- <q-icon
-          round
-          size="sm"
-          key="item9"
-          class="q-mr-md text-white"
-          style="cursor: pointer"
-          name="eva-link-outline"
-          @click="showLinkModal"
-        /> -->
         <q-btn
           flat
           round
@@ -64,19 +57,10 @@
           key="item9"
           label="Link"
           class="q-mr-md text-white"
-          style="cursor: pointer"
+          style="cursor: pointer;"
           icon="eva-link-outline"
           @click="showLinkModal"
         />
-        <!-- <q-icon
-          round
-          size="sm"
-          key="item8"
-          class="q-mr-md text-white"
-          style="cursor: pointer"
-          name="eva-video-outline"
-          @click="showVideoModal"
-        /> -->
         <q-btn
           flat
           round
@@ -89,15 +73,6 @@
           icon="eva-video-outline"
           @click="showVideoModal"
         />
-        <!-- <q-icon
-          round
-          size="sm"
-          key="item10"
-          class="text-white"
-          style="cursor: pointer"
-          name="eva-pin-outline"
-          @click="showMapModal"
-        /> -->
         <q-btn
           flat
           stack

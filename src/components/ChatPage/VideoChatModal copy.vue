@@ -1,129 +1,121 @@
 <template>
   <q-page class="page-chat bg-dark">
-    <div class="row justify-center constraint">
-      <div class="remote-video-container">
-        <div style="position: relative">
-          <video
-            class="remote-video"
-            ref="remoteVideo"
-            id="remoteVideo"
-            autoplay
+    <div class="row justify-center">
+      <div class="remote-video-container " style="position: relative">
+        <video
+          class="remote-video"
+          ref="remoteVideo"
+          id="remoteVideo"
+          autoplay
+        />
+        <div
+          style="
+            width: 100px;
+            cursor: pointer;
+            z-index: 500;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          "
+        >
+          <q-img
+            v-if="!remoteVideoShow && store.state.otherUser"
+            :src="store.state.otherUser.avatar"
+            spinner-color="white"
           />
-          <div
-            style="
-              width: 100px;
-              cursor: pointer;
-              z-index: 500;
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-            "
-          >
-            <q-img
-              v-if="!remoteVideoShow && store.state.otherUser"
-              :src="store.state.otherUser.avatar"
-              spinner-color="white"
+          <div class="block text-center" style="margin-top: -20px; opacity: 0.7;">
+            <q-btn
+              v-if="!remoteVideoShow"
+              rounded
+              dense
+              size=""
+              color="pink-3"
+              icon="eva-phone-outline"
+              @click="call"
             />
-            <div
-              class="block text-center"
-              style="margin-top: -20px; opacity: 0.7"
-            >
-              <q-btn
-                v-if="!remoteVideoShow"
-                rounded
-                dense
-                size=""
-                color="pink-3"
-                icon="eva-phone-outline"
-                @click="call"
-              />
-            </div>
           </div>
-            <!-- v-if="remoteVideoShow && !btnHangup" -->
-          <q-btn
-            v-if="remoteVideoShow && !btnHangup"
-            rounded
-            dense
-            class="btn-hangup"
-            color="pink-3"
-            icon="eva-phone-off-outline"
-            @click="hangUp"
-          />
         </div>
-      </div>
 
-      <div class="local-video-container">
-        <div style="position: relative">
+        <q-btn
+          v-if="remoteVideoShow && !btnHangup"
+          rounded
+          dense
+          class="btn-hangup"
+          color="pink-3"
+          icon="leak_remove"
+          @click="hangUp"
+        />
+      </div>
+      <div class="local-video-container" style="position: relative;">
+        <!-- <div
+          style="
+            width: 100px;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+          "
+        >
+          <q-img
+            v-if="!localVideoShow && store.state.userDetails"
+            :src="store.state.userDetails.avatar"
+            spinner-color="white"
+          />
+        </div> -->
+        <div class="position: relative; z-index: 200;">
+          <video class="local-video" ref="localVideo" autoplay />
           <div
-            style="
-              width: 100px;
-              cursor: pointer;
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              z-index: -50;
-            "
+            class="row justify-center full-width"
+            style="position: absolute; bottom: 20px"
           >
-            <q-img
-              v-if="!localVideoShow && store.state.userDetails"
-              :src="store.state.userDetails.avatar"
-              spinner-color="white"
+            <q-btn
+              v-if="pause && cameraEnabled"
+              round
+              dense
+              color="pink-3"
+              class="q-mx-md"
+              style="opacity: 0.7; cursor: pointer"
+              icon="eva-play-circle-outline"
+              @click="resumeVideo"
             />
-          </div>
-          <div class="position: relative; z-index: 200;">
-            <video class="local-video" ref="localVideo" autoplay />
-            <div
-              class="row justify-center full-width"
-              style="position: absolute; bottom: 20px"
-            >
-              <q-btn
-                v-if="pause && cameraEnabled"
-                round
-                dense
-                color="pink-3"
-                class="q-mx-md"
-                style="opacity: 0.7; cursor: pointer"
-                icon="eva-play-circle-outline"
-                @click="resumeVideo"
-              />
-              <q-btn
-                v-if="!pause && cameraEnabled"
-                dense
-                round
-                color="pink-3"
-                class="q-mx-md"
-                style="opacity: 0.7; cursor: pointer"
-                icon="eva-pause-circle-outline"
-                @click="pauseVideo"
-              />
-              <q-btn
-                v-if="audioOn && cameraEnabled"
-                dense
-                round
-                color="pink-3"
-                class="q-mx-md"
-                style="opacity: 0.7; cursor: pointer"
-                icon="eva-volume-up-outline"
-                @click="toggleAudio"
-              />
-              <q-btn
-                v-if="!audioOn && cameraEnabled"
-                dense
-                round
-                color="pink-3"
-                class="q-mx-md"
-                icon="eva-volume-off-outline"
-                style="opacity: 0.7; cursor: pointer; z-index: 500"
-                @click="toggleAudio"
-              />
-            </div>
+            <q-btn
+              v-if="!pause && cameraEnabled"
+              dense
+              round
+              color="pink-3"
+              class="q-mx-md"
+              style="opacity: 0.7; cursor: pointer"
+              icon="eva-pause-circle-outline"
+              @click="pauseVideo"
+            />
+            <q-btn
+              v-if="audioOn && cameraEnabled"
+              dense
+              round
+              color="pink-3"
+              class="q-mx-md"
+              style="opacity: 0.7; cursor: pointer"
+              icon="eva-volume-up-outline"
+              @click="toggleAudio"
+            />
+            <q-btn
+              v-if="!audioOn && cameraEnabled"
+              dense
+              round
+              color="pink-3"
+              class="q-mx-md"
+              icon="eva-volume-off-outline"
+              style="opacity: 0.7; cursor: pointer; z-index: 500"
+              @click="toggleAudio"
+            />
           </div>
         </div>
       </div>
+      <!-- <div class="row justify-around control-panel"> -->
       <q-btn
-        v-if="remoteVideoShow"
         round
         dense
         color="pink-3"
@@ -132,6 +124,7 @@
         style="cursor: pointer"
         @click="closeVideoModal"
       />
+      <!-- </div> -->
     </div>
   </q-page>
 </template>
@@ -354,8 +347,8 @@ export default {
   cursor: pointer;
   z-index: 500;
   position: absolute;
-  left: 20px;
-  bottom: 20px;
+  left: 30px;
+  bottom: 30px;
   opacity: 0.7;
 }
 .btn-close {
@@ -384,40 +377,33 @@ export default {
 }
 .remote-video-container,
 .local-video-container {
-  // border: 1px solid pink;
+  border: 1px solid pink;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 50vh;
 }
-.local-video,
-.remote-video {
-  width: 100vw;
-  height: 50vh;
+@media (orientation: portrait) {
+  .remote-video-container,
+  .local-video-container {
+    width: 100%;
+    height: 50vh;
+  }
+  .local-video,
+  .remote-video {
+    width: 100vw;
+    height: 50vh;
+  }
 }
-// @media (orientation: portrait) {
-//   .remote-video-container,
-//   .local-video-container {
-//     width: 100%;
-//     height: 50vh;
-//   }
-//   .local-video,
-//   .remote-video {
-//     width: 100vw;
-//     height: 50vh;
-//   }
-// }
 @media (orientation: landscape) {
   .remote-video-container,
   .local-video-container {
-    width: 50%;
+    width: 50vw;
     height: 100vh;
   }
   .local-video,
   .remote-video {
-    width: 100%;
-    height: 100%;
+    width: 50vw;
+    height: 100vh;
   }
 }
 </style>
