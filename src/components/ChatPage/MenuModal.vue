@@ -13,9 +13,8 @@
     @leave="leave"
     @after-leave="afterLeave"
   >
-    <div
-      style="height: 64px;"
-      class="menu-modal bg-dark q-pa-sm full-width q-py-md constraint"
+    <div     
+      class="menu-modal bg-dark q-pa-sm q-py-md full-width constraint"
       key="item1"
     >
       <div class="icons full-width" key="item2">
@@ -31,11 +30,12 @@
             key="item4"
           />
           <q-icon
-            size="sm"
+            size="24px"
             class="text-"
             name="eva-image-outline"
             key="item5"
           />
+          <span class="block" >PIC</span>
         </label>
         <q-icon
           v-if="store.state.desktop"
@@ -47,7 +47,7 @@
           name="eva-camera-outline"
           @click="showCameraModal"
         />
-        <q-icon
+        <!-- <q-icon
           round
           size="sm"
           key="item9"
@@ -55,8 +55,20 @@
           style="cursor: pointer"
           name="eva-link-outline"
           @click="showLinkModal"
+        /> -->
+        <q-btn
+          flat
+          round
+          stack
+          size="md"
+          key="item9"
+          label="Link"
+          class="q-mr-md text-white"
+          style="cursor: pointer"
+          icon="eva-link-outline"
+          @click="showLinkModal"
         />
-        <q-icon
+        <!-- <q-icon
           round
           size="sm"
           key="item8"
@@ -64,14 +76,38 @@
           style="cursor: pointer"
           name="eva-video-outline"
           @click="showVideoModal"
+        /> -->
+        <q-btn
+          flat
+          round
+          stack
+          size="md"
+          key="item8"
+          label="Video"
+          class="q-mr-md text-white"
+          style="cursor: pointer"
+          icon="eva-video-outline"
+          @click="showVideoModal"
         />
-        <q-icon
+        <!-- <q-icon
           round
           size="sm"
           key="item10"
           class="text-white"
           style="cursor: pointer"
           name="eva-pin-outline"
+          @click="showMapModal"
+        /> -->
+        <q-btn
+          flat
+          stack
+          round
+          size="md"
+          label="Map"
+          key="item10"
+          class="text-white"
+          style="cursor: pointer"
+          icon="eva-pin-outline"
           @click="showMapModal"
         />
         <q-btn
@@ -97,7 +133,7 @@
 
 <script>
 import { ref, inject } from "vue";
-import ImageModal from './ImageModal.vue'
+import ImageModal from "./ImageModal.vue";
 
 export default {
   components: {
@@ -118,12 +154,12 @@ export default {
 
     const types = ["image/png", "image/jpeg", "image/jpg"];
 
-    const beforeEnter = (el) => {}
-    const enter = (el) => {}
-    const afterEnter = (el) => {}
-    const beforeLeave = (el) => {}
-    const leave = (el) => {}
-    const afterLeave = (el) => {}
+    const beforeEnter = (el) => {};
+    const enter = (el) => {};
+    const afterEnter = (el) => {};
+    const beforeLeave = (el) => {};
+    const leave = (el) => {};
+    const afterLeave = (el) => {};
 
     const handleChange = (e) => {
       let selected = e.target.files[0];
