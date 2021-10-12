@@ -42,7 +42,7 @@
           </div>
             <!-- v-if="remoteVideoShow && !btnHangup" -->
           <q-btn
-            v-if="remoteVideoShow && !btnHangup"
+            v-if="remoteVideoShow"
             rounded
             dense
             class="btn-hangup"
@@ -123,9 +123,11 @@
         </div>
       </div>
       <q-btn
-        v-if="remoteVideoShow"
+        v-if="cameraEnabled"
+        flat
         round
         dense
+        size="lg"
         color="pink-3"
         class="btn-close"
         icon="eva-close-outline"
@@ -161,9 +163,8 @@ export default {
     const pause = ref(false);
     const cameraEnabled = ref(false);
     const remoteVideoShow = ref(false);
-    const localVideoShow = ref(false);
     const closeRemoteVideo = ref(false);
-    const btnHangup = ref(false);
+    // const btnHangup = ref(false);
 
     const peer = new Peer();
 
@@ -211,7 +212,7 @@ export default {
       console.log("close connection");
       peer.destroy();
       closeRemoteVideo.value = true;
-      btnHangup.value = true;
+      // btnHangup.value = true;
     };
 
     const call = () => {
@@ -279,7 +280,6 @@ export default {
         .then((stream) => {
           localVideo.value.srcObject = localStream.value = stream;
 
-          // localVideoShow.value = true;
           cameraEnabled.value = true;
           videoOn.value = true;
           audioOn.value = true;
@@ -324,10 +324,10 @@ export default {
 
       myId,
       idInput,
-      btnHangup,
+      // btnHangup,
       remoteStream,
       cameraEnabled,
-      localVideoShow,
+      // localVideoShow,
       remoteVideoShow,
 
       call,
