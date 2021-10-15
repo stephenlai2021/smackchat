@@ -1,7 +1,7 @@
 <template>
   <div class="full-width q-px-md q-my-md" style="display: block">
     <input type="text" name="search" placeholder="Search" />
-  </div>
+  </div>  
 </template>
 
 <script>
@@ -34,6 +34,8 @@ export default {
   font-size: 14px;
   font-weight: 600;
   color: #a9b5c1;
+  // border: 1px solid;
+  padding-left: 1px;
 }
 input[type="text"] {
   width: 100%;
@@ -44,7 +46,7 @@ input[type="text"] {
   color: grey;
   background-color: white;
   background-image: url("https://www.w3schools.com/css/searchicon.png");
-  background-position: 12px 15px;
+  background-position: 15px 20px;
   background-repeat: no-repeat;
   background-size: 20px;
   padding: 15px 20px 15px 40px;
