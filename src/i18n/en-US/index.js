@@ -10,7 +10,7 @@ export default {
   logout: "Logout",
   addPost: "Add Post",
   findUser: "Find User",
-  chatRoom: "Chat Room",
+  messages: "Messages",
   searchUser: "Search",
   message: "Please enter your Message",
   title: "Smackchat",

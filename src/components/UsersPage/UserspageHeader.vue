@@ -8,7 +8,7 @@
           class="text-bold text-primary"
           style="font-size: 25px; font-weight: 700"
         >
-          {{ t("chatRoom") }}
+          {{ t("messages") }}
         </span>
         <q-btn
           round

@@ -10,7 +10,7 @@ export default {
   logout: "登出",
   addPost: "建立貼文",
   findUser: "尋找好友",
-  chatRoom: "聊天室",
+  messages: "您的信息",
   searchUser: "搜尋好友",
   message: "請輸入信息",
   login: "登錄",

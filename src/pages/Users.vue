@@ -31,11 +31,8 @@
       >
         <q-item-section avatar>
           <q-avatar size="50px" style="">
-            <img
-              :src="user.avatar"
-              alt="user avatar"
-            />
-              <!-- :style="{
+            <img :src="user.avatar" alt="user avatar" />
+            <!-- :style="{
                 border: user.online ? '2px solid #e6ee9c' : '2px solid #e0e0e0',
               }" -->
           </q-avatar>
@@ -43,7 +40,10 @@
             rounded
             class="float-right"
             style="position: absolute; left: 50px; top: 45px"
-            :style="{ background: user.online ? '#ED4F5C' : 'none', border: user.online ? '1px solid white' : 'none' }"
+            :style="{
+              background: user.online ? '#ED4F5C' : 'none',
+              border: user.online ? '1px solid white' : 'none',
+            }"
           />
         </q-item-section>
 
@@ -72,6 +72,7 @@
       <q-tabs
         v-model="store.state.tab"
         no-caps
+        :inline-label="$q.platform.is.mobile ? true : false"
         class="row justify-evenly text-white"
       >
         <q-tab
@@ -83,7 +84,7 @@
         />
         <q-tab
           name="chat"
-          :label="t('chat')"
+        :label="t('chat')"
           icon="eva-message-circle-outline"
           style="width: 50%"
           @click="router.push('/users')"
@@ -94,12 +95,12 @@
 </template>
 
 <script>
+import { useQuasar } from 'quasar'
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { ref, onMounted, computed, inject, watchEffect } from "vue";
 
 import UserspageHeader from "../components/UsersPage/UserspageHeader";
-// import UserspageFooter from "../components/UsersPage/UserspageFooter";
 import UsersmapModal from "../components/UsersPage/UsersmapModal";
 import UsersList from "../components/UsersPage/UsersList";
 
@@ -108,9 +109,10 @@ export default {
     UsersList,
     UsersmapModal,
     UserspageHeader,
-    // UserspageFooter,
   },
   setup() {
+    const $q = useQuasar()
+
     const store = inject("store");
 
     const router = useRouter();
@@ -176,6 +178,7 @@ export default {
 
     return {
       t,
+      $q,
       locale,
       store,
       router,
