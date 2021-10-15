@@ -1,5 +1,5 @@
 <template>
-  <q-footer class="bg-transparent q-py-xs row" style="backdrop-filter: blur(20px);" elevated>
+  <q-footer class="bg-primary q-py-xs row" style="z-index: 300;">
     <menu-modal
       :showMenuModal="showMenuModal"
       @openCameraModal="showCameraModal = true"

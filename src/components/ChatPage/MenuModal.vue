@@ -12,7 +12,7 @@
     <!-- :style="{ display: showMenuModal ? 'flex' : 'none' }" -->
     <div class="icons" key="item2">
       <label
-        class="q-ml-sm q-mr-md text-primary"
+        class="q-ml-sm q-mr-md text-"
         style="cursor: pointer"
         key="item3"
       >
@@ -33,7 +33,7 @@
         size="md"
         key="item7"
         label="Cam"
-        class="q-mr-md text-primary"
+        class="q-mr-md text-"
         style="cursor: pointer"
         icon="eva-camera-outline"
         @click="showCameraModal"
@@ -45,7 +45,7 @@
         size="md"
         key="item9"
         label="Link"
-        class="q-mr-md text-primary"
+        class="q-mr-md text-"
         style="cursor: pointer"
         icon="eva-link-outline"
         @click="showLinkModal"
@@ -57,7 +57,7 @@
         size="md"
         key="item8"
         label="Video"
-        class="q-mr-md text-primary"
+        class="q-mr-md text-"
         style="cursor: pointer"
         icon="eva-video-outline"
         @click="showVideoModal"
@@ -69,7 +69,7 @@
         size="md"
         label="Map"
         key="item10"
-        class="text-primary"
+        class="text-"
         style="cursor: pointer"
         icon="eva-pin-outline"
         @click="showMapModal"

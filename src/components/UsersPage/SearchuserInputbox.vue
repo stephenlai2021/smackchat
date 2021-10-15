@@ -1,41 +1,53 @@
 <template>
-  <div class="full-width q-px-md q-my-sm" style="display: block">
-    <q-input      
-      rounded
-      label-color="secondary"
-      standout="text-secondary bg-white"
-      v-model="search"
-      :label="t('searchUser')"
-    >
-      <template v-slot:prepend>
-        <q-icon
-          name="eva-search-outline"
-          class="q-ml-sm text-secondary"
-          style="cursor: pointer"
-        />
-      </template>
-    </q-input>
+  <div class="full-width q-px-md q-my-md" style="display: block">
+    <input type="text" name="search" placeholder="Search" />
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 export default {
   setup() {
-    const { t, locale } = useI18n()
+    const { t, locale } = useI18n();
 
-    const search = ref('')
+    const search = ref("");
 
     return {
-      t, 
+      t,
       locale,
       search,
-    }
-  }
-
+    };
+  },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.icon-search {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+::placeholder {
+  font-size: 14px;
+  font-weight: 600;
+  color: #a9b5c1;
+}
+input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 15px;
+  font-size: 16px;
+  color: grey;
+  background-color: white;
+  background-image: url("https://www.w3schools.com/css/searchicon.png");
+  background-position: 12px 15px;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  padding: 15px 20px 15px 40px;
+  box-shadow: 0px 5px 5px rgb(206, 204, 204);
+}
+</style>

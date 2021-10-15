@@ -32,19 +32,21 @@
         <q-item-section avatar>
           <q-avatar size="50px" style="">
             <img :src="user.avatar" alt="user avatar" />
-            <!-- :style="{
-                border: user.online ? '2px solid #e6ee9c' : '2px solid #e0e0e0',
-              }" -->
           </q-avatar>
-          <q-badge
-            rounded
-            class="float-right"
-            style="position: absolute; left: 50px; top: 45px"
+          <div
+            style="
+              position: absolute;
+              left: 50px;
+              top: 45px;
+              width: 12px;
+              height: 12px;
+              border-radius: 50%;
+            "
             :style="{
               background: user.online ? '#ED4F5C' : 'none',
-              border: user.online ? '1px solid white' : 'none',
+              border: user.online ? '2px solid white' : 'none',
             }"
-          />
+          ></div>
         </q-item-section>
 
         <q-item-section>
@@ -70,21 +72,20 @@
 
     <q-footer class="footer bg-primary">
       <q-tabs
-        v-model="store.state.tab"
         no-caps
-        :inline-label="$q.platform.is.mobile ? true : false"
-        class="row justify-evenly text-white"
+        indicator-color="transparent"
+        active-color="white"
+        v-model="store.state.tab"
+        class="row justify-evenly text-grey-5 q-py-sm"
       >
         <q-tab
           name="home"
-          :label="t('posts')"
           icon="eva-home-outline"
           style="width: 50%"
           @click="router.push('/')"
         />
         <q-tab
           name="chat"
-        :label="t('chat')"
           icon="eva-message-circle-outline"
           style="width: 50%"
           @click="router.push('/users')"
@@ -95,7 +96,7 @@
 </template>
 
 <script>
-import { useQuasar } from 'quasar'
+import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { ref, onMounted, computed, inject, watchEffect } from "vue";
@@ -111,7 +112,7 @@ export default {
     UserspageHeader,
   },
   setup() {
-    const $q = useQuasar()
+    const $q = useQuasar();
 
     const store = inject("store");
 
@@ -197,14 +198,14 @@ export default {
 <style lang="scss" scoped>
 .footer {
   z-index: 300;
-  border-top-left-radius: 35px;
-  border-top-right-radius: 35px;
+  // border-top-left-radius: 35px;
+  // border-top-right-radius: 35px;
 }
 .users-list {
   border-bottom-left-radius: 35px;
   border-bottom-right-radius: 35px;
   // border: 1px solid black;
-  height: 550px;
+  // height: 550px;
 }
 .spinner {
   position: fixed;

@@ -1,59 +1,39 @@
 <template>
   <div class="q-my-lg">
     <div
-      class="items-center"
+      class="items-center q-ml-md"
       style="overflow-x: auto; overflow-y: hidden; white-space: nowrap"
     >
       <div
         @click="goChat(user)"
         v-for="(user, index) in matchingUsers"
         :key="index"
-        class="row q-ml-md items-center"
-        style="display: inline-block"
+        class="row q-mr-lg items-center"
+        style="display: inline-block;"
       >
         <q-avatar size="60px" style="position: relative; cursor: pointer">
           <img
             :src="user.avatar"
             alt="user avatar"
           />
-            <!-- :style="{
-              border: user.online ? '2px solid #e6ee9c' : '2px solid #e0e0e0',
-            }" -->
-          <q-badge
-            rounded
-            class="float-right"
+          <div
             style="
               position: absolute;
               left: 42px;
               top: 45px;
-              border: 1px solid white;
+              width: 12px;
+              height: 12px;
+              border-radius: 50%; 
             "
             :style="{
               background: user.online ? '#ED4F5C' : 'none',
-              border: user.online ? '1px solid white' : 'none'
+              border: user.online ? '2px solid white' : 'none'
             }"
-          />
+          ></div>
         </q-avatar>
       </div>
     </div>
   </div>
-  <!-- <div class="full-width q-px-md q-my-sm" style="display: block">
-    <q-input
-      rounded
-      elevated
-      standout="bg-grey-6 text-white"
-      v-model="search"
-      :label="t('searchUser')"
-    >
-      <template v-slot:prepend>
-        <q-icon
-          name="eva-search-outline"
-          class="q-ml-sm"
-          style="cursor: pointer"
-        />
-      </template>
-    </q-input>
-  </div> -->
   <searchuser-inputbox />
 </template>
 
