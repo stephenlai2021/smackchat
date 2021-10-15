@@ -1,16 +1,11 @@
-// app global css in SCSS form
-.constraint {
-  max-width: 800px;
-  margin: auto;
-  // border: 1px solid;
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 body {
-  background-image: url('/bg/bg-1.jpg');
-  // background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  font-family: 'Montserrat', sans-serif;
+  // background-image: url('/bg/bg-2.jpg');
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  // background-attachment: fixed;
 
   // width: 100%;
   // height: 100vh;

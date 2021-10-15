@@ -1,6 +1,6 @@
 <template>
   <q-page class="post-page">
-    <q-header class="constraint bg-transparent">
+    <q-header class="constraint bg-primary">
       <q-toolbar>
         <q-avatar>
           <img
@@ -47,9 +47,9 @@
       suscipit nisi nam consequuntur eum? Quod ipsam porro natus dolor corrupti
       incidunt inventore hic numquam quas fugiat at pariatur molestiae sequi quo
       ducimus soluta modi, nemo tenetur nostrum vitae. Debitis est vero
-      asperiores architecto. Consequuntur consectetur similique quod?
+      asperiores architecto. Consequuntur consectetur similique quod?     
     </div>
-    <q-footer class="footer bg-transparent">
+    <q-footer class="footer bg-primary">
       <div class="constraint">
         <q-tabs
           v-model="store.state.tab"
@@ -100,6 +100,7 @@ export default {
     const router = useRouter();
 
     const leftDrawerOpen = ref(false);
+    const showTitle = ref(true);
 
     const toggleLeftDrawer = () => {
       store.state.leftDrawerOpen = !store.state.leftDrawerOpen;
@@ -121,15 +122,11 @@ export default {
     });
 
     return {
-      // i18n,
       t,
       locale,
-
-      // others
       store,
       router,
-
-      // methods
+      showTitle,
       toggleLeftDrawer,
     };
   },
@@ -137,10 +134,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fade-enter-from { opacity: 0; }
+.fade-enter-active { transition: all 2s ease; }
+.fade-enter-to { opacity: 1; }
+.fade-leave-from { opacity: 1; }
+.fade-leave-active { transition: all 2s ease; }
+.fade-leave-to { opacity: 0; }
+
 .footer {
   border-top: 1px solid white;
-  // border-top-left-radius: 10px;
-  // border-top-right-radius: 10px;
-  // border-bottom: 0px;
 }
 </style>

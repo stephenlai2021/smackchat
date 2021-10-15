@@ -1,45 +1,52 @@
 <template>
-  <q-footer class="footer bg-transparent q-py-xs row justify-center">
-    <q-form class="flex constraint full-width">
+  <q-footer class="bg-transparent q-py-xs row" style="backdrop-filter: blur(20px);" elevated>
+    <menu-modal
+      :showMenuModal="showMenuModal"
+      @openCameraModal="showCameraModal = true"
+      @openVideoModal="showVideoModal = true"
+      @openLinkModal="showLinkModal = true"
+      @openMapModal="showMapModal = true"
+      @closeMenuModal="closeMenuModal"
+    />
+    <q-form v-if="inputForm" class="flex form">
+        <!-- v-if="!inputFocus" -->
       <div
-        v-if="!inputFocus"
         flat
         round
-        class="row justify-center items-center"
-        style="width: 15%"
+        class="btn-menu row justify-center items-center"
       >
         <q-btn
           flat
           round
           ref="btnEmoji"
+          class="text-primary"
           icon="eva-menu-outline"
           @click="openMenuModal"
         />
+        <!-- @click="showMenuModal = true" -->
       </div>
-      <div
-        class="q-py-sm"
-        style="width: 100%; display: flex; align-items: center"
-        :style="{ width: inputFocus ? '85%' : '70%' }"
-      >
+      <div class="q-py-sm input-box-container" style="">
+        <!-- :style="{ width: inputFocus ? '85%' : '70%' }" -->
         <q-input
           ref="input"
           dense
           standout
+          outlined
           focus="false"
           class="full-width"
           :class="inputFocus ? 'q-pl-md' : ''"
-          bg-color="lime-1"
-          label-color="dark"
+          bg-color="primary"
+          label-color="white"
           :label="t('message')"
           v-model="newMessage"
+          style="opacity: 0.7;"
           @keydown.enter="sendMessage"
           @keyup="sendTypingIndicator"
           @focus="onFocus"
           @blur="onBlur"
-          style="border: 20px"
-          :style="{ width: inputFocus ? '85%' : '70%' }"
         >
-         <template v-slot:prepend v-if="inputFocus">
+          <!-- :style="{ width: inputFocus ? '90%' : '80%' }" -->
+          <template v-slot:prepend v-if="inputFocus">
             <q-btn
               icon="navigate_next"
               size="md"
@@ -55,7 +62,7 @@
               size="sm"
               ref="btnEmoji"
               style="cursor: pointer"
-              class="q-mr- text-dark"
+              class="text-primary"
               name="eva-smiling-face-outline"
               @click="showEmojiPicker"
             />
@@ -63,13 +70,13 @@
         </q-input>
       </div>
       <div
-        class="row justify-center items-center"
-        style="width: 15%"
+        class="btn-send row justify-center items-center"
+        style="width: 10%"
       >
         <q-btn
           icon="eva-navigation-2-outline"
           size="md"
-          class="text-white"
+          class="text-primary"
           dense
           flat
           @click="sendMessage"
@@ -81,26 +88,44 @@
 
 <script>
 import { useI18n } from "vue-i18n";
-import { useRoute } from 'vue-router'
-import { ref, inject, watch } from 'vue'
-import { timestamp } from 'src/boot/firebase'
+import { useRoute } from "vue-router";
+import { ref, inject, watch, onMounted } from "vue";
+import { timestamp } from "src/boot/firebase";
 import { EmojiButton } from "@joeattardi/emoji-button";
+import MenuModal from "./MenuModal.vue";
 
 export default {
+  components: {
+    MenuModal,
+  },
   setup(props, { emit }) {
     const { t, locale } = useI18n();
 
-    const route = useRoute()
+    const route = useRoute();
 
-    const store = inject('store')
+    const store = inject("store");
 
     const newMessage = ref("");
     const indicator = ref(false);
     const inputFocus = ref(false);
+    const showMenuModal = ref(false);
+
+    const inputForm = ref(true)
+    const menuModal = ref(true)
+
+    const closeMenuModal = () => {
+      showMenuModal.value = false
+      inputForm.value = true
+    }
 
     const openMenuModal = () => {
-      emit('openMenuModal')
-    }
+      // emit("openMenuModal");
+      // showMenuModal.value = !showMenuModal;
+      inputForm.value = false
+      showMenuModal.value = true
+      console.log("menu modal state: ", showMenuModal.vaue);
+      console.log("open menu modal");
+    };
 
     const sendMessage = () => {
       if (newMessage.value === "") return;
@@ -187,21 +212,67 @@ export default {
       }
     );
 
+    const resize = () => {
+      setInterval(() => {
+        let w = window.innerWidth;
+        if (w <= 575) {
+          btnSend.value = false
+          btnMenu.value = false
+          inputBoxContainer.value = false
+          menuModal.value = true
+        } 
+      }, 100);
+    };
+
+    onMounted(() => {
+      // resize()
+    })
+
     return {
       t,
       store,
       locale,
       onBlur,
+      resize,
       onFocus,
+      menuModal,
+      inputForm,
       newMessage,
       inputFocus,
       sendMessage,
+      showMenuModal,
       openMenuModal,
+      closeMenuModal,
       showEmojiPicker,
       sendTypingIndicator,
-    }
+    };
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.input-box-container {
+  width: 90%;
+  display: flex;
+  align-items: center;
+}
+.btn-menu {
+  display: none;
+  width: 10%;
+}
+.form {
+  width: 50%;
+}
+@media (max-width: 575px) {
+  .form {
+    width: 100%;
+  }
+  .btn-menu {
+    display: flex;
+    width: 10%;
+  }
+  .input-box-container {
+    width: 80%;
+  }  
+}
+</style>

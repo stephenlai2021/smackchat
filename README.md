@@ -1,22 +1,46 @@
-# Quasar App 
+## Transition Classes
 
-A Quasar Framework app
-
-## Install the dependencies
-```bash
-npm install
+### Example
+```
+<transition>
+  <h1>hello</h1>
+</transition>
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
+### on entering the page:
+```
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-enter-to {
+  opacity: 1;
+}
+.fade-etner-active {
+  transition: opacity 2s ease;
+}
 ```
 
-
-### Build the app for production
-```bash
-quasar build
+### on leaving the page:
+```
+.fade-leave-from {
+  opacity: 1;
+}
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-leave-active {
+  transition: opacity 2s eas;
+}
 ```
 
-### Customize the configuration
-See [Configuring quasar.conf.js](https://v2.quasar.dev/quasar-cli/quasar-conf-js).
+## Transition JavaScript Hooks
+
+### - Can fire JavaScript code at different stages of the transition
+
+Enter hooks:
+
+- before-enter, enter, after-enter
+
+Leave hooks:
+
+- before-leave, leave, after-leave

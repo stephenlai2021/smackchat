@@ -1,98 +1,11 @@
 <template>
-  <q-page>
-    <q-header reveal style="z-index: 600" class="bg-transparent">
-      <q-toolbar class="constraint">
-        <span class="text-bold q-ml-sm" style="font-size: 20px; width: 100%">
-          {{ t("chatRoom") }}
-        </span>
-        <div class="flex row justify-end full-width">
-          <q-btn
-            round
-            dense
-            flat
-            size="md"
-            icon="eva-pin-outline"
-            @click="showUsersMapModal = true"
-          />
-        </div>
-      </q-toolbar>
-    </q-header>
+  <div class="page-users">
+    <userspage-header @openUsersMapModal="showUsersMapModal = true" />
 
     <usersmap-modal
       v-if="showUsersMapModal"
       @close-usersMapModal="showUsersMapModal = false"
     />
-
-    <div class="full-width q-pa-sm" style="display: inline-block">
-      <q-input
-        v-model="search"
-        standout
-        :label="t('searchUser')"
-        dense
-        class="q-mb-"
-      >
-        <template v-slot:prepend>
-          <q-icon
-            name="eva-search-outline"
-            class="q-ml-sm"
-            @click="findUser"
-            style="cursor: pointer"
-          />
-        </template>
-      </q-input>
-    </div>
-
-    <div style="overflow-x: auto; overflow-y: hidden; white-space: nowrap">
-      <q-btn
-        round
-        color="grey"
-        class="q-ml-md text-red"
-        size="15px"
-        icon="eva-plus-outline"
-       
-        @click="router.push('/finduser')"
-      />
-      <div
-        @click="goChat(user)"
-        v-for="(user, index) in matchingUsers"
-        :key="index"
-        style="display: inline-block"
-        class="flex row q-ml-md q-my-sm"
-      >
-        <q-avatar size="45px" style="position: relative; cursor: pointer">
-          <img
-            :src="user.avatar"
-            alt="user avatar"
-            :style="{
-              border: user.online ? '2px solid #e6ee9c' : '2px solid #e0e0e0',
-            }"
-          />
-          <q-badge
-            rounded
-            class="float-right"
-            style="position: absolute; left: 32px; top: 32px"
-            :style="{ background: user.online ? '#dcedc8' : '#e0e0e0' }"
-          />
-        </q-avatar>
-        <!-- <div class="flex">
-          <span
-            style="
-              white-space: break-spaces;
-              word-wrap: break-word;
-              height: 21px;
-              width: 50px;
-              text-align: center;
-            "
-          >
-            {{
-              user.name.split(" ")[0].length > 6
-                ? user.name.split(" ")[0].substring(6, 0) + "."
-                : user.name.split(" ")[0]
-            }}
-          </span>
-        </div> -->
-      </div>
-    </div>
 
     <div class="spinner" v-if="!store.state.users.length && !noUserMessages">
       <q-spinner-ios color="primary" size="3em" />
@@ -107,17 +20,17 @@
       </p>
     </div>
 
-    <q-list v-else class="full-width q-mt">
+    <q-list v-else class="full-width q-mt-sm users-list">
       <q-item
         v-for="(user, index) in matchingUsers"
         :key="index"
         clickable
         v-ripple
-        class="q-my-xs"
+        class="q-my-sm"
         @click="goChat(user)"
       >
         <q-item-section avatar>
-          <q-avatar size="55px" style="position: relative">
+          <q-avatar size="50px" style="">
             <img
               :src="user.avatar"
               alt="user avatar"
@@ -129,19 +42,23 @@
           <q-badge
             rounded
             class="float-right"
-            style="position: absolute; left: 57px; top: 50px"
-            :style="{ background: user.online ? '#e6ee9c' : '#e0e0e0' }"
+            style="position: absolute; left: 50px; top: 45px"
+            :style="{ background: user.online ? '#ED4F5C' : 'none', border: user.online ? '1px solid white' : 'none' }"
           />
         </q-item-section>
 
         <q-item-section>
-          <q-item-label class="text-subtitle2">{{ user.name }}</q-item-label>
+          <q-item-label
+            class="text-subtitle2"
+            style="font-size: 18px; font-weight: 600"
+            >{{ user.name }}</q-item-label
+          >
         </q-item-section>
 
         <q-item-section side>
           <q-badge
             class="q-pa-xs"
-            :style="{ background: user.online ? '#e6ee9c' : '#e0e0e0' }"
+            :style="{ background: user.online ? '#e6ee9c' : 'none' }"
           >
             <span class="text-primary">
               {{ user.online ? t("online") : t("offline") }}
@@ -150,62 +67,48 @@
         </q-item-section>
       </q-item>
     </q-list>
-    <q-footer reveal class="footer bg-transparent">
-      <div class="constraint">
-        <q-tabs
-          v-model="store.state.tab"
-          inline-label
-          no-caps
-          class="flex row justify-evenly"
-        >
-          <q-tab
-            name="home"
-            :label="t('posts')"
-            active-color=""
-            active-bg-color=""
-            indicator-color=""
-            icon="eva-home-outline"
-            style="width: 50%;"
-            @click="router.push('/')"
-          />
-          <q-tab
-            name="chat"
-            class="text-"
-            :label="t('chat')"
-            active-color=""
-            active-bg-color=""
-            indicator-color=""
-            icon="eva-message-circle-outline"
-            style="width: 50%"
-            @click="router.push('/users')"
-          />
-          <!-- <q-btn
-            flat
-            class="text-"
-            icon="eva-settings-2-outline"
-            style="width: 20%"
-            @click="toggleLeftDrawer"
-          /> -->
-        </q-tabs>
-      </div>
+
+    <q-footer class="footer bg-primary">
+      <q-tabs
+        v-model="store.state.tab"
+        no-caps
+        class="row justify-evenly text-white"
+      >
+        <q-tab
+          name="home"
+          :label="t('posts')"
+          icon="eva-home-outline"
+          style="width: 50%"
+          @click="router.push('/')"
+        />
+        <q-tab
+          name="chat"
+          :label="t('chat')"
+          icon="eva-message-circle-outline"
+          style="width: 50%"
+          @click="router.push('/users')"
+        />
+      </q-tabs>
     </q-footer>
-  </q-page>
+  </div>
 </template>
 
 <script>
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import {
-  ref,
-  onMounted,
-  computed,
-  inject,
-  watchEffect,
-} from "vue";
+import { ref, onMounted, computed, inject, watchEffect } from "vue";
+
+import UserspageHeader from "../components/UsersPage/UserspageHeader";
+import UserspageFooter from "../components/UsersPage/UserspageFooter";
+import UsersmapModal from "../components/UsersPage/UsersmapModal";
+import UsersList from "../components/UsersPage/UsersList";
 
 export default {
   components: {
-    "usersmap-modal": require("components/ChatPage/UsersMapModal.vue").default,
+    UsersList,
+    UsersmapModal,
+    UserspageHeader,
+    UserspageFooter,
   },
   setup() {
     const store = inject("store");
@@ -262,7 +165,6 @@ export default {
     });
 
     onMounted(() => {
-      // store.state.tab = 'users'
       setTimeout(() => {
         if (!store.state.users.length) {
           noUserMessages.value = true;
@@ -273,22 +175,14 @@ export default {
     });
 
     return {
-      // i18n
       t,
       locale,
-
       store,
       router,
-
-      // ref
       search,
       noUserMessages,
       showUsersMapModal,
-
-      // computed
       matchingUsers,
-
-      // methods
       goChat,
       findUser,
       toggleLeftDrawer,
@@ -299,12 +193,15 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
-  opacity: 0.7;
-  z-index: 500;
-  border-top: 1px solid white;
-  // border-top-left-radius: 10px;
-  // border-top-right-radius: 10px;
-  // border-bottom: 0px;
+  z-index: 300;
+  border-top-left-radius: 35px;
+  border-top-right-radius: 35px;
+}
+.users-list {
+  border-bottom-left-radius: 35px;
+  border-bottom-right-radius: 35px;
+  // border: 1px solid black;
+  height: 550px;
 }
 .spinner {
   position: fixed;
@@ -317,6 +214,5 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  // background: white;
 }
 </style>

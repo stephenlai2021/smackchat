@@ -5,7 +5,6 @@
       v-model="store.state.rightDrawerOpen"
       side="right"
       bordered
-      class=""
     >
       <div class="q-ma-md">
         <p>

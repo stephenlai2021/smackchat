@@ -1,5 +1,5 @@
 <template>
-  <q-header style="z-index: 500" class="bg-transparent">
+  <q-header style="z-index: 500" class="bg-transparent" elevated>
     <q-toolbar
       class="constraint"
       style="padding: 0; backdrop-filter: blur(20px); position: relative"
@@ -10,12 +10,13 @@
           round
           dense
           size="16px"
+          class="text-primary"
           icon="eva-arrow-ios-back-outline"
           @click="router.push('/users')"
         />
         <span
           v-if="store.state.otherUser"
-          class="text-bold q-ml-sm row justify-center items-center"
+          class="text-bold text-primary q-ml-sm row justify-center items-center"
           style="font-size: 18px"
         >
           {{ store.state.otherUser.name }}

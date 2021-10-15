@@ -384,7 +384,6 @@ export default {
 }
 .remote-video-container,
 .local-video-container {
-  // border: 1px solid pink;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -396,18 +395,6 @@ export default {
   width: 100vw;
   height: 50vh;
 }
-// @media (orientation: portrait) {
-//   .remote-video-container,
-//   .local-video-container {
-//     width: 100%;
-//     height: 50vh;
-//   }
-//   .local-video,
-//   .remote-video {
-//     width: 100vw;
-//     height: 50vh;
-//   }
-// }
 @media (orientation: landscape) {
   .remote-video-container,
   .local-video-container {

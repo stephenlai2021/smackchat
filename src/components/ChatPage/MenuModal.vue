@@ -4,110 +4,99 @@
     enter-active-class="animated slideInUp"
     leave-active-class="animated slideOutDown"
   > -->
-  <transition-group
-    appear
-    @before-enter="beforeEnter"
-    @enter="enter"
-    @after-enter="afterEnter"
-    @before-leave="beforeLeave"
-    @leave="leave"
-    @after-leave="afterLeave"
+  <div
+    class="menu-modal bg-transparent q-pa-sm"
+    key="item1"
   >
-    <div     
-      class="menu-modal bg-dark q-pa-sm q-py-md full-width constraint"
-      key="item1"
-    >
-      <div class="icons full-width" key="item2">
-        <label
-          class="q-ml-sm q-mr-md text-white"
-          style="cursor: pointer;"
-          key="item3"
-        >
-          <input
-            class="file-input"
-            type="file"
-            @change="handleChange"
-            key="item4"
-          />
-          <q-icon
-            size="23px"
-            name="eva-image-outline"
-            key="item5"
-          />
-          <span class="block" >PIC</span>
-        </label>
-        <q-btn
-          v-if="store.state.desktop"
-          flat
-          stack
-          round
-          size="md"
-          key="item7"
-          label="Camera"
-          class="q-mr-md text-white"
-          style="cursor: pointer;"
-          icon="eva-camera-outline"
-          @click="showCameraModal"
+    <!-- :style="{ display: showMenuModal ? 'flex' : 'none', width: showMenuModal ? '100%' : '50%' }" -->
+    <!-- :style="{ display: showMenuModal ? 'flex' : 'none' }" -->
+    <div class="icons" key="item2">
+      <label
+        class="q-ml-sm q-mr-md text-primary"
+        style="cursor: pointer"
+        key="item3"
+      >
+        <input
+          class="file-input"
+          type="file"
+          @change="handleChange"
+          key="item4"
         />
-        <q-btn
-          flat
-          round
-          stack
-          size="md"
-          key="item9"
-          label="Link"
-          class="q-mr-md text-white"
-          style="cursor: pointer;"
-          icon="eva-link-outline"
-          @click="showLinkModal"
-        />
-        <q-btn
-          flat
-          round
-          stack
-          size="md"
-          key="item8"
-          label="Video"
-          class="q-mr-md text-white"
-          style="cursor: pointer"
-          icon="eva-video-outline"
-          @click="showVideoModal"
-        />
-        <q-btn
-          flat
-          stack
-          round
-          size="md"
-          label="Map"
-          key="item10"
-          class="text-white"
-          style="cursor: pointer"
-          icon="eva-pin-outline"
-          @click="showMapModal"
-        />
-        <q-btn
-          flat
-          round
-          key="item11"
-          size="md"
-          class="text-pink-3 btn-close"
-          icon="eva-close-outline"
-          @click="closeMenuModal"
-        />
-      </div>
+        <q-icon size="23px" name="eva-image-outline" key="item5" />
+        <span class="block">PIC</span>
+      </label>
+      <q-btn
+        v-if="store.state.desktop"
+        flat
+        stack
+        round
+        size="md"
+        key="item7"
+        label="Cam"
+        class="q-mr-md text-primary"
+        style="cursor: pointer"
+        icon="eva-camera-outline"
+        @click="showCameraModal"
+      />
+      <q-btn
+        flat
+        round
+        stack
+        size="md"
+        key="item9"
+        label="Link"
+        class="q-mr-md text-primary"
+        style="cursor: pointer"
+        icon="eva-link-outline"
+        @click="showLinkModal"
+      />
+      <q-btn
+        flat
+        round
+        stack
+        size="md"
+        key="item8"
+        label="Video"
+        class="q-mr-md text-primary"
+        style="cursor: pointer"
+        icon="eva-video-outline"
+        @click="showVideoModal"
+      />
+      <q-btn
+        flat
+        stack
+        round
+        size="md"
+        label="Map"
+        key="item10"
+        class="text-primary"
+        style="cursor: pointer"
+        icon="eva-pin-outline"
+        @click="showMapModal"
+      />
     </div>
-    <image-modal
-      key="item12"
-      :file="file"
-      v-if="file"
-      @close-imageModal="file = null"
-      @close-menuModal="closeMenuModal"
-    />
-  </transition-group>
+    <!-- <q-btn
+      flat
+      round
+      key="item11"
+      size="md"
+      class="text-pink-3 btn-close"
+      icon="eva-close-outline"
+      @click="closeMenuModal"
+    /> -->
+  </div>
+  <image-modal
+    key="item12"
+    :file="file"
+    v-if="file"
+    @close-imageModal="file = null"
+    @close-menuModal="closeMenuModal"
+  />
+  <!-- </transition-group> -->
 </template>
 
 <script>
-import { ref, inject } from "vue";
+import { ref, inject, onUnmounted, onBeforeUnmount } from "vue";
 import ImageModal from "./ImageModal.vue";
 
 export default {
@@ -121,6 +110,7 @@ export default {
     "openMapModal",
     "closeMenuModal",
   ],
+  props: ["showMenuModal"],
   setup(props, { emit }) {
     const store = inject("store");
 
@@ -129,12 +119,24 @@ export default {
 
     const types = ["image/png", "image/jpeg", "image/jpg"];
 
-    const beforeEnter = (el) => {};
-    const enter = (el) => {};
-    const afterEnter = (el) => {};
-    const beforeLeave = (el) => {};
-    const leave = (el) => {};
-    const afterLeave = (el) => {};
+    const beforeEnter = (el) => {
+      console.log("before enter");
+    };
+    const enter = (el) => {
+      console.log("enter");
+    };
+    const afterEnter = (el) => {
+      console.log("after enter");
+    };
+    const beforeLeave = (el) => {
+      console.log("before leave");
+    };
+    const leave = (el) => {
+      console.log("leave");
+    };
+    const afterLeave = (el) => {
+      console.log("after enter");
+    };
 
     const handleChange = (e) => {
       let selected = e.target.files[0];
@@ -197,6 +199,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-enter-to {
+  opacity: 1;
+}
+.fade-enter-active {
+  transition: all 2s ease;
+}
+.fade-leave-from {
+  opacity: 1;
+}
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-leave-active {
+  transition: all 2s ease;
+}
+
 .file-input {
   height: 0;
   width: 0;
@@ -211,11 +232,13 @@ export default {
   margin-left: auto;
 }
 .menu-modal {
-  position: fixed;
-  bottom: 0;
-  z-index: 500;
+  width: 50%;
   display: flex;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  // border: 1px solid yellow;
+}
+@media (max-width: 575px) {
+  .menu-modal {
+    display: none;
+  }
 }
 </style>

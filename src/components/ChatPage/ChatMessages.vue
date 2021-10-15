@@ -27,13 +27,12 @@
             <span v-if="message.url" class="time-stamp">{{
               message.createdAt
             }}</span>
-          </div>
-
-          <div
+          </div>          
+        </div>
+        <div
             v-if="message.image && !message.url"
             class="img-box"
             :class="{ invisible: !imageLoaded }"
-            style="position: relative"
           >
             <img
               ref="imageRef"
@@ -47,7 +46,6 @@
               <span class="time-stamp">{{ message.createdAt }}</span>
             </div>
           </div>
-        </div>
       </div>
     </section>
   </div>
@@ -108,13 +106,21 @@ export default {
 
 <style lang="scss" scoped>
 // .chatbox {
-//   overflow-y: scroll;
+//   border-top-left-radius: 20px;
+//   border-top-right-radius: 20px;
 // }
 .img-box {
+  position: relative;
   margin: 0;
   padding: 0;
   line-height: 0.9;
   box-sizing: border-box;
+  width: 30%;
+}
+@media (orientation: portrait) {
+  .img-box {
+    width: 50%;
+  }
 }
 .video-box {
   width: 50%;

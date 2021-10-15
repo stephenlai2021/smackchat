@@ -31,14 +31,14 @@
 
     <map-modal v-if="showMapModal" @close-mapModal="showMapModal = false" />
 
-    <menu-modal
+    <!-- <menu-modal
       v-if="showMenuModal"
       @openCameraModal="showCameraModal = true"
       @openVideoModal="showVideoModal = true"
       @openLinkModal="showLinkModal = true"
       @openMapModal="showMapModal = true"
       @closeMenuModal="showMenuModal = false"
-    />
+    /> -->
 
     <page-footer @openMenuModal="showMenuModal = true" />
   </q-page>
@@ -272,7 +272,6 @@ export default {
 .icons {
   display: flex;
   align-items: center;
-  
 }
 .btn-close {
   cursor: pointer;
