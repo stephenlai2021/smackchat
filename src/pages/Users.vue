@@ -70,7 +70,7 @@
       </q-item>
     </q-list>
 
-    <q-footer class="footer bg-primary q-py-md q-px-lg row justify-between">
+    <div class="footer bg-primary q-py- q-px-md row justify-between">
       <!-- <q-tabs
         no-caps
         indicator-color="transparent"
@@ -96,6 +96,7 @@
           width="27.584"
           height="25.195"
           viewBox="0 0 27.584 25.195"
+          @click="router.push('/')"
         >
           <g
             id="Group_97"
@@ -202,7 +203,7 @@
       </svg>
 
       <!-- </q-tabs> -->
-    </q-footer>
+    </div>
   </div>
 </template>
 
@@ -311,7 +312,11 @@ export default {
   font-weight: 600;
 }
 .footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   z-index: 300;
+  padding: 17px;
   // border-top-left-radius: 35px;
   // border-top-right-radius: 35px;
 }

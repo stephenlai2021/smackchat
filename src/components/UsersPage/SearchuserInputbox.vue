@@ -1,5 +1,5 @@
 <template>
-  <div class="full-width q-px-md q-my-md" style="display: block">
+  <div class="full-width q-px-md q-my-lg q-pt-sm">
     <input type="text" name="search" placeholder="Search" />
   </div>  
 </template>
