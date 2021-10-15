@@ -70,7 +70,7 @@
       </q-item>
     </q-list>
 
-    <q-footer class="footer bg-primary q-py-lg q-px-lg row justify-between">
+    <q-footer class="footer bg-primary q-py-md q-px-lg row justify-between">
       <!-- <q-tabs
         no-caps
         indicator-color="transparent"
@@ -90,7 +90,7 @@
           style="width: 50%"
           @click="router.push('/users')"
         /> -->
-      <router-link to="/">
+      <!-- <router-link to="/"> -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="27.584"
@@ -139,7 +139,7 @@
             </g>
           </g>
         </svg>
-      </router-link>
+      <!-- </router-link> -->
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="31.09"
