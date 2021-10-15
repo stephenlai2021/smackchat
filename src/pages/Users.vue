@@ -34,10 +34,10 @@
             <img
               :src="user.avatar"
               alt="user avatar"
-              :style="{
-                border: user.online ? '2px solid #e6ee9c' : '2px solid #e0e0e0',
-              }"
             />
+              <!-- :style="{
+                border: user.online ? '2px solid #e6ee9c' : '2px solid #e0e0e0',
+              }" -->
           </q-avatar>
           <q-badge
             rounded
@@ -49,7 +49,7 @@
 
         <q-item-section>
           <q-item-label
-            class="text-subtitle2"
+            class="text-secondary"
             style="font-size: 18px; font-weight: 600"
             >{{ user.name }}</q-item-label
           >

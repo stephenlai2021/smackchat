@@ -15,10 +15,10 @@
           <img
             :src="user.avatar"
             alt="user avatar"
-            :style="{
-              border: user.online ? '2px solid #e6ee9c' : '2px solid #e0e0e0',
-            }"
           />
+            <!-- :style="{
+              border: user.online ? '2px solid #e6ee9c' : '2px solid #e0e0e0',
+            }" -->
           <q-badge
             rounded
             class="float-right"
