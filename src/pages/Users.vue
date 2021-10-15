@@ -99,7 +99,7 @@ import { useRouter } from "vue-router";
 import { ref, onMounted, computed, inject, watchEffect } from "vue";
 
 import UserspageHeader from "../components/UsersPage/UserspageHeader";
-import UserspageFooter from "../components/UsersPage/UserspageFooter";
+// import UserspageFooter from "../components/UsersPage/UserspageFooter";
 import UsersmapModal from "../components/UsersPage/UsersmapModal";
 import UsersList from "../components/UsersPage/UsersList";
 
@@ -108,7 +108,7 @@ export default {
     UsersList,
     UsersmapModal,
     UserspageHeader,
-    UserspageFooter,
+    // UserspageFooter,
   },
   setup() {
     const store = inject("store");
