@@ -116,9 +116,9 @@ export default {
   white-space: nowrap;
   // border: 1px solid;
 }
-@media (max-width: 437px) {
-  .scroll-horizontal {
-    padding-bottom: 0;
-  }
-}
+// @media (max-width: 437px) {
+//   .scroll-horizontal {
+//     padding-bottom: 0;
+//   }
+// }
 </style>
