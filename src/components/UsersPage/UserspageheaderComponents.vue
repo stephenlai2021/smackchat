@@ -1,6 +1,6 @@
 <template>
   <div class="q-mt-lg">
-    <div class="items-center q-ml-md scroll-horizontal">
+    <div class="items-center q-pl-md scroll-horizontal" style="border: 1px solid;">
       <div
         @click="goChat(user)"
         v-for="(user, index) in matchingUsers"

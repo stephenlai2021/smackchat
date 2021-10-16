@@ -29,8 +29,7 @@
           :key="index"
           clickable
           v-ripple
-          class="q-py-none"
-          style="padding-bottom: 30px"
+          class="q-py-md"
           @click="goChat(user)"
         >
           <q-item-section avatar>
@@ -38,17 +37,10 @@
               <img :src="user.avatar" alt="user avatar" />
             </q-avatar>
             <div
-              style="
-                position: absolute;
-                left: 50px;
-                top: 45px;
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-              "
+              class="online-indication"
               :style="{
                 background: user.online ? '#ED4F5C' : 'none',
-               
+                border: user.online ? '2px solid white' : 'none',
               }"
             ></div>
           </q-item-section>
@@ -172,8 +164,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.online-indication {
+  position: absolute;
+  left: 50px;
+  top: 52px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
 .page-users {
-  border: 1px solid transparent;
+  // This is a very strange behavior
+  // border: 1px solid transparent;
 }
 .footer {
   position: fixed;
@@ -183,7 +184,7 @@ export default {
   padding: 17px;
 }
 .users-list-container {
-  margin-top: 256px;
+  padding-top: 256px;
   width: 100%;
   // border: 1px solid;
 }
