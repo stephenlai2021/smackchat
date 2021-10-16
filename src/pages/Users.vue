@@ -23,7 +23,7 @@
 
     <div v-else class="users-list-container">
       <q-list class="full-width q-pt-xs">
-        <div class="spacer" style="height: 20px"></div>
+        <!-- <div class="spacer" style="height: 20px"></div> -->
         <q-item
           v-for="(user, index) in matchingUsers"
           :key="index"
