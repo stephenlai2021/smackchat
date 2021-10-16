@@ -22,7 +22,7 @@
     </div> -->
 
     <div v-else class="users-list-container">
-      <q-list class="full-width q-pt-xs q-pb-sm">
+      <q-list class="full-width q-pt-sm q-pb-sm">
         <!-- <div class="spacer" style="height: 20px"></div> -->
         <q-item
           v-for="(user, index) in matchingUsers"
@@ -165,7 +165,7 @@ export default {
 
 <style lang="scss" scoped>
 .user-list {
-  padding: 15px 0;
+  padding: 15px 16px;
 }
 .online-indication {
   position: absolute;
