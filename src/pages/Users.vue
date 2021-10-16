@@ -1,5 +1,5 @@
 <template>
-  <div class="page-users">
+  <div class="page-users bg-primary">
     <userspage-header @openUsersMapModal="showUsersMapModal = true" />
 
     <usersmap-modal
@@ -21,7 +21,7 @@
       </p>
     </div> -->
 
-    <div v-else class="users-list-container">
+    <div v-else class="users-list-container bg-white">
       <q-list class="full-width q-pt-sm q-pb-sm">
         <!-- <div class="spacer" style="height: 20px"></div> -->
         <q-item
@@ -164,6 +164,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page-users {
+  height: 100vh;
+}
 .user-list {
   padding: 15px 16px;
 }
@@ -183,9 +186,12 @@ export default {
   padding: 17px;
 }
 .users-list-container {
+  
   padding-top: 256px;
   width: 100%;
   // border: 1px solid;
+  border-bottom-left-radius:35px;
+  border-bottom-right-radius:35px;
 }
 .spinner {
   position: fixed;
