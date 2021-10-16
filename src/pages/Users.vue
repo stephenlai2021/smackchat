@@ -29,7 +29,7 @@
           :key="index"
           clickable
           v-ripple
-          class="q-py-md"
+          class="user-list"
           @click="goChat(user)"
         >
           <q-item-section avatar>
@@ -164,6 +164,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.user-list {
+  padding: 15px 0;
+}
 .online-indication {
   position: absolute;
   left: 50px;
