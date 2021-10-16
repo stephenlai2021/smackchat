@@ -48,7 +48,7 @@
               "
               :style="{
                 background: user.online ? '#ED4F5C' : 'none',
-                border: user.online ? '2px solid white' : 'none',
+               
               }"
             ></div>
           </q-item-section>
