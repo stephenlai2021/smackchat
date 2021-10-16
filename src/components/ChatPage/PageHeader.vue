@@ -12,7 +12,7 @@
           size="16px"
           class="text-primary"
           icon="eva-arrow-ios-back-outline"
-          @click="router.push('/users')"
+          @click="router.push('/')"
         />
         <span
           v-if="store.state.otherUser"

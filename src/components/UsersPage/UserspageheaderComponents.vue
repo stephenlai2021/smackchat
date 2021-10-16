@@ -1,21 +1,15 @@
 <template>
-  <div class="q-my-lg">
-    <div
-      class="items-center q-ml-md"
-      style="overflow-x: auto; overflow-y: hidden; white-space: nowrap"
-    >
+  <div class="q-mt-lg">
+    <div class="items-center q-ml-md scroll-horizontal">
       <div
         @click="goChat(user)"
         v-for="(user, index) in matchingUsers"
         :key="index"
         class="row q-mr-lg items-center"
-        style="display: inline-block;"
+        style="display: inline-block"
       >
         <q-avatar size="60px" style="position: relative; cursor: pointer">
-          <img
-            :src="user.avatar"
-            alt="user avatar"
-          />
+          <img :src="user.avatar" alt="user avatar" />
           <div
             style="
               position: absolute;
@@ -23,11 +17,11 @@
               top: 45px;
               width: 12px;
               height: 12px;
-              border-radius: 50%; 
+              border-radius: 50%;
             "
             :style="{
               background: user.online ? '#ED4F5C' : 'none',
-              border: user.online ? '2px solid white' : 'none'
+              border: user.online ? '2px solid white' : 'none',
             }"
           ></div>
         </q-avatar>
@@ -59,7 +53,7 @@
 import { useI18n } from "vue-i18n";
 import { inject, computed, ref } from "vue";
 import { useRouter } from "vue-router";
-import SearchuserInputbox from './SearchuserInputbox.vue'
+import SearchuserInputbox from "./SearchuserInputbox.vue";
 
 export default {
   components: {
@@ -106,4 +100,19 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.scroll-horizontal::-webkit-scrollbar {
+  width: 0 !important;
+}
+.scroll-horizontal {
+  -ms-overflow-style: none;
+}
+.scroll-horizontal {
+  overflow: -moz-scrollbars-none;
+}
+.scroll-horizontal {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+</style>
