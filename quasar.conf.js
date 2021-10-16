@@ -110,6 +110,7 @@ module.exports = configure(function (ctx) {
       'slideOutDown',
       'slideOutUp',
       'slideInRight',
+      'slideOutRight',
       'slideOutLeft',
       'zoomIn',
       'zoomOut',

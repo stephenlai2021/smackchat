@@ -4,7 +4,7 @@
       v-model="store.state.leftDrawerOpen"
       show-if-above
       bordered
-      side="left"      
+      side="left"
     >
       <div>
         <q-toolbar></q-toolbar>
@@ -111,7 +111,16 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view class="constraint" />
+      <router-view v-slot="{ Component }">
+        <transition
+          appear
+          mode="out-in"
+          enter-active-class="animated slideInRight"
+          leave-active-class="animated slideOutRight"
+        >
+          <component :is="Component"></component>
+        </transition>
+      </router-view>
     </q-page-container>
   </q-layout>
 </template>
