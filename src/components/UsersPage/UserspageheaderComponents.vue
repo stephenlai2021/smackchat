@@ -1,6 +1,6 @@
 <template>
   <div class="q-mt-lg">
-    <div class="items-center q-pl-md scroll-horizontal" style="border: 1px solid;">
+    <div class="items-center q-pl-md q-pb-md scroll-horizontal">
       <div
         @click="goChat(user)"
         v-for="(user, index) in matchingUsers"
@@ -114,5 +114,11 @@ export default {
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
+  // border: 1px solid;
+}
+@media (max-width: 437px) {
+  .scroll-horizontal {
+    padding-bottom: 0;
+  }
 }
 </style>

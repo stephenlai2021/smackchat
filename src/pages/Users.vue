@@ -172,10 +172,6 @@ export default {
   height: 12px;
   border-radius: 50%;
 }
-.page-users {
-  // This is a very strange behavior
-  // border: 1px solid transparent;
-}
 .footer {
   position: fixed;
   bottom: 0;

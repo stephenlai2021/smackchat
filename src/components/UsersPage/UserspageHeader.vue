@@ -1,30 +1,29 @@
 <template>
-  <!-- <div class="bg-white"> -->
-    <div class="q-py-md user-page-header">
-      <div class="row justify-between full-width q-pl-md q-pr-sm">
-        <span
-          class="text-bold text-primary"
-          style="font-size: 25px; font-weight: 700"
-        >
-          {{ t("messages") }}
-        </span>
-        <q-btn
-          round
-          dense
-          flat
-          size="md"
-          class="text-primary"
-          icon="eva-plus-outline"
-          style="margin-left: auto; font-weight: 700"
-          @click="openUsersMapModal"
-        />
-      </div>
-      <userspageheader-components />
+  <div class="q-py-md user-page-header">
+    <div class="row justify-between full-width q-pl-md q-pr-sm">
+      <span
+        class="text-bold text-primary"
+        style="font-size: 25px; font-weight: 700"
+      >
+        {{ t("messages") }}
+      </span>
+      <q-btn
+        round
+        dense
+        flat
+        size="md"
+        class="text-primary"
+        icon="eva-plus-outline"
+        style="margin-left: auto; font-weight: 700"
+        @click="store.state.rightDrawerOpen = true"
+      />
     </div>
-  <!-- </div> -->
+    <userspageheader-components />
+  </div>
 </template>
 
 <script>
+import { inject } from "vue";
 import { useI18n } from "vue-i18n";
 import UserspageheaderComponents from "./UserspageheaderComponents";
 
@@ -33,6 +32,8 @@ export default {
     UserspageheaderComponents,
   },
   setup(props, { emit }) {
+    const store = inject("store");
+
     const { t, locale } = useI18n();
 
     const openUsersMapModal = () => {
@@ -41,6 +42,7 @@ export default {
 
     return {
       t,
+      store,
       locale,
       openUsersMapModal,
     };

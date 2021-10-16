@@ -1,5 +1,5 @@
 <template>
-  <div class="full-width q-px-md q-mb-md q-mt-md">
+  <div class="input-search full-width q-px-md q-mb-md q-mt-md">
     <input type="text" name="search" placeholder="Search" />
   </div>  
 </template>
@@ -24,6 +24,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.input-search {
+  // border: 1px solid;
+}
 .icon-search {
   position: absolute;
   left: 12px;
@@ -41,6 +44,7 @@ input[type="text"] {
   width: 100%;
   box-sizing: border-box;
   border: none;
+  outline: none;
   border-radius: 15px;
   font-size: 16px;
   color: grey;
