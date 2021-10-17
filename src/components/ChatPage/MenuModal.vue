@@ -181,16 +181,4 @@ export default {
   cursor: pointer padding-y;
   margin-left: auto;
 }
-.menu-modal {
-  // width: 50%;
-  // display: flex;
-  // flex-wrap: wrap;
-  // flex-direction: column;
-  // border: 1px solid yellow;
-}
-@media (max-width: 575px) {
-  .menu-modal {
-    display: none;
-  }
-}
 </style>

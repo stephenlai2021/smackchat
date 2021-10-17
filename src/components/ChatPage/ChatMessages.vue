@@ -135,7 +135,7 @@ export default {
 .chat-box {
   .message {
     display: flex;
-    margin-bottom: 15px;
+    padding-bottom: 20px;
 
     .message-inner {
       max-width: 50%;

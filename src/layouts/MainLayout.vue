@@ -1,13 +1,14 @@
 <template>
-  <q-layout view="lHr lpR lFr">
+  <q-layout view="lHr lpR lFr" style="overflow-y: hidden">
     <q-drawer
       v-if="route.fullPath.includes('/chat')"
       side="right"
       mini
+      :width="70"
       bordered
-      v-model="store.state.leftDrawerOpen"
+      v-model="store.state.rightDrawerOpen"
       show-if-above
-      class="column justify-center"
+      class="column justify-center"      
     >
       <menu-modal />
     </q-drawer>
@@ -15,10 +16,12 @@
       side="left"
       bordered
       show-if-above
+      :width="250"
       v-model="store.state.leftDrawerOpen"
+      :style="{ oveflow: route.fullPath.includes('/chat') ? 'hidden' : 'none' }"
     >
       <q-toolbar></q-toolbar>
-      <div class="flex row justify-center">
+      <div class="row justify-center">
         <div style="position: relative">
           <img
             :src="
@@ -142,7 +145,7 @@ import { useRoute, useRouter } from "vue-router";
 import { localdb } from "src/boot/localbase";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
-import MenuModal from '../components/ChatPage/MenuModal'
+import MenuModal from "../components/ChatPage/MenuModal";
 
 export default {
   components: {
