@@ -1,6 +1,6 @@
 <template>
-  <div class="page-users bg-primary">
-    <userspage-header @openUsersMapModal="showUsersMapModal = true" />
+  <div class="page-users">
+    <page-header @openUsersMapModal="showUsersMapModal = true" />
 
     <usersmap-modal
       v-if="showUsersMapModal"
@@ -21,7 +21,10 @@
       </p>
     </div> -->
 
-    <div v-else class="users-list-container bg-white">
+    <div v-else class="users-list-container bg-">
+      <div class="icon-right-arrow bg-primary" @click="store.state.leftDrawerOpen = true">
+        <q-icon name="eva-arrow-right-outline" size="lg" class="text-white" />
+      </div>
       <q-list class="full-width q-pt-sm q-pb-sm">
         <!-- <div class="spacer" style="height: 20px"></div> -->
         <q-item
@@ -75,15 +78,15 @@ import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { ref, onMounted, computed, inject, watchEffect } from "vue";
 
-import UserspageHeader from "../components/UsersPage/UserspageHeader";
-import UserspageFooter from "../components/UsersPage/UserspageFooter";
+import PageHeader from "../components/UsersPage/PageHeader";
+import PageFooter from "../components/UsersPage/PageFooter";
 import UsersmapModal from "../components/UsersPage/UsersmapModal";
 
 export default {
   components: {
     UsersmapModal,
-    UserspageHeader,
-    UserspageFooter,
+    PageHeader,
+    PageFooter,
   },
   setup() {
     const $q = useQuasar();
@@ -186,12 +189,12 @@ export default {
   padding: 17px;
 }
 .users-list-container {
-  
-  padding-top: 256px;
+  // padding-top: 256px;
+  z-index: 300;
   width: 100%;
   // border: 1px solid;
-  border-bottom-left-radius:35px;
-  border-bottom-right-radius:35px;
+  border-bottom-left-radius: 35px;
+  border-bottom-right-radius: 35px;
 }
 .spinner {
   position: fixed;
@@ -204,5 +207,27 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.icon-right-arrow {
+  display: none;
+}
+@media (max-width: 1023px) {
+  .icon-right-arrow {
+    width: 30px;
+    height: 80px;
+    position: fixed;
+    top: 40%;
+    z-index: 700;
+    transform: translateY(-50%);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: 1px solid #ececec;
+    box-shadow: 2px 2px 2px grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.7;
+  }
 }
 </style>

@@ -31,6 +31,12 @@
 
     <map-modal v-if="showMapModal" @close-mapModal="showMapModal = false" />
 
+    <image-modal
+      :file="store.state.file"
+      v-if="store.state.file"
+      @close-imageModal="store.state.file = null"
+    />
+      <!-- @close-menuModal="closeMenuModal" -->
     <!-- <menu-modal
       v-if="showMenuModal"
       @openCameraModal="showCameraModal = true"
@@ -63,11 +69,13 @@ import CameraModal from "../components/ChatPage/CameraModal.vue";
 import PicModal from "../components/ChatPage/PicModal.vue";
 import LinkModal from "../components/ChatPage/LinkModal.vue";
 import ChatMessages from "../components/ChatPage/ChatMessages.vue";
+import ImageModal from "../components/ChatPage/ImageModal.vue";
 
 export default {
   components: {
     PageHeader,
     PageFooter,
+    ImageModal,
     MapModal,
     MenuModal,
     VideochatModal,
@@ -260,9 +268,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .page-chat {
-//   overflow: hidden;
-// }
+.page-chat {
+  position: relative;
+}
 .footer {
   z-index: 300;
   backdrop-filter: blur(20px);

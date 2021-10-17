@@ -1,5 +1,6 @@
 <template>
-  <div class="q-py-md user-page-header" :style="{ maxWidth: store.state.leftDrawerOpen ? 'calc(100% - 300px)' : '100%' }">
+  <!-- :style="{ maxWidth: store.state.leftDrawerOpen ? 'calc(100% - 300px)' : '100%' }" -->
+  <div class="q-py-md user-page-header">
     <div class="row justify-between full-width q-pl-md q-pr-sm">
       <span
         class="text-bold text-primary"
@@ -18,18 +19,18 @@
         @click="store.state.rightDrawerOpen = true"
       />
     </div>
-    <userspageheader-components />
+    <pageheader-components />
   </div>
 </template>
 
 <script>
 import { inject } from "vue";
 import { useI18n } from "vue-i18n";
-import UserspageheaderComponents from "./UserspageheaderComponents";
+import PageheaderComponents from "./PageheaderComponents";
 
 export default {
   components: {
-    UserspageheaderComponents,
+    PageheaderComponents,
   },
   setup(props, { emit }) {
     const store = inject("store");
@@ -52,10 +53,10 @@ export default {
 
 <style lang="scss" scoped>
 .user-page-header {
-  position: fixed;
-  top: 0;
-  z-index: 300;
-  width: 100%;
+  // position: fixed;
+  // top: 0;
+  // z-index: 300;
+  // width: 100%;
   background: #e7eaed;
   border-bottom-left-radius: 35px;
   border-bottom-right-radius: 35px;

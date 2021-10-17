@@ -35,8 +35,9 @@ const state = reactive({
   isChatPage: false,
   videochat: false,
   from: null,
-  // sendingVideochat: false,
-  // receivingVideochat: false,
+
+  file: null,
+  fileError: null,
 });
 
 const methods = {

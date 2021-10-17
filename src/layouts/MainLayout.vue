@@ -1,126 +1,136 @@
 <template>
   <q-layout view="lHr lpR lFr">
     <q-drawer
+      v-if="route.fullPath.includes('/chat')"
+      side="right"
+      mini
+      bordered
       v-model="store.state.leftDrawerOpen"
       show-if-above
-      bordered
-      side="left"
+      class="column justify-center"
     >
-      <div>
-        <q-toolbar></q-toolbar>
-        <div class="flex row justify-center">
-          <div style="position: relative">
-            <img
-              :src="
-                store.state.userDetails.avatar
-                  ? store.state.userDetails.avatar
-                  : 'https://www.clipartmax.com/png/full/98-984206_profile-photo-facebook-profile-picture-icon.png'
-              "
-              alt="my avatar"
-              style="width: 120px; border-radius: 8px"
+      <menu-modal />
+    </q-drawer>
+    <q-drawer
+      side="left"
+      bordered
+      show-if-above
+      v-model="store.state.leftDrawerOpen"
+    >
+      <q-toolbar></q-toolbar>
+      <div class="flex row justify-center">
+        <div style="position: relative">
+          <img
+            :src="
+              store.state.userDetails.avatar
+                ? store.state.userDetails.avatar
+                : 'https://www.clipartmax.com/png/full/98-984206_profile-photo-facebook-profile-picture-icon.png'
+            "
+            alt="my avatar"
+            style="width: 120px; border-radius: 8px"
+          />
+          <label class="full-width btn-1" style="cursor: pointer">
+            <input class="file-input" type="file" @change="handleChange" />
+            <q-icon
+              color="green"
+              size="md"
+              name="eva-camera-outline"
+              style="position: absolute; bottom: -8px; right: -13px"
             />
-            <label class="full-width btn-1" style="cursor: pointer">
-              <input class="file-input" type="file" @change="handleChange" />
-              <q-icon
-                color="green"
-                size="md"
-                name="eva-camera-outline"
-                style="position: absolute; bottom: -8px; right: -13px"
-              />
-            </label>
-          </div>
+          </label>
         </div>
-        <div v-if="file" class="row justify-center">
-          <div class="output-1 text-center q-mt-sm" style="width: 200px">
-            <div v-if="fileError" class="error">{{ fileError }}</div>
-            <div>{{ file.name }}</div>
-            <div
-              class="progress-bar q-mt-sm"
-              :style="{ width: store.state.progress + '%' }"
-            ></div>
-          </div>
-        </div>
-        <p class="text-center q-mt-sm text-h5 text-grey-6 text-bold">
-          {{ store.state.userDetails.name }}
-        </p>
-
-        <q-list class="q-mt-lg">
-          <span class="q-ml-md text-grey">{{ t("settings") }}</span>
-          <q-item>
-            <q-item-section avatar>
-              <q-icon
-                color="white"
-                name="dark_mode"
-                class="icon"
-                style="background: black"
-              />
-            </q-item-section>
-
-            <q-item-section>{{ t("dark") }}</q-item-section>
-            <q-toggle v-model="store.state.darkMode" color="black" />
-          </q-item>
-          <q-item>
-            <q-item-section avatar>
-              <q-icon
-                color="white"
-                name="translate"
-                class="icon"
-                style="background: #2196f3"
-              />
-            </q-item-section>
-
-            <q-item-section>{{ t("chinese") }}</q-item-section>
-            <q-btn-group flat dense round>
-              <q-btn
-                label="Eng"
-                size="md"
-                dense
-                flat
-                rounded
-                @click="locale = 'en-US'"
-              />
-              <q-btn
-                label="Chn"
-                size="md"
-                dense
-                flat
-                rounded
-                @click="locale = 'zh'"
-              />
-            </q-btn-group>
-          </q-item>
-          <q-item
-            v-if="store.state.userDetails.online"
-            clickable
-            v-ripple
-            @click="logoutUser"
-          >
-            <q-item-section avatar>
-              <q-icon
-                color="white"
-                name="logout"
-                class="icon"
-                style="background: red"
-              />
-            </q-item-section>
-
-            <q-item-section>{{ t("logout") }}</q-item-section>
-          </q-item>
-        </q-list>
       </div>
+      <div v-if="file" class="row justify-center">
+        <div class="output-1 text-center q-mt-sm" style="width: 200px">
+          <div v-if="fileError" class="error">{{ fileError }}</div>
+          <div>{{ file.name }}</div>
+          <div
+            class="progress-bar q-mt-sm"
+            :style="{ width: store.state.progress + '%' }"
+          ></div>
+        </div>
+      </div>
+      <p class="text-center q-mt-sm text-h5 text-grey-6 text-bold">
+        {{ store.state.userDetails.name }}
+      </p>
+
+      <q-list class="q-mt-lg">
+        <span class="q-ml-md text-grey">{{ t("settings") }}</span>
+        <q-item>
+          <q-item-section avatar>
+            <q-icon
+              color="white"
+              name="dark_mode"
+              class="icon"
+              style="background: black"
+            />
+          </q-item-section>
+
+          <q-item-section>{{ t("dark") }}</q-item-section>
+          <q-toggle v-model="store.state.darkMode" color="black" />
+        </q-item>
+        <q-item>
+          <q-item-section avatar>
+            <q-icon
+              color="white"
+              name="translate"
+              class="icon"
+              style="background: #2196f3"
+            />
+          </q-item-section>
+
+          <q-item-section>{{ t("chinese") }}</q-item-section>
+          <q-btn-group flat dense round>
+            <q-btn
+              label="Eng"
+              size="md"
+              dense
+              flat
+              rounded
+              @click="locale = 'en-US'"
+            />
+            <q-btn
+              label="Chn"
+              size="md"
+              dense
+              flat
+              rounded
+              @click="locale = 'zh'"
+            />
+          </q-btn-group>
+        </q-item>
+        <q-item
+          v-if="store.state.userDetails.online"
+          clickable
+          v-ripple
+          @click="logoutUser"
+        >
+          <q-item-section avatar>
+            <q-icon
+              color="white"
+              name="logout"
+              class="icon"
+              style="background: red"
+            />
+          </q-item-section>
+
+          <q-item-section>{{ t("logout") }}</q-item-section>
+        </q-item>
+      </q-list>
     </q-drawer>
 
     <q-page-container>
-      <router-view v-slot="{ Component }">
+      <!-- <router-view v-slot="{ Component }">
         <transition
           appear
           mode="out-in"
-          enter-active-class="animated slideInRight"
+          enter-active-class="animated fadeIn"
           leave-active-class="animated slideOutRight"
         >
           <component :is="Component"></component>
         </transition>
-      </router-view>
+      </router-view> -->
+      <router-view />
     </q-page-container>
   </q-layout>
 </template>
@@ -132,8 +142,12 @@ import { useRoute, useRouter } from "vue-router";
 import { localdb } from "src/boot/localbase";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
+import MenuModal from '../components/ChatPage/MenuModal'
 
 export default {
+  components: {
+    MenuModal,
+  },
   setup() {
     const route = useRoute();
     const router = useRouter();

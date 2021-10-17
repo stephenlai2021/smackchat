@@ -1,13 +1,13 @@
 <template>
   <q-footer class="bg-primary q-py-xs row" style="z-index: 300;">
-    <menu-modal
+    <!-- <menu-modal
       :showMenuModal="showMenuModal"
       @openCameraModal="showCameraModal = true"
       @openVideoModal="showVideoModal = true"
       @openLinkModal="showLinkModal = true"
       @openMapModal="showMapModal = true"
       @closeMenuModal="closeMenuModal"
-    />
+    /> -->
     <q-form v-if="inputForm" class="flex form">
         <!-- v-if="!inputFocus" -->
       <div
