@@ -25,7 +25,7 @@ export default {
 
 <style lang="scss" scoped>
 .input-search {
-  border: 1px solid;
+  // border: 1px solid;
 }
 .icon-search {
   position: absolute;

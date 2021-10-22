@@ -1,6 +1,6 @@
 <template>
   <div class="chatbox" ref="chats" :class="{ invisible: !showMessages }">
-    <section class="chat-box">
+    <div class="chat-box">
       <div
         v-for="(message, index) in store.getters.formattedMessages()"
         :key="index"
@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -129,13 +129,11 @@ p {
   width: 50%;
 }
 .time-stamp {
-  // text-align: right;
   font-size: 10px;
+  // font-weight: 500;
   color: #c9d5e2;
-  // border: 1px solid;
-  // line-height: 0.7;
   margin-top: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 13px;
 }
 .user-image {
   width: 100%;
@@ -152,13 +150,14 @@ p {
       .content {
         text-align: center;
         padding: 7px;
-        background-color: #ffe0b2;
+        background-color: #E7EAED;
         border-radius: 15px;
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 10px;
         height: auto;
-        // color: white;
-        // font-size: 14px;
+        color: #0B2F5B;
+        font-size: 14px;
+        font-weight: 600;
         word-wrap: break-word;
       }
     }
@@ -176,6 +175,7 @@ p {
           color: #fff;
           word-wrap: break-word;
           font-size: 14px;
+          font-weight: 600;
           background-color: #ed4f5c;
           border-radius: 10px;
           // border-bottom-left-radius: 10px;
