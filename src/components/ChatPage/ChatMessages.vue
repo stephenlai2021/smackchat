@@ -8,11 +8,26 @@
         class="q-px-md"
         :class="message.from == 'me' ? 'message current-user' : 'message'"
       >
-        <!-- <span>123</span> -->
         <div class="message-inner">
-          <div v-if="!message.url && !message.image" class="text-box">
-            <div class="content">
-              {{ message.text }}
+          <div v-if="!message.url && !message.image">
+            <div class="text-box">
+              <div
+                v-if="store.state.otherUser"
+                class="row justify-center items-center other-avatar q-mr-sm"
+              >
+                <img
+                  class="avatar-image"
+                  :src="
+                    !store.state.otherUser.avatar
+                      ? '/avatar.png'
+                      : store.state.otherUser.avatar
+                  "
+                  alt="user avatar"
+                />
+              </div>
+              <div class="content">
+                {{ message.text }}
+              </div>
             </div>
             <div class="full-width text-right">
               <div class="time-stamp">{{ message.createdAt }}</div>
@@ -25,7 +40,9 @@
             </a>
           </div>
           <div class="full-width text-right">
-            <div v-if="message.url" class="time-stamp">{{ message.createdAt }}</div>
+            <div v-if="message.url" class="time-stamp">
+              {{ message.createdAt }}
+            </div>
           </div>
         </div>
         <div
@@ -104,9 +121,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-p {
-  margin-bottom: 0;
-  font-size: 10px;
+.text-box {
+  display: flex;
 }
 .chatbox {
   padding-top: 80px;
@@ -141,21 +157,28 @@ p {
 .chat-box {
   .message {
     display: flex;
-    // padding-bottom: 20px;
 
     .message-inner {
-      max-width: 50%;
+      // max-width: 50%;
       position: relative;
+      // border: 1px solid;
+
+      .avatar-image {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
 
       .content {
         text-align: center;
         padding: 7px;
-        background-color: #E7EAED;
+        background-color: #e7eaed;
         border-radius: 15px;
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 10px;
         height: auto;
-        color: #0B2F5B;
+        color: #0b2f5b;
         font-size: 14px;
         font-weight: 600;
         word-wrap: break-word;
@@ -169,6 +192,11 @@ p {
       .message-inner {
         max-width: 50%;
         position: relative;
+        border: none;
+
+        .other-avatar {
+          display: none;
+        }
 
         .content {
           text-align: center;

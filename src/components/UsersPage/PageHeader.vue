@@ -1,5 +1,4 @@
 <template>
-  <!-- :style="{ maxWidth: store.state.leftDrawerOpen ? 'calc(100% - 300px)' : '100%' }" -->
   <div class="q-py-md user-page-header">
     <div class="row justify-between full-width q-pl-md q-pr-sm">
       <span

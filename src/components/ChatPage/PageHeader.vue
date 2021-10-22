@@ -31,9 +31,8 @@
       {{ store.state.otherUser.name }}
     </span>
     <div v-if="store.state.otherUser" class="row justify-center items-center">
-      <!-- <q-avatar v-if="store.state.otherUser"> -->
       <img
-        style="width: 26px; height: 26px; border-radius: 50%; object-fit: cover"
+        style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover"
         :src="
           !store.state.otherUser.avatar
             ? '/avatar.png'
@@ -41,7 +40,6 @@
         "
         alt="user avatar"
       />
-      <!-- </q-avatar> -->
     </div>
   </div>
 </template>
