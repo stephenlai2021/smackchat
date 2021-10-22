@@ -12,11 +12,11 @@
         round
         dense
         flat
-        size="md"
+        size="15px"
         class="text-primary"
-        icon="eva-plus-outline"
+        icon="eva-settings-outline"
         style="margin-left: auto; font-weight: 700"
-        @click="store.state.rightDrawerOpen = true"
+        @click="store.state.leftDrawerOpen = true"
       />
     </div>
     <pageheader-components />

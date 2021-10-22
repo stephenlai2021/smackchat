@@ -22,9 +22,9 @@
     </div> -->
 
     <div v-else class="users-list-container bg-">
-      <div class="icon-right-arrow bg-primary" @click="store.state.leftDrawerOpen = true">
+      <!-- <div class="icon-right-arrow bg-primary" @click="store.state.leftDrawerOpen = true">
         <q-icon name="eva-arrow-right-outline" size="lg" class="text-white" />
-      </div>
+      </div> -->
       <q-list class="full-width q-pt-sm q-pb-sm">
         <!-- <div class="spacer" style="height: 20px"></div> -->
         <q-item

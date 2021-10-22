@@ -8,7 +8,7 @@
       bordered
       v-model="store.state.rightDrawerOpen"
       show-if-above
-      class="column justify-center"      
+      class="column justify-center"
     >
       <menu-modal />
     </q-drawer>
