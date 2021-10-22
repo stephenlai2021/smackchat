@@ -25,7 +25,7 @@ export default {
 
 <style lang="scss" scoped>
 .input-search {
-  // border: 1px solid;
+  border: 1px solid;
 }
 .icon-search {
   position: absolute;
@@ -49,10 +49,11 @@ input[type="text"] {
   font-size: 16px;
   color: grey;
   background-color: white;
-  background-image: url("https://www.w3schools.com/css/searchicon.png");
-  background-position: 15px 20px;
+  // background-image: url("https://www.w3schools.com/css/searchicon.png");
+  background-image: url("/icons/search.png");
+  background-position: 16px 18px;
   background-repeat: no-repeat;
-  background-size: 20px;
+  background-size: 17px;
   padding: 15px 20px 15px 40px;
   box-shadow: 0px 5px 5px rgb(206, 204, 204);
 }

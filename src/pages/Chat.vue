@@ -1,5 +1,5 @@
 <template>
-  <q-page class="page-chat">
+  <q-page class="page-chat q-pr-">
     <page-header />
 
     <chat-messages
@@ -315,9 +315,6 @@ export default {
 .camera-frame {
   border: 2px solid grey;
   border-radius: 10px;
-}
-.footer {
-  z-index: 300;
 }
 .camera-modal {
   position: fixed;

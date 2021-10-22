@@ -1,6 +1,6 @@
 <template>
   <div class="chatbox" ref="chats" :class="{ invisible: !showMessages }">
-    <section class="chat-box q-mt-md">
+    <section class="chat-box">
       <div
         v-for="(message, index) in store.getters.formattedMessages()"
         :key="index"
@@ -8,13 +8,14 @@
         class="q-px-md"
         :class="message.from == 'me' ? 'message current-user' : 'message'"
       >
+        <!-- <span>123</span> -->
         <div class="message-inner">
           <div v-if="!message.url && !message.image" class="text-box">
-            <div class="content text-dark">
+            <div class="content">
               {{ message.text }}
             </div>
-            <div class="full-width text-center">
-              <span class="time-stamp">{{ message.createdAt }}</span>
+            <div class="full-width text-right">
+              <div class="time-stamp">{{ message.createdAt }}</div>
             </div>
           </div>
 
@@ -23,29 +24,27 @@
               {{ message.text }}
             </a>
           </div>
-          <div class="full-width text-center">
-            <span v-if="message.url" class="time-stamp">{{
-              message.createdAt
-            }}</span>
-          </div>          
+          <div class="full-width text-right">
+            <div v-if="message.url" class="time-stamp">{{ message.createdAt }}</div>
+          </div>
         </div>
         <div
-            v-if="message.image && !message.url"
-            class="img-box"
-            :class="{ invisible: !imageLoaded }"
-          >
-            <img
-              ref="imageRef"
-              class="user-image"
-              :src="message.text"
-              alt="user image"
-              @load="loadImage"
-              @click="getMessage(index, message)"
-            />
-            <div class="full-width text-center">
-              <span class="time-stamp">{{ message.createdAt }}</span>
-            </div>
+          v-if="message.image && !message.url"
+          class="img-box"
+          :class="{ invisible: !imageLoaded }"
+        >
+          <img
+            ref="imageRef"
+            class="user-image"
+            :src="message.text"
+            alt="user image"
+            @load="loadImage"
+            @click="getMessage(index, message)"
+          />
+          <div class="full-width text-center">
+            <span class="time-stamp">{{ message.createdAt }}</span>
           </div>
+        </div>
       </div>
     </section>
   </div>
@@ -105,10 +104,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .chatbox {
-//   border-top-left-radius: 20px;
-//   border-top-right-radius: 20px;
-// }
+p {
+  margin-bottom: 0;
+  font-size: 10px;
+}
+.chatbox {
+  padding-top: 80px;
+  // border: 1px solid;
+}
 .img-box {
   position: relative;
   margin: 0;
@@ -126,8 +129,12 @@ export default {
   width: 50%;
 }
 .time-stamp {
-  text-align: center;
+  // text-align: right;
   font-size: 10px;
+  color: #c9d5e2;
+  // border: 1px solid;
+  // line-height: 0.7;
+  margin-top: 7px;
 }
 .user-image {
   width: 100%;
@@ -135,36 +142,42 @@ export default {
 .chat-box {
   .message {
     display: flex;
-    padding-bottom: 20px;
+    // padding-bottom: 20px;
 
     .message-inner {
       max-width: 50%;
+      position: relative;
 
       .content {
-        padding: 10px;
+        text-align: center;
+        padding: 7px;
         background-color: #ffe0b2;
-        // background-color: #f3f3f3;
         border-radius: 15px;
         border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 15px;
+        border-bottom-right-radius: 10px;
         height: auto;
-        color: #333;
+        // color: white;
+        // font-size: 14px;
         word-wrap: break-word;
       }
     }
 
     &.current-user {
-      margin-top: 30px;
+      margin-top: 10px;
       justify-content: flex-end;
 
       .message-inner {
         max-width: 50%;
+        position: relative;
 
         .content {
+          text-align: center;
           color: #fff;
           word-wrap: break-word;
-          background-color: #c8e6c9;
-          border-bottom-left-radius: 15px;
+          font-size: 14px;
+          background-color: #ed4f5c;
+          border-radius: 10px;
+          // border-bottom-left-radius: 10px;
           border-bottom-right-radius: 0px;
         }
       }

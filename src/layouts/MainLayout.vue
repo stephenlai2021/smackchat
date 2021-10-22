@@ -4,7 +4,7 @@
       v-if="route.fullPath.includes('/chat')"
       side="right"
       mini
-      :width="70"
+      :width="65"
       bordered
       v-model="store.state.rightDrawerOpen"
       show-if-above

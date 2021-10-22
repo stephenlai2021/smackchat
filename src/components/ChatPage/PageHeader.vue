@@ -1,42 +1,49 @@
 <template>
-  <q-header style="z-index: 500" class="bg-transparent" elevated>
-    <q-toolbar
-      class="constraint"
-      style="padding: 0; backdrop-filter: blur(20px); position: relative"
-    >
-      <div class="full-width row justify-between">
-        <q-btn
-          flat
-          round
-          dense
-          size="16px"
-          class="text-primary"
-          icon="eva-arrow-ios-back-outline"
-          @click="router.push('/')"
-        />
-        <span
-          v-if="store.state.otherUser"
-          class="text-bold text-primary q-ml-sm row justify-center items-center"
-          style="font-size: 18px"
-        >
-          {{ store.state.otherUser.name }}
-        </span>
-        <div class="row justify-center items-center q-mr-sm">
-          <q-avatar v-if="store.state.otherUser">
-            <img
-              style="width: 30px; height: 30px"
-              :src="
-                !store.state.otherUser.avatar
-                  ? '/avatar.png'
-                  : store.state.otherUser.avatar
-              "
-              alt="user avatar"
+  <div class="header bg-white q-px-md q-pb- row justify-between">
+    <div class="row items-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="9.801"
+        height="16.683"
+        style="cursor: pointer;"
+        viewBox="0 0 9.801 16.683"
+        @click="router.push('/')"
+      >
+        <g id="left-arrow" transform="translate(111.281 16.683) rotate(180)">
+          <g id="Group_86" data-name="Group 86" transform="translate(101.48 0)">
+            <path
+              id="Path_244"
+              data-name="Path 244"
+              d="M104.773,8.345,111.014,2.1a.915.915,0,0,0,0-1.29l-.547-.547a.914.914,0,0,0-1.291,0L101.746,7.7a.921.921,0,0,0,0,1.3l7.424,7.424a.914.914,0,0,0,1.291,0l.547-.547a.914.914,0,0,0,0-1.291Z"
+              transform="translate(-101.48 0)"
+              fill="#a9b5c1"
             />
-          </q-avatar>
-        </div>
-      </div>
-    </q-toolbar>
-  </q-header>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <span
+      v-if="store.state.otherUser"
+      class="text-bold text-secondary row justify-center items-center"
+      style="font-size: 20px"
+    >
+      {{ store.state.otherUser.name }}
+    </span>
+    <div v-if="store.state.otherUser" class="row justify-center items-center">
+      <!-- <q-avatar v-if="store.state.otherUser"> -->
+      <img
+        style="width: 26px; height: 26px; border-radius: 50%; object-fit: cover"
+        :src="
+          !store.state.otherUser.avatar
+            ? '/avatar.png'
+            : store.state.otherUser.avatar
+        "
+        alt="user avatar"
+      />
+      <!-- </q-avatar> -->
+    </div>
+  </div>
 </template>
 
 <script>
@@ -57,4 +64,22 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+* {
+  line-height: 0.7;
+}
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 500;
+  padding-top: 24px;
+}
+@media (min-width: 1023px) {
+  .header {
+    left: 250px;
+    width: calc(100% - 315px);
+  }
+}
+</style>

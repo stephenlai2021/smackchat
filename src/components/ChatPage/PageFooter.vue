@@ -1,89 +1,65 @@
 <template>
-  <q-footer class="bg-primary q-py-xs row" style="z-index: 300;">
-    <!-- <menu-modal
-      :showMenuModal="showMenuModal"
-      @openCameraModal="showCameraModal = true"
-      @openVideoModal="showVideoModal = true"
-      @openLinkModal="showLinkModal = true"
-      @openMapModal="showMapModal = true"
-      @closeMenuModal="closeMenuModal"
-    /> -->
-    <q-form v-if="inputForm" class="flex form">
-        <!-- v-if="!inputFocus" -->
-      <div
+  <div class="bg-white q-py-sm q-px-md footer">
+    <div class="input-search q-mt-">
+      <svg
+        id="happiness"
+        xmlns="http://www.w3.org/2000/svg"
+        width="18.004"
+        height="18.004"
+        viewBox="0 0 18.004 18.004"
+        class="icon-smiley"
+        @click="showEmojiPicker"
+      >
+        <path
+          id="Path_247"
+          data-name="Path 247"
+          d="M9,0a9,9,0,1,0,9,9A9.012,9.012,0,0,0,9,0ZM9,17.031A8.027,8.027,0,1,1,17.031,9,8,8,0,0,1,9,17.031Z"
+          fill="#a9b5c1"
+        />
+        <circle
+          id="Ellipse_10"
+          data-name="Ellipse 10"
+          cx="0.973"
+          cy="0.973"
+          r="0.973"
+          transform="translate(5.089 6.022)"
+          fill="#a9b5c1"
+        />
+        <circle
+          id="Ellipse_11"
+          data-name="Ellipse 11"
+          cx="0.973"
+          cy="0.973"
+          r="0.973"
+          transform="translate(11.111 6.022)"
+          fill="#a9b5c1"
+        />
+        <path
+          id="Path_248"
+          data-name="Path 248"
+          d="M75.363,182.288a5.65,5.65,0,0,0,4.72-2.562l-.817-.528a4.623,4.623,0,0,1-7.771,0l-.817.528a5.651,5.651,0,0,0,4.056,2.525A5.5,5.5,0,0,0,75.363,182.288Z"
+          transform="translate(-66.378 -168.298)"
+          fill="#a9b5c1"
+        />
+      </svg>
+      <input
+        type="text"
+        name="search"
+        v-model="newMessage"
+        placeholder="Enter your message"
+        @keydown.enter="sendMessage"
+        @keyup="sendTypingIndicator"
+      />
+      <q-icon
+        name="navigate_next"
+        size="sm"
+        class="text- btn-send q-pr-sm icon-right-arrow"
+        dense
         flat
-        round
-        class="btn-menu row justify-center items-center"
-      >
-        <q-btn
-          flat
-          round
-          ref="btnEmoji"
-          class="text-primary"
-          icon="eva-menu-outline"
-          @click="openMenuModal"
-        />
-        <!-- @click="showMenuModal = true" -->
-      </div>
-      <div class="q-py-sm input-box-container" style="">
-        <!-- :style="{ width: inputFocus ? '85%' : '70%' }" -->
-        <q-input
-          ref="input"
-          dense
-          standout
-          outlined
-          focus="false"
-          class="full-width"
-          :class="inputFocus ? 'q-pl-md' : ''"
-          bg-color="primary"
-          label-color="white"
-          :label="t('message')"
-          v-model="newMessage"
-          style="opacity: 0.7;"
-          @keydown.enter="sendMessage"
-          @keyup="sendTypingIndicator"
-          @focus="onFocus"
-          @blur="onBlur"
-        >
-          <!-- :style="{ width: inputFocus ? '90%' : '80%' }" -->
-          <template v-slot:prepend v-if="inputFocus">
-            <q-btn
-              icon="navigate_next"
-              size="md"
-              class="text-dark"
-              dense
-              flat
-              @click="inputFocus = false"
-            />
-          </template>
-          <template v-slot:append v-if="inputFocus">
-            <q-icon
-              round
-              size="sm"
-              ref="btnEmoji"
-              style="cursor: pointer"
-              class="text-primary"
-              name="eva-smiling-face-outline"
-              @click="showEmojiPicker"
-            />
-          </template>
-        </q-input>
-      </div>
-      <div
-        class="btn-send row justify-center items-center"
-        style="width: 10%"
-      >
-        <q-btn
-          icon="eva-navigation-2-outline"
-          size="md"
-          class="text-primary"
-          dense
-          flat
-          @click="sendMessage"
-        />
-      </div>
-    </q-form>
-  </q-footer>
+        @click="sendMessage"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -107,22 +83,23 @@ export default {
 
     const newMessage = ref("");
     const indicator = ref(false);
-    const inputFocus = ref(false);
+    // const inputFocus = ref(false);
     const showMenuModal = ref(false);
+    const inputBgColor = ref("#E7EAED");
 
-    const inputForm = ref(true)
-    const menuModal = ref(true)
+    const inputForm = ref(true);
+    const menuModal = ref(true);
 
     const closeMenuModal = () => {
-      showMenuModal.value = false
-      inputForm.value = true
-    }
+      showMenuModal.value = false;
+      inputForm.value = true;
+    };
 
     const openMenuModal = () => {
       // emit("openMenuModal");
       // showMenuModal.value = !showMenuModal;
-      inputForm.value = false
-      showMenuModal.value = true
+      inputForm.value = false;
+      showMenuModal.value = true;
       console.log("menu modal state: ", showMenuModal.vaue);
       console.log("open menu modal");
     };
@@ -141,20 +118,20 @@ export default {
 
       newMessage.value = "";
 
-      inputFocus.value = false;
+      // inputFocus.value = false;
     };
 
-    const onFocus = () => {
-      if (!store.state.desktop) {
-        inputFocus.value = true;
-      }
-    };
+    // const onFocus = () => {
+    //   if (!store.state.desktop) {
+    //     inputFocus.value = true;
+    //   }
+    // };
 
-    const onBlur = () => {
-      if (!store.state.desktop) {
-        inputFocus.value = false;
-      }
-    };
+    // const onBlur = () => {
+    //   if (!store.state.desktop) {
+    //     inputFocus.value = false;
+    //   }
+    // };
 
     /****************/
     /* Emoji Button */
@@ -212,34 +189,15 @@ export default {
       }
     );
 
-    const resize = () => {
-      setInterval(() => {
-        let w = window.innerWidth;
-        if (w <= 575) {
-          btnSend.value = false
-          btnMenu.value = false
-          inputBoxContainer.value = false
-          menuModal.value = true
-        } 
-      }, 100);
-    };
-
-    onMounted(() => {
-      // resize()
-    })
-
     return {
       t,
       store,
       locale,
-      onBlur,
-      resize,
-      onFocus,
       menuModal,
       inputForm,
       newMessage,
-      inputFocus,
       sendMessage,
+      inputBgColor,
       showMenuModal,
       openMenuModal,
       closeMenuModal,
@@ -251,28 +209,60 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input-box-container {
-  width: 90%;
-  display: flex;
-  align-items: center;
+.input-search {
+  position: relative;
 }
-.btn-menu {
-  display: none;
-  width: 10%;
+.icon-search {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
 }
-.form {
-  width: 50%;
+::placeholder {
+  font-size: 14px;
+  font-weight: 600;
+  color: #a9b5c1;
+  padding-left: 1px;
 }
-@media (max-width: 575px) {
-  .form {
-    width: 100%;
+input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  font-size: 16px;
+  color: grey;
+  background-color: #e7eaed;
+  padding: 13px 20px 13px 37px;
+}
+.icon-smiley {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+  cursor: pointer;
+}
+.icon-right-arrow {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 800;
+  cursor: pointer;
+}
+.btn-send {
+  color: #a9b5c1;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 700;
+}
+@media (min-width: 1023px) {
+  .footer {
+    left: 250px;
+    width: calc(100% - 307px);
   }
-  .btn-menu {
-    display: flex;
-    width: 10%;
-  }
-  .input-box-container {
-    width: 80%;
-  }  
 }
 </style>
