@@ -134,7 +134,8 @@ p {
   color: #c9d5e2;
   // border: 1px solid;
   // line-height: 0.7;
-  margin-top: 7px;
+  margin-top: 5px;
+  margin-bottom: 20px;
 }
 .user-image {
   width: 100%;
