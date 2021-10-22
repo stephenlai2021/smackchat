@@ -1,6 +1,6 @@
 <template>
-  <div class="chatbox" ref="chats" :class="{ invisible: !showMessages }">
-    <div class="chat-box">
+  <div class="messages" ref="chats" :class="{ invisible: !showMessages }">
+    <div class="chatbox">
       <div
         v-for="(message, index) in store.getters.formattedMessages()"
         :key="index"
@@ -124,8 +124,9 @@ export default {
 .text-box {
   display: flex;
 }
-.chatbox {
+.messages {
   padding-top: 80px;
+  padding-bottom: 80px;
   // border: 1px solid;
 }
 .img-box {
@@ -154,7 +155,7 @@ export default {
 .user-image {
   width: 100%;
 }
-.chat-box {
+.chatbox {
   .message {
     display: flex;
 
