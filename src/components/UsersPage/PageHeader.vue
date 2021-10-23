@@ -15,7 +15,7 @@
         class="text-primary"
         icon="eva-settings-outline"
         style="margin-left: auto; font-weight: 700"
-        @click="store.state.leftDrawerOpen = true"
+        @click="store.state.leftDrawerOpen = !store.state.leftDrawerOpen"
       />
     </div>
     <pageheader-components />

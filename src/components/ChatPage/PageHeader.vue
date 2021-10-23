@@ -1,11 +1,25 @@
 <template>
-  <div class="header bg-white q-px-md q-pb- row justify-between">
+  <div
+    class="header bg-white q-px-md q-pb- row justify-between"
+    :style="{
+      left:
+        store.state.leftDrawerOpen && $q.platform.is.desktop ? '250px' : '0px',
+      width:
+        store.state.leftDrawerOpen &&
+        store.state.rightDrawerOpen &&
+        $q.platform.is.desktop
+          ? 'calc(100% - 315px)'
+          : store.state.leftDrawerOpen && $q.platform.is.desktop
+          ? 'calc(100% - 250px)'
+          : '',
+    }"
+  >
     <div class="row items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="9.801"
         height="16.683"
-        style="cursor: pointer;"
+        style="cursor: pointer"
         viewBox="0 0 9.801 16.683"
         @click="router.push('/')"
       >
@@ -47,6 +61,7 @@
 <script>
 import { inject } from "vue";
 import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 
 export default {
   setup() {
@@ -54,7 +69,10 @@ export default {
 
     const router = useRouter();
 
+    const $q = useQuasar();
+
     return {
+      $q,
       store,
       router,
     };
@@ -74,10 +92,10 @@ export default {
   z-index: 500;
   padding-top: 24px;
 }
-@media (min-width: 1023px) {
-  .header {
-    left: 250px;
-    width: calc(100% - 315px);
-  }
-}
+// @media (min-width: 1023px) {
+//   .header {
+//     left: 250px;
+//     width: calc(100% - 315px);
+//   }
+// }
 </style>
