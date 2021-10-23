@@ -272,10 +272,10 @@ export default {
   position: relative;
 }
 .footer {
-  z-index: 300;
-  backdrop-filter: blur(20px);
-  border-top: 1px solid white;
-  backdrop-filter: blur(20px);
+  // z-index: 300;
+  // backdrop-filter: blur(20px);
+  // border-top: 1px solid white;
+  // backdrop-filter: blur(20px);
 }
 .icons {
   display: flex;

@@ -1,5 +1,9 @@
 <template>
-  <div class="messages" ref="chats" :class="{ invisible: !showMessages }">
+  <div
+    class="messages"
+    ref="chats"
+    :class="{ invisible: !showMessages }"
+  >
     <div class="chatbox">
       <div
         v-for="(message, index) in store.getters.formattedMessages()"
@@ -125,7 +129,7 @@ export default {
   display: flex;
 }
 .messages {
-  padding-top: 80px;
+  padding-top: 78px;
   padding-bottom: 80px;
   // border: 1px solid;
 }
@@ -150,7 +154,7 @@ export default {
   // font-weight: 500;
   color: #c9d5e2;
   margin-top: 5px;
-  margin-bottom: 13px;
+  margin-bottom: 18px;
 }
 .user-image {
   width: 100%;
@@ -187,7 +191,7 @@ export default {
     }
 
     &.current-user {
-      margin-top: 10px;
+      // margin-top: 10px;
       justify-content: flex-end;
 
       .message-inner {

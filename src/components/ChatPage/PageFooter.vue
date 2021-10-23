@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white q-py-sm q-pl-md footer row"
+    class="bg-transparent q-py-sm q-pl-md footer row"
     :style="{
       left:
         store.state.leftDrawerOpen && $q.platform.is.desktop ? '250px' : '0px',
@@ -143,6 +143,27 @@ export default {
     const inputForm = ref(true);
     const menuModal = ref(true);
 
+    const footerItems = ref([
+      {
+        left: [
+          {
+            id: "item #1",
+            value: true,
+          },
+          {
+            id: "item #2",
+            value: true,
+          },
+        ],
+        right: [
+          {
+            id: "item#3",
+            value: true,
+          },
+        ],
+      },
+    ]);
+
     const closeMenuModal = () => {
       showMenuModal.value = false;
       inputForm.value = true;
@@ -170,21 +191,7 @@ export default {
       });
 
       newMessage.value = "";
-
-      // inputFocus.value = false;
     };
-
-    // const onFocus = () => {
-    //   if (!store.state.desktop) {
-    //     inputFocus.value = true;
-    //   }
-    // };
-
-    // const onBlur = () => {
-    //   if (!store.state.desktop) {
-    //     inputFocus.value = false;
-    //   }
-    // };
 
     /****************/
     /* Emoji Button */
@@ -313,6 +320,8 @@ input[type="text"] {
   bottom: 0;
   width: 100%;
   z-index: 700;
+  backdrop-filter: blur(20px);
+  // border: none;
 }
 // @media (min-width: 1023px) {
 //   .footer {
