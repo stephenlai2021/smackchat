@@ -51,20 +51,24 @@ export default {
 <style lang="scss" scoped>
 .image-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  // height: 100vh;
+  // width: 100%;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(20px);
-  z-index: 700;
+  z-index: 800;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 10px;
 }
 .container {
+  width: 250px;
   // border: 1px solid white;
-  width: 300px;
+  padding: 20px;
+  // border-radius: 20px;
 }
 .progress-bar {
   display: block;

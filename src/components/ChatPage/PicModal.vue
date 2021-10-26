@@ -85,8 +85,6 @@ export default {
       }
     );
 
-    onMounted(() => {});
-
     return {
       image,
       context,

@@ -58,7 +58,7 @@
             @load="loadImage"
             @click="getMessage(index, message)"
           />
-          <div class="full-width text-right" style="margin-bottom: 18px;">
+          <div class="full-width text-right" style="margin-bottom: 25px;">
             <span class="time-stamp">{{ message.createdAt }}</span>
           </div>
         </div>
