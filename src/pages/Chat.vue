@@ -2,11 +2,11 @@
   <q-page class="page-chat q-pr-">
     <page-header />
 
-    <chat-messages
-      @click="
+      <!-- @click="
         showMenuModal && !showLinkModal ? (showMenuModal = false) : null,
           showLinkModal && showMenuModal ? (showLinkModal = false) : null
-      "
+      " -->
+    <chat-messages
       @user-message="openPicModal"
     />
 
@@ -16,10 +16,10 @@
       @close-picmodal="picModal = false"
     />
 
-    <camera-modal
+    <camera-modal      
       v-if="showCameraModal"
       @close-cameraModal="showCameraModal = false"
-      @close-menuModal="showMenuModal = false"
+      @close-menuModal="showMenuModal = false"     
     />
 
     <link-modal v-if="showLinkModal" @close-LinkModal="showLinkModal = false" />
@@ -271,12 +271,6 @@ export default {
 .page-chat {
   position: relative;
 }
-.footer {
-  // z-index: 300;
-  // backdrop-filter: blur(20px);
-  // border-top: 1px solid white;
-  // backdrop-filter: blur(20px);
-}
 .icons {
   display: flex;
   align-items: center;
@@ -284,7 +278,6 @@ export default {
 .btn-close {
   cursor: pointer;
   margin-left: auto;
-  // position: absolute;
 }
 .menu-modal {
   position: fixed;

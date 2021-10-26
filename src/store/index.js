@@ -38,6 +38,8 @@ const state = reactive({
 
   file: null,
   fileError: null,
+
+  showCameraModal: false,
 });
 
 const methods = {

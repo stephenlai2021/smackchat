@@ -10,7 +10,7 @@
       show-if-above
       class="column justify-center"
     >
-      <menu-modal />
+      <menu-modal @openCameraModal="store.state.showCameraModal = true" />
     </q-drawer>
     <q-drawer
       side="left"
@@ -166,6 +166,8 @@ export default {
     const userPage = ref(false);
     const chatPage = ref(false);
     const leftDrawerOpen = ref(null);
+    
+    const showCameraModal = ref(false)
 
     const file = ref(null);
     const fileError = ref(null);
@@ -327,6 +329,8 @@ export default {
       userPage,
       chatPage,
       leftDrawerOpen,
+
+      showCameraModal,
 
       // methods
       logoutUser,

@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="messages"
-    ref="chats"
-    :class="{ invisible: !showMessages }"
-  >
+  <div class="messages" ref="chats" :class="{ invisible: !showMessages }">
     <div class="chatbox">
       <div
         v-for="(message, index) in store.getters.formattedMessages()"
@@ -62,7 +58,7 @@
             @load="loadImage"
             @click="getMessage(index, message)"
           />
-          <div class="full-width text-center">
+          <div class="full-width text-right" style="margin-bottom: 18px;">
             <span class="time-stamp">{{ message.createdAt }}</span>
           </div>
         </div>
@@ -129,8 +125,8 @@ export default {
   display: flex;
 }
 .messages {
-  padding-top: 78px;
-  padding-bottom: 80px;
+  padding-top: 90px;
+  padding-bottom: 75px;
   // border: 1px solid;
 }
 .img-box {

@@ -78,7 +78,6 @@ export default {
       console.log("You have selected: ", selected);
 
       if (selected && types.includes(selected.type)) {
-
         /* Do Not Delete ! */
         // file.value = selected;
         // fileError.value = null;
@@ -87,6 +86,8 @@ export default {
 
         store.state.file = selected;
         store.state.fileError = null;
+
+        store.state.rightDrawerOpen = false;
 
         store.methods.useStorage2(store.state.file, "smackchat");
 
@@ -108,7 +109,7 @@ export default {
       }
     };
 
-    const showCameraModal = () => {
+    const openCameraModal = () => {
       emit("openCameraModal");
     };
     const showLinkModal = () => {
@@ -132,7 +133,7 @@ export default {
       showLinkModal,
       showVideoModal,
       closeMenuModal,
-      showCameraModal,
+      openCameraModal,
     };
   },
 };

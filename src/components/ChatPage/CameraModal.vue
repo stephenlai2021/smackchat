@@ -4,7 +4,7 @@
     enter-active-class="animated zoomIn"
     leave-active-class="animated zoomOut"
   >
-    <div class="camera-modal bg-dark" key="item1">
+    <div class="camera-modal bg-" key="item1">
       <div class="constraint" style="height: 100vh">
         <div
           v-if="!videoLoaded"
@@ -92,7 +92,6 @@ import {
 } from "vue";
 
 export default {
-  props: ["file"],
   emits: ["open-cameraModal", "close-cameraModal", "close-menuModal"],
   setup(props, context) {
     const store = inject("store");
@@ -357,8 +356,8 @@ export default {
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 600;
-  // background: rgba(0, 0, 0, 0.9);
-  // backdrop-filter: blur(8px);
+  z-index: 800;
+    background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
 }
 </style>
