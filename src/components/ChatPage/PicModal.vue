@@ -65,7 +65,7 @@ export default {
           }
           if (imageWidth.value < imageHeight.value) {
             image.value.style.width = "90vw";
-            image.value.style.height = "100vh";
+            // image.value.style.height = "100vh";
           }
           if (imageWidth.value == imageHeight.value) {
             image.value.style.width = "90vw";
