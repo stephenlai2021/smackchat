@@ -67,7 +67,7 @@ export default {
 
           if (orientation.value.type === 'landscape-primary' && imageWidth.value < imageHeight.value) {
             image.value.style.height = '100vh'
-            image.value.style.width = '90%'
+            image.value.style.width = '90vw'
           }
           if (orientation.value.type === 'landscape-primary' && imageWidth.value > imageHeight.value) {
             image.value.style.width = '90vw'
@@ -79,20 +79,8 @@ export default {
           }
           if (orientation.value.type === 'portrait-primary' && imageWidth.value > imageHeight.value) {
             image.value.style.width = '100vw'
-            // image.value.style.height = '100vh'
+            image.value.style.height = '90vh'
           }
-
-          // if (imageWidth.value > imageHeight.value) {
-          //   image.value.style.width = "100%";
-          // }
-          // if (imageWidth.value < imageHeight.value) {
-          //   image.value.style.width = "90vw";
-          //   // image.value.style.height = "100vh";
-          // }
-          // if (imageWidth.value == imageHeight.value) {
-          //   image.value.style.width = "90vw";
-          //   // image.value.style.height = "100vh";
-          // }
         }
       }
     );
