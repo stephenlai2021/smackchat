@@ -4,7 +4,11 @@
     enter-active-class="animated zoomIn"
     leave-active-class="animated zoomOut"
   >
-    <div class="pic-modal bg-dark constraint" key="item1" style="object-fit: cover;">
+    <div
+      class="pic-modal bg-dark constraint"
+      key="item1"
+      style="object-fit: cover"
+    >
       <img
         @load="loadFullImage"
         :src="message.text"
@@ -12,7 +16,7 @@
         alt="user pic"
         class="image"
         key="item2"
-        style="object-fit: cover;"
+        style="object-fit: contain"
       />
       <q-btn
         key="item3"
@@ -38,6 +42,7 @@ export default {
     const imageWidth = ref(null);
     const imageHeight = ref(null);
     const isImageFullyLoaded = ref(false);
+    const orientation = ref(screen.orientation || screen.mozOrientation || screen.msOrientation)
 
     const closePicModal = () => {
       context.emit("close-picmodal");
@@ -51,7 +56,7 @@ export default {
     };
 
     watch(
-      () => isImageFullyLoaded.value,
+      () => [isImageFullyLoaded.value, orientation.value],
       () => {
         if ((isImageFullyLoaded.value = true)) {
           imageWidth.value = image.value.clientWidth;
@@ -60,23 +65,39 @@ export default {
           console.log("image width: ", imageWidth.value);
           console.log("image height: ", imageHeight.value);
 
-          if (imageWidth.value > imageHeight.value) {
-            image.value.style.width = "100%";
+          if (orientation.value.type === 'landscape-primary' && imageWidth.value < imageHeight.value) {
+            image.value.style.height = '100vh'
+            image.value.style.width = '90%'
           }
-          if (imageWidth.value < imageHeight.value) {
-            image.value.style.width = "90vw";
-            // image.value.style.height = "100vh";
+          if (orientation.value.type === 'landscape-primary' && imageWidth.value > imageHeight.value) {
+            image.value.style.width = '90vw'
+            image.value.style.height = '90vh'
           }
-          if (imageWidth.value == imageHeight.value) {
-            image.value.style.width = "90vw";
-            // image.value.style.height = "100vh";
+          if (orientation.value.type === 'portrait-primary' && imageWidth.value < imageHeight.value) {
+            image.value.style.width = '90vw'
+            image.value.style.height = '100vh'
           }
+          if (orientation.value.type === 'portrait-primary' && imageWidth.value > imageHeight.value) {
+            image.value.style.width = '100vw'
+            // image.value.style.height = '100vh'
+          }
+
+          // if (imageWidth.value > imageHeight.value) {
+          //   image.value.style.width = "100%";
+          // }
+          // if (imageWidth.value < imageHeight.value) {
+          //   image.value.style.width = "90vw";
+          //   // image.value.style.height = "100vh";
+          // }
+          // if (imageWidth.value == imageHeight.value) {
+          //   image.value.style.width = "90vw";
+          //   // image.value.style.height = "100vh";
+          // }
         }
       }
     );
 
-    onMounted(() => {
-    });
+    onMounted(() => {});
 
     return {
       image,
