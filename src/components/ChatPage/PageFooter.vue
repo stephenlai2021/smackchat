@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-transparent q-py-sm q-pl-md footer row"
+    class="bg-white q-py-sm q-pl-md footer row"
     :style="{
       left:
         store.state.leftDrawerOpen && $q.platform.is.desktop ? '250px' : '0px',
@@ -320,7 +320,7 @@ input[type="text"] {
   bottom: 0;
   width: 100%;
   z-index: 700;
-  backdrop-filter: blur(20px);
+  // backdrop-filter: blur(20px);
   // border: none;
 }
 // @media (min-width: 1023px) {

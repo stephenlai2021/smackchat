@@ -125,8 +125,8 @@ export default {
   display: flex;
 }
 .messages {
-  padding-top: 90px;
-  padding-bottom: 75px;
+  padding-top: 15px;
+  padding-bottom: 60px;
   // border: 1px solid;
 }
 .img-box {

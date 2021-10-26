@@ -4,7 +4,7 @@
     enter-active-class="animated zoomIn"
     leave-active-class="animated zoomOut"
   >
-    <div class="pic-modal bg-dark constraint" key="item1">
+    <div class="pic-modal bg-dark constraint" key="item1" style="object-fit: cover;">
       <img
         @load="loadFullImage"
         :src="message.text"
@@ -12,6 +12,7 @@
         alt="user pic"
         class="image"
         key="item2"
+        style="object-fit: cover;"
       />
       <q-btn
         key="item3"
@@ -63,11 +64,12 @@ export default {
             image.value.style.width = "100%";
           }
           if (imageWidth.value < imageHeight.value) {
+            image.value.style.width = "90vw";
             image.value.style.height = "100vh";
           }
           if (imageWidth.value == imageHeight.value) {
-            image.value.style.width = "100%";
-            image.value.style.height = "100vh";
+            image.value.style.width = "90vw";
+            // image.value.style.height = "100vh";
           }
         }
       }

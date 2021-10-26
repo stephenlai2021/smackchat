@@ -1,6 +1,6 @@
 <template>
   <div
-    class="header bg-transparent q-px-md q-pb- row justify-between"
+    class="header bg- q-px-md q-pb- row justify-between"
     :style="{
       left:
         store.state.leftDrawerOpen && $q.platform.is.desktop ? '250px' : '0px',
@@ -85,15 +85,14 @@ export default {
   line-height: 0.7;
 }
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 500;
+  // position: fixed;
+  // top: 0;
+  // left: 0;
+  // width: 100%;
+  // z-index: 500;
+  // backdrop-filter: blur(20px);
   padding-top: 24px;
   padding-bottom: 24px;
-  // border: 1px solid;
-  backdrop-filter: blur(20px);
 }
 // @media (min-width: 1023px) {
 //   .header {
