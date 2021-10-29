@@ -8,7 +8,7 @@
         store.state.leftDrawerOpen &&
         store.state.rightDrawerOpen &&
         $q.platform.is.desktop
-          ? 'calc(100% - 315px)'
+          ? '100%'
           : store.state.leftDrawerOpen && $q.platform.is.desktop
           ? 'calc(100% - 250px)'
           : '',

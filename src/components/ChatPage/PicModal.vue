@@ -5,11 +5,25 @@
     leave-active-class="animated zoomOut"
   >
     <div
-      class="pic-modal bg-dark constraint"
+      class="pic-modal"
       key="item1"
-      style="object-fit: cover"
+      :style="{
+        left:
+          store.state.leftDrawerOpen && $q.platform.is.desktop
+            ? '250px'
+            : '0px',
+        width:
+          store.state.leftDrawerOpen &&
+          store.state.rightDrawerOpen &&
+          $q.platform.is.desktop
+            ? 'calc(100% - 315px)'
+            : store.state.leftDrawerOpen && $q.platform.is.desktop
+            ? 'calc(100% - 250px)'
+            : '',
+      }"
     >
-      <img
+      <q-icon v-if="!isImageFullyLoaded" name="eva-image-outline" size="xl" class="text-green-2" />
+      <img        
         @load="loadFullImage"
         :src="message.text"
         ref="image"
@@ -31,18 +45,22 @@
 </template>
 
 <script>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, inject } from "vue";
 
 export default {
   props: ["message"],
   emits: ["close-picmodal"],
   setup(props, context) {
     // console.log("image url: ", props.message.text);
+    const store = inject("store");
+
     const image = ref(null);
     const imageWidth = ref(null);
     const imageHeight = ref(null);
     const isImageFullyLoaded = ref(false);
-    const orientation = ref(screen.orientation || screen.mozOrientation || screen.msOrientation)
+    const orientation = ref(
+      screen.orientation || screen.mozOrientation || screen.msOrientation
+    );
 
     const closePicModal = () => {
       context.emit("close-picmodal");
@@ -65,27 +83,40 @@ export default {
           console.log("image width: ", imageWidth.value);
           console.log("image height: ", imageHeight.value);
 
-          if (orientation.value.type === 'landscape-primary' && imageWidth.value < imageHeight.value) {
-            image.value.style.height = '100vh'
-            image.value.style.width = '90vw'
+          if (
+            orientation.value.type === "landscape-primary" &&
+            imageWidth.value < imageHeight.value
+          ) {
+            image.value.style.height = "100vh";
+            image.value.style.width = "90vw";
           }
-          if (orientation.value.type === 'landscape-primary' && imageWidth.value > imageHeight.value) {
-            image.value.style.width = '90vw'
-            image.value.style.height = '90vh'
+          if (
+            orientation.value.type === "landscape-primary" &&
+            imageWidth.value > imageHeight.value
+          ) {
+            image.value.style.width = "90vw";
+            image.value.style.height = "90vh";
           }
-          if (orientation.value.type === 'portrait-primary' && imageWidth.value < imageHeight.value) {
-            image.value.style.width = '90vw'
-            image.value.style.height = '100vh'
+          if (
+            orientation.value.type === "portrait-primary" &&
+            imageWidth.value < imageHeight.value
+          ) {
+            image.value.style.width = "90vw";
+            image.value.style.height = "100vh";
           }
-          if (orientation.value.type === 'portrait-primary' && imageWidth.value > imageHeight.value) {
-            image.value.style.width = '100vw'
-            image.value.style.height = '90vh'
+          if (
+            orientation.value.type === "portrait-primary" &&
+            imageWidth.value > imageHeight.value
+          ) {
+            image.value.style.width = "100vw";
+            image.value.style.height = "90vh";
           }
         }
       }
     );
 
     return {
+      store,
       image,
       context,
       loadFullImage,
@@ -106,14 +137,17 @@ export default {
 }
 .pic-modal {
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0px;
+  // left: 10%;
+  // transform: translateX(-10%);
   top: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   z-index: 800;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
 }
 </style>

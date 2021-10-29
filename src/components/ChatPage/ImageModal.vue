@@ -2,6 +2,7 @@
   <div class="image-modal bg- q-pa-md">
     <div class="container text-center">
       <div class="text-white">{{ file.name }}</div>
+      <!-- <div class="text-white">{{ file.name.split(" ")[0].substring(20, 0) + "." }}</div> -->
       <div class="text-white q-mt-sm ">Uploading... {{ store.state.progress }}%</div>
       <div
         class="progress-bar"
@@ -51,18 +52,20 @@ export default {
 <style lang="scss" scoped>
 .image-modal {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 0;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
   // height: 100vh;
-  // width: 100%;
+  width: 100%;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(20px);
   z-index: 800;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
 }
 .container {
   width: 250px;

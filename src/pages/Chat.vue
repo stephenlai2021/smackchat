@@ -17,7 +17,7 @@
     />
 
     <camera-modal      
-      v-if="showCameraModal"
+      v-if="store.state.showCameraModal"
       @close-cameraModal="showCameraModal = false"
       @close-menuModal="showMenuModal = false"     
     />
@@ -36,6 +36,7 @@
       v-if="store.state.file"
       @close-imageModal="store.state.file = null"
     />
+
       <!-- @close-menuModal="closeMenuModal" -->
     <!-- <menu-modal
       v-if="showMenuModal"

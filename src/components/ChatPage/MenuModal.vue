@@ -7,7 +7,7 @@
         <span class="block text-primary text-bold">Pic</span>
       </label>
     </div>
-    <div class="column items-center pointer padding-y">
+    <div class="column items-center pointer padding-y" @click="openCameraModal">
       <q-icon size="23px" name="eva-camera-outline" class="text-primary" />
       <span class="block text-primary text-bold">Cam</span>
     </div>
@@ -110,6 +110,7 @@ export default {
     };
 
     const openCameraModal = () => {
+      console.log('open camera modal')
       emit("openCameraModal");
     };
     const showLinkModal = () => {
